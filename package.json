@@ -6,6 +6,6 @@
   "author": "KaiwenJon <kaiwenjon23@gmail.com>",
   "license": "MIT",
   "scripts":{
-    "server":"cd backend && yarn server",
+    "server":"cd backend && yarn server"
   }
 }

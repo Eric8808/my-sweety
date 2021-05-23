@@ -9,10 +9,16 @@
     "mongoose": "^5.12.10"
   },
   "devDependencies": {
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
+    "@babel/node": "^7.14.2",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
+    "@babel/plugin-transform-arrow-functions": "^7.13.0",
+    "@babel/preset-env": "^7.14.2",
     "nodemon": "^2.0.7"
   },
-  "type":"module",
-  "scripts":{
-    "server": ""
+  "scripts": {
+    "server": "nodemon src/main.js --ext js --watch src --exec babel-node"
   }
 }
