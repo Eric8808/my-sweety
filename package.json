@@ -1,0 +1,11 @@
+{
+  "name": "my-sweety",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/KaiwenJon/my-sweety.git",
+  "author": "KaiwenJon <kaiwenjon23@gmail.com>",
+  "license": "MIT",
+  "scripts":{
+    "server":"cd backend && yarn server",
+  }
+}
