@@ -14,6 +14,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/core/styles';
 import {yellow, orange, red } from '@material-ui/core/colors';
 
+import axios from '../api'
+import Yuri from '../myimages/yuri.jpg'
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const useStyles = makeStyles((theme) => ({
     paper: {
       height: '500px',
@@ -57,23 +65,46 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-  function generate(element) {
+function generate(element) {
     return [0, 1, 2].map((value) =>
-      React.cloneElement(element, {
+        React.cloneElement(element, {
         key: value,
-      }),
+        }),
     );
-  }
+}
 
-  const handleChange = (func) => (event) => {
+const handleChange = (func) => (event) => {
     func(event.target.value);
-  };
+};
 
 function TodoList() {
+    const [user, setUser] = useState('')
+    const [pwd, setPwd] = useState('')
+    const [isLogin, setLogin] = useState(false)
+    const [accMsg, setAccMsg] = useState()
+    const [showMsg, setShowMsg] = useState(false)
+
+
     const classes = useStyles();
     const [list, setList] = useState([]);
     const [task, setTask] = useState('');
     const [priority, setPriority] = useState(1)
+
+    const handleRegister= async ()=>{
+        const {
+            data: {message, success},
+          } = await axios.post('/api/register',{
+            user: user,
+            pwd, pwd
+        })
+        setLogin(success)
+        setShowMsg(true)
+        setAccMsg(message)
+    }
+    const handleLogin= async ()=>{
+        console.log('Hello')
+    }
+
     const handleAdd = () => {
         if (task && priority) {
             const item = {
@@ -167,6 +198,66 @@ function TodoList() {
                 </ListItem>
                 ))}
             </List>
+                    
+            {/* Register form */}
+            <Snackbar open={showMsg} autoHideDuration={3000} onClose={()=>setShowMsg(false)}>
+                {
+                    isLogin?
+                        (<Alert severity="success">
+                            {accMsg}
+                        </Alert>
+                        )
+                        :
+                        (<Alert severity="error">
+                            {accMsg}
+                        </Alert>
+                        )
+                }
+            </Snackbar>
+            {isLogin?
+                (<Avatar alt="Yuri" src={Yuri}/>)
+                :
+                null
+            }
+            <form className={classes.root} noValidate autoComplete="off">
+                <Grid container spacing={2} alignItems='flex-end'>
+                    <Grid item xs={12}>
+                        <TextField 
+                            id="standard-basic" 
+                            label="Username" 
+                            value={user} 
+                            onChange={handleChange(setUser)}
+                            fullWidth/>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField 
+                            id="standard-password-input" 
+                            label="Password" 
+                            type="password"
+                            value={pwd} 
+                            onChange={handleChange(setPwd)}
+                            fullWidth/>
+                    </Grid>
+                    <Grid item xs={8}>
+                        <Button variant="contained" 
+                                color='Primary'
+                                className={classes.button}
+                                onClick={handleLogin}
+                                fullWidth>
+                            Login
+                        </Button>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Button variant="contained" 
+                                color='secondary'
+                                className={classes.button}
+                                onClick={handleRegister}
+                                fullWidth>
+                            Register
+                        </Button>
+                    </Grid>
+                </Grid>  
+            </form>
         </Grid>
     );
 }

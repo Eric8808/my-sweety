@@ -5,6 +5,6 @@ import register from './register'
 const router = Router();
 
 router.use('/', scoreCardRouter);
-router.use('/', register)
+router.use('/register', register)
 
 export default router;
