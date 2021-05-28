@@ -1,12 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import './index.css';
 import App from './containers/App';
+import LoginPage from './containers/LoginPage/LoginPage.js'
 import reportWebVitals from './reportWebVitals';
+import { AppBar } from '@material-ui/core';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <Switch>
+        <Route exact path="/" component={LoginPage}/>
+        <Route exact path="/profile" component={App}/>
+      </Switch>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );

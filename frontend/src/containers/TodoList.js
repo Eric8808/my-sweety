@@ -78,13 +78,6 @@ const handleChange = (func) => (event) => {
 };
 
 function TodoList() {
-    const [user, setUser] = useState('')
-    const [pwd, setPwd] = useState('')
-    const [isLogin, setLogin] = useState(false)
-    const [accMsg, setAccMsg] = useState()
-    const [showMsg, setShowMsg] = useState(false)
-
-
     const classes = useStyles();
     const [list, setList] = useState([]);
     const [task, setTask] = useState('');
@@ -198,66 +191,7 @@ function TodoList() {
                 </ListItem>
                 ))}
             </List>
-                    
-            {/* Register form */}
-            <Snackbar open={showMsg} autoHideDuration={3000} onClose={()=>setShowMsg(false)}>
-                {
-                    isLogin?
-                        (<Alert severity="success">
-                            {accMsg}
-                        </Alert>
-                        )
-                        :
-                        (<Alert severity="error">
-                            {accMsg}
-                        </Alert>
-                        )
-                }
-            </Snackbar>
-            {isLogin?
-                (<Avatar alt="Yuri" src={Yuri}/>)
-                :
-                null
-            }
-            <form className={classes.root} noValidate autoComplete="off">
-                <Grid container spacing={2} alignItems='flex-end'>
-                    <Grid item xs={12}>
-                        <TextField 
-                            id="standard-basic" 
-                            label="Username" 
-                            value={user} 
-                            onChange={handleChange(setUser)}
-                            fullWidth/>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField 
-                            id="standard-password-input" 
-                            label="Password" 
-                            type="password"
-                            value={pwd} 
-                            onChange={handleChange(setPwd)}
-                            fullWidth/>
-                    </Grid>
-                    <Grid item xs={8}>
-                        <Button variant="contained" 
-                                color='Primary'
-                                className={classes.button}
-                                onClick={handleLogin}
-                                fullWidth>
-                            Login
-                        </Button>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <Button variant="contained" 
-                                color='secondary'
-                                className={classes.button}
-                                onClick={handleRegister}
-                                fullWidth>
-                            Register
-                        </Button>
-                    </Grid>
-                </Grid>  
-            </form>
+             
         </Grid>
     );
 }
