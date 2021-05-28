@@ -7,31 +7,40 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField'
 import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        '& .MuiGrid-item': {
-            // padding: 10
-            // margin: '0 2px 0 2px',
-        }
-        
-        // maxWidth: 200,
-    },
+    container: {
+        '& .MuiTableCell-root': {
+            padding: 0
+        },
+        maxHeight: '70vh',
+      },
     demo: {
         backgroundColor: theme.palette.background.paper,
     },
     title: {
-        margin: theme.spacing(4, 0, 2),
+        margin: theme.spacing(2),
+        // border: '1px solid red'
         // alignItems: 'center',
     },
+    cell:{
+        verticalAlign: 'top'
+    },
     list: {
-        
-        '& .MuiListItem-root': {
-            // borderCollapse: 'collapse',
-            // minWidth: 50,
+        '& .MuiListItem-root':{
             border: '1px solid black',
-            height: 100,
-        }
+            width: '100%',
+            paddingTop: '80%',
+            // height:'same-as-width',
+            
+        },
+        
     }
   }));
 
@@ -62,9 +71,18 @@ const handleChange = (func) => (event) => {
     func(event.target.value);
   };
 
+
 function Calender() {
     const classes = useStyles();
     const day = ['日', '一','二','三','四','五','六']
+    const [available, setAvb] = useState([3,3,3,3,3,3,3])
+
+    // const changeAvb = (event, i) => {
+    //     const newAvb = available;
+    //     newAvb[i] = parseInt(event.target.value) ;
+    //     console.log(newAvb)
+    //     setAvb(newAvb);
+    // }
     const [numMon, setNumMon] = useState(3)
     const [numTue, setNumTue] = useState(3)
     const [numWed, setNumWed] = useState(3)
@@ -72,181 +90,56 @@ function Calender() {
     const [numFri, setNumFri] = useState(3)
     const [numSat, setNumSat] = useState(3)
     const [numSun, setNumSun] = useState(3)
+    const numDay = [numMon, numTue, numWed, numThu, numFri, numSat, numSun]
+    const setNumDay = [setNumMon, setNumTue, setNumWed, setNumThu, setNumFri, setNumSat, setNumSun]
     return (
-        <Grid container xs={12} className={classes.root} justify='center'>
-            {day.map((value,i) => (
-                <Grid item xs={1}>
-                <Typography variant="h6" className={classes.title} align='center'>
-                    {value}
-                </Typography>
-                <TextField
-                    id="outlined-number"
-                    label="Number"
-                    type="number"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    value={numMon}
-                    onChange={handleChange(setNumMon)}
-                    variant="outlined"
-                    size='small'
-                />
-                <div className={classes.demo}>
-                    <List className={classes.list}>
-                        {generate(
-                            <ListItem>
-                                <ListItemText
-                                    // primary="Single-line item"
-                                />
-                            </ListItem>, i+1
-                        )}
-                    </List>
-                    
-                </div>
-            </Grid>
-            ))}
-            {/* <Grid item xs={1}>
-                <Typography variant="h6" className={classes.title} align='center'>
-                    Sunday
-                </Typography>
-                <TextField
-                    id="outlined-number"
-                    label="Number"
-                    type="number"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    value={numMon}
-                    onChange={handleChange(setNumMon)}
-                    variant="outlined"
-                    size='small'
-                />
-                <div className={classes.demo}>
-                    <List className={classes.list}>
-                        {generate(
-                            <ListItem>
-                                <ListItemText
-                                    // primary="Single-line item"
-                                />
-                            </ListItem>, numMon
-                        )}
-                    </List>
-                    
-                </div>
-            </Grid>
-            <Grid item xs={1}>
-                <Typography variant="h6" className={classes.title} align='center'>
-                    Sunday
-                </Typography>
-                <div className={classes.demo}>
-                    <List className={classes.list}>
-                        {generate(
-                            <ListItem>
-                                <ListItemText
-                                    primary="Single-line item"
-                                />
-                            </ListItem>,3
-                        )}
-                    </List>
-                </div>
-            </Grid>
-            <Grid item xs={1}>
-                <Typography variant="h6" className={classes.title} align='center'>
-                    Sunday
-                </Typography>
-                <div className={classes.demo}>
-                    <List className={classes.list}>
-                        {generate(
-                            <ListItem>
-                            <ListItemText
-                                primary="Single-line item"
-                            />
-                            </ListItem>,
-                        )}
-                    </List>
-                </div>
-            </Grid>
-            <Grid item xs={1}>
-                <Typography variant="h6" className={classes.title} align='center'>
-                    Sunday
-                </Typography>
-                <div className={classes.demo}>
-                    <List className={classes.list}>
-                        {generate(
-                            <ListItem>
-                            <ListItemText
-                                primary="Single-line item"
-                            />
-                            </ListItem>,
-                        )}
-                    </List>
-                </div>
-            </Grid>
-            <Grid item xs={1}>
-                <Typography variant="h6" className={classes.title} align='center'>
-                    Sunday
-                </Typography>
-                <div className={classes.demo}>
-                    <List className={classes.list}>
-                        {generate(
-                            <ListItem>
-                            <ListItemText
-                                primary="Single-line item"
-                            />
-                            </ListItem>,
-                        )}
-                    </List>
-                </div>
-            </Grid>
-            <Grid item xs={1}>
-                <Typography variant="h6" className={classes.title} align='center'>
-                    Sunday
-                </Typography>
-                <div className={classes.demo}>
-                    <List className={classes.list}>
-                        {generate(
-                            <ListItem>
-                            <ListItemText
-                                primary="Single-line item"
-                            />
-                            </ListItem>,
-                        )}
-                    </List>
-                </div>
-            </Grid>
-            <Grid item xs={1}>
-                <Typography variant="h6" className={classes.title} align='center'>
-                    Sunday
-                </Typography>
-                <div className={classes.demo}>
-                    <List className={classes.list}>
-                        {generate(
-                            <ListItem>
-                            <ListItemText
-                                primary="Single-line item"
-                            />
-                            </ListItem>,
-                        )}
-                    </List>
-                </div>
-            </Grid>
-            <Grid item xs={1}>
-                <Typography variant="h6" className={classes.title} align='center'>
-                    Sunday
-                </Typography>
-                <div className={classes.demo}>
-                    <List className={classes.list}>
-                        {generate(
-                            <ListItem>
-                            <ListItemText
-                                primary="Single-line item"
-                            />
-                            </ListItem>,
-                        )}
-                    </List>
-                </div>
-            </Grid> */}
-        </Grid>
+        <Paper className={classes.root}>
+            <TableContainer className={classes.container}>
+                <Table stickyHeader aria-label="sticky table">
+                    <TableHead>
+                        <TableRow>
+                            {day.map((value,i) => (
+                                <TableCell key={`col${value}`}>
+                                    <Typography variant="h5" className={classes.title} align='center'>
+                                        {value}
+                                    </Typography>
+                                    <TextField
+                                        id="outlined-number"
+                                        inputProps={{min: 1, style: { textAlign: 'center' }}}
+                                        label="Number"
+                                        type="number"
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                        value={numDay[i]}
+                                        onChange={handleChange(setNumDay[i])}
+                                        variant="outlined"
+                                        size='small'
+                                    />
+                                </TableCell>))}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow>
+                            {day.map((value,i) => (
+                                <TableCell className={classes.cell} key={`list${value}`}>
+                                    <div className={classes.demo}>
+                                        <List className={classes.list}>
+                                            {generate(
+                                                <ListItem>
+                                                    <ListItemText
+                                                        // primary="Single-line item"
+                                                    />
+                                                </ListItem>, numDay[i]
+                                            )}
+                                        </List>
+                                    </div>
+                                </TableCell>))}
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Paper> 
     );
 }
 

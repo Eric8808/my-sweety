@@ -37,6 +37,10 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
     padding: theme.spacing(2)
   },
+  grid: {
+    // maxHeight: '50vh',
+    // overflow: 'auto',
+  }
 
 }));
 
@@ -47,12 +51,12 @@ function App() {
     <div className={classes.root}>
       <Grid container spacing={5}>
         <Header/>
-        <Grid container item spacing={2}>
+        <Grid container item spacing={3}>
           <Grid item xs>
             {/* <Paper variant="outlined" elevation={3} className={classes.paper}/> */}
           </Grid>
           <TodoList/>
-          <Grid item xs={7}>
+          <Grid item xs={7} className={classes.grid}>
             <Calender/>
             {/* <Paper variant="outlined" elevation={3} className={classes.paper}/> */}
           </Grid>  

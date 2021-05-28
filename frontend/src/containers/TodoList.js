@@ -91,7 +91,7 @@ function TodoList() {
                 <Grid container spacing={3} alignItems='flex-end'>
                     <Grid item xs={12}>
                         <TextField 
-                            id="standard-basic" 
+                            id="standard-basic"
                             label="Task" 
                             value={task} 
                             onChange={handleChange(setTask)}
@@ -113,6 +113,7 @@ function TodoList() {
                     <Grid item xs={3}>
                         <TextField
                             id="outlined-number"
+                            inputProps={{style: { textAlign: 'center' }}} 
                             label="NeedTime"
                             type="number"
                             InputLabelProps={{
@@ -124,6 +125,7 @@ function TodoList() {
                     <Grid item xs={3}>
                         <TextField
                             id="filled-number"
+                            inputProps={{style: { textAlign: 'center' }}}
                             label="Priority"
                             value={priority}
                             onChange={handleChange(setPriority)}
