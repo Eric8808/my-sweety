@@ -83,21 +83,6 @@ function TodoList() {
     const [task, setTask] = useState('');
     const [priority, setPriority] = useState(1)
 
-    const handleRegister= async ()=>{
-        const {
-            data: {message, success},
-          } = await axios.post('/api/register',{
-            user: user,
-            pwd, pwd
-        })
-        setLogin(success)
-        setShowMsg(true)
-        setAccMsg(message)
-    }
-    const handleLogin= async ()=>{
-        console.log('Hello')
-    }
-
     const handleAdd = () => {
         if (task && priority) {
             const item = {
@@ -115,7 +100,7 @@ function TodoList() {
                 <Grid container spacing={3} alignItems='flex-end'>
                     <Grid item xs={12}>
                         <TextField 
-                            id="standard-basic" 
+                            id="standard-basic"
                             label="Task" 
                             value={task} 
                             onChange={handleChange(setTask)}
@@ -137,6 +122,7 @@ function TodoList() {
                     <Grid item xs={3}>
                         <TextField
                             id="outlined-number"
+                            inputProps={{style: { textAlign: 'center' }}} 
                             label="NeedTime"
                             type="number"
                             InputLabelProps={{
@@ -148,6 +134,7 @@ function TodoList() {
                     <Grid item xs={3}>
                         <TextField
                             id="filled-number"
+                            inputProps={{style: { textAlign: 'center' }}}
                             label="Priority"
                             value={priority}
                             onChange={handleChange(setPriority)}
