@@ -11,6 +11,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import {yellow, orange, red } from '@material-ui/core/colors';
 
@@ -82,6 +83,10 @@ function TodoList() {
     const [list, setList] = useState([]);
     const [task, setTask] = useState('');
     const [priority, setPriority] = useState(1)
+
+    const handleDelete = (i) => {
+        setList(list.filter((_,index) => index!==i))
+    }
 
     const handleAdd = () => {
         if (task && priority) {
@@ -160,7 +165,9 @@ function TodoList() {
 
             
             <List className={classes.list}>
-                {list.map((value) => (
+                {list.map((value,i) => (
+                    <>
+                    {(i===0)? <></> : <Divider />}
                     <ListItem className={classes[`prior${value.priority}`]}>
                         <ListItemAvatar>
                             <Avatar>
@@ -171,11 +178,12 @@ function TodoList() {
                             primary={value.name}
                         />
                         <ListItemSecondaryAction>
-                            <IconButton edge="end" aria-label="delete">
-                            <DeleteIcon />
+                            <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(i)}>
+                                <DeleteIcon />
                             </IconButton>
                         </ListItemSecondaryAction>
-                </ListItem>
+                    </ListItem>
+                    </>
                 ))}
             </List>
              

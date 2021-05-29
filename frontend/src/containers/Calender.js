@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Grid from '@material-ui/core/Grid';
+import { shadows } from '@material-ui/system';
+import BOx from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField'
 import Paper from '@material-ui/core/Paper';
@@ -13,28 +14,41 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
     container: {
         '& .MuiTableCell-root': {
-            padding: 0
+            padding: '5px'
         },
+        height: '70vh',
         maxHeight: '70vh',
+        // margin: '30px'
       },
     demo: {
         backgroundColor: theme.palette.background.paper,
     },
     title: {
         margin: theme.spacing(2),
+        color: 'white',
+        
         // border: '1px solid red'
         // alignItems: 'center',
     },
+    head: {
+        '& .MuiTableCell-root': {
+           backgroundColor: '#2196f3',
+        },   
+    },
+    textCell:{
+        borderBottom: '2px solid black',
+    },
     cell:{
-        verticalAlign: 'top'
+        verticalAlign: 'top',
     },
     list: {
         '& .MuiListItem-root':{
-            border: '1px solid black',
+            border: '1px solid gray',
             width: '100%',
             paddingTop: '80%',
             // height:'same-as-width',
@@ -75,7 +89,6 @@ const handleChange = (func) => (event) => {
 function Calender() {
     const classes = useStyles();
     const day = ['日', '一','二','三','四','五','六']
-    const [available, setAvb] = useState([3,3,3,3,3,3,3])
 
     // const changeAvb = (event, i) => {
     //     const newAvb = available;
@@ -83,63 +96,68 @@ function Calender() {
     //     console.log(newAvb)
     //     setAvb(newAvb);
     // }
-    const [numMon, setNumMon] = useState(3)
-    const [numTue, setNumTue] = useState(3)
-    const [numWed, setNumWed] = useState(3)
-    const [numThu, setNumThu] = useState(3)
-    const [numFri, setNumFri] = useState(3)
-    const [numSat, setNumSat] = useState(3)
-    const [numSun, setNumSun] = useState(3)
+    const [numMon, setNumMon] = useState(2)
+    const [numTue, setNumTue] = useState(2)
+    const [numWed, setNumWed] = useState(2)
+    const [numThu, setNumThu] = useState(2)
+    const [numFri, setNumFri] = useState(2)
+    const [numSat, setNumSat] = useState(2)
+    const [numSun, setNumSun] = useState(2)
     const numDay = [numMon, numTue, numWed, numThu, numFri, numSat, numSun]
     const setNumDay = [setNumMon, setNumTue, setNumWed, setNumThu, setNumFri, setNumSat, setNumSun]
     return (
-        <Paper className={classes.root}>
-            <TableContainer className={classes.container}>
-                <Table stickyHeader aria-label="sticky table">
-                    <TableHead>
-                        <TableRow>
-                            {day.map((value,i) => (
-                                <TableCell key={`col${value}`}>
-                                    <Typography variant="h5" className={classes.title} align='center'>
-                                        {value}
-                                    </Typography>
-                                    <TextField
-                                        id="outlined-number"
-                                        inputProps={{min: 1, style: { textAlign: 'center' }}}
-                                        label="Number"
-                                        type="number"
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                        value={numDay[i]}
-                                        onChange={handleChange(setNumDay[i])}
-                                        variant="outlined"
-                                        size='small'
-                                    />
-                                </TableCell>))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow>
-                            {day.map((value,i) => (
-                                <TableCell className={classes.cell} key={`list${value}`}>
-                                    <div className={classes.demo}>
-                                        <List className={classes.list}>
-                                            {generate(
-                                                <ListItem>
-                                                    <ListItemText
-                                                        // primary="Single-line item"
-                                                    />
-                                                </ListItem>, numDay[i]
-                                            )}
-                                        </List>
-                                    </div>
-                                </TableCell>))}
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </Paper> 
+        <TableContainer className={classes.container}>
+            <Table stickyHeader aria-label="sticky table">
+                <TableHead className={classes.head}>
+                    <TableRow>
+                        {day.map((value,i) => (
+                            <TableCell key={`col${value}`}>
+                                <Typography variant="h4" className={classes.title} align='center'>
+                                    {value}
+                                </Typography>
+                            </TableCell>))}
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    <TableRow>
+                        {numDay.map((value,i) => (
+                            <TableCell key={`day-input-${i}`} className={classes.textCell}>
+                                <TextField
+                                    id="outlined-number"
+                                    inputProps={{min: 1, style: { textAlign: 'center' }}}
+                                    label="Number"
+                                    type="number"
+                                    margin='dense'
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    value={value}
+                                    onChange={handleChange(setNumDay[i])}
+                                    variant="outlined"
+                                    size='small'
+                                />
+                            </TableCell>
+                        ))}
+                    </TableRow>
+                    <TableRow>
+                        {numDay.map((value,i) => (
+                            <TableCell className={classes.cell} key={`day${i}`}>
+                                <div className={classes.demo}>
+                                    <List className={classes.list}>
+                                        {generate(
+                                            <ListItem>
+                                                <ListItemText
+                                                    // primary="Single-line item"
+                                                />
+                                            </ListItem>, value
+                                        )}
+                                    </List>
+                                </div>
+                            </TableCell>))}
+                    </TableRow>
+                </TableBody>
+            </Table>
+        </TableContainer>
     );
 }
 

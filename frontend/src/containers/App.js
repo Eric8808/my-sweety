@@ -9,17 +9,6 @@ import Paper from '@material-ui/core/Paper'
 
 
 
-// componentWillMount() {
-//   this.tick.animate = false
-// }
-
-// componentDidMount() {
-// this.tick = Tick(()=>{
-//   var {rotation} = this.state
-//   rotation.y += 0.005
-//   this.setState({rotation})
-
-// }
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,13 +36,12 @@ const useStyles = makeStyles((theme) => ({
 function App(props) {
   const classes = useStyles();
   return (
-    // <Sweety/>
     <div className={classes.root}>
-      <Grid container spacing={5}>
+      <Grid container>
         <Header username={props.username}/>
-        <Grid container item spacing={3}>
-          <Grid item xs>
-            {/* <Paper variant="outlined" elevation={3} className={classes.paper}/> */}
+        <Grid container item spacing={0} justify='space-around'>
+          <Grid item xs={1}>
+            {/* <Sweety/> */}
           </Grid>
           <TodoList/>
           <Grid item xs={7} className={classes.grid}>

@@ -1,12 +1,10 @@
 import {Tick,OBJModel} from 'react-3d-viewer'
-
+import sofa3D from './Open3DModel.com_07.obj'
 
 function Sweety() {
 
     return(
-        <div>
-            <OBJModel src="./Open3DModel.com_07.obj" texPath=""/>
-        </div>
+        <OBJModel src={sofa3D} texPath="" width={200} height={500}/>
   )
 }
 
