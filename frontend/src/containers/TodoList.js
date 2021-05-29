@@ -14,6 +14,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import {yellow, orange, red } from '@material-ui/core/colors';
+import Fade from "@material-ui/core/Fade";
+import Grow from '@material-ui/core/Grow'
 
 import axios from '../api'
 import Yuri from '../myimages/yuri.jpg'
@@ -47,22 +49,16 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'auto',
     },
     prior1: {
-        "& .MuiAvatar-root": {
             color: theme.palette.getContrastText(red[500]),
             backgroundColor: red[500],
-        }
     },
     prior2: {
-        "& .MuiAvatar-root": {
             color: theme.palette.getContrastText(orange[500]),
             backgroundColor: orange[500],
-        }
     },
     prior3: {
-        "& .MuiAvatar-root": {
             color: theme.palette.getContrastText(yellow[500]),
             backgroundColor: yellow[500],
-        }
     },
   }));
 
@@ -83,6 +79,7 @@ function TodoList() {
     const [list, setList] = useState([]);
     const [task, setTask] = useState('');
     const [priority, setPriority] = useState(1)
+    const [fadeTimeout, setFadeTimeout] = React.useState(0);
 
     const handleDelete = (i) => {
         setList(list.filter((_,index) => index!==i))
@@ -99,6 +96,11 @@ function TodoList() {
             setPriority(1)
         }
     }
+
+    React.useEffect(() => {
+        setFadeTimeout(1500);
+      }, []);
+
     return (
         <Grid item xs={3}>
             <form className={classes.root} noValidate autoComplete="off">
@@ -166,24 +168,26 @@ function TodoList() {
             
             <List className={classes.list}>
                 {list.map((value,i) => (
-                    <>
-                    {(i===0)? <></> : <Divider />}
-                    <ListItem className={classes[`prior${value.priority}`]}>
-                        <ListItemAvatar>
-                            <Avatar>
-                                {value.priority}
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText
-                            primary={value.name}
-                        />
-                        <ListItemSecondaryAction>
-                            <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(i)}>
-                                <DeleteIcon />
-                            </IconButton>
-                        </ListItemSecondaryAction>
-                    </ListItem>
-                    </>
+                    <Grow in timeout={500}>
+                        <div>
+                        {(i===0)? <></> : <Divider />}
+                        <ListItem>
+                            <ListItemAvatar>
+                                <Avatar className={classes[`prior${value.priority}`]}>
+                                    {value.priority}
+                                </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText
+                                primary={value.name}
+                            />
+                            <ListItemSecondaryAction>
+                                <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(i)}>
+                                    <DeleteIcon />
+                                </IconButton>
+                            </ListItemSecondaryAction>
+                        </ListItem>
+                        </div>
+                    </Grow>
                 ))}
             </List>
              
