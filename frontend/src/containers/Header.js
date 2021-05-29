@@ -8,12 +8,12 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function Header() {
+function Header(props) {
     const classes = useStyles();
     return (
         <Grid xs={12} container justify='center'>
             <Typography variant='h1' className={classes.title}>
-                My Sweety
+                {`My Sweety ${props.username}!`}
             </Typography>
         </Grid>
     )

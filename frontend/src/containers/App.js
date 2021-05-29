@@ -44,13 +44,13 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-function App() {
+function App(props) {
   const classes = useStyles();
   return (
     // <Sweety/>
     <div className={classes.root}>
       <Grid container spacing={5}>
-        <Header/>
+        <Header username={props.username}/>
         <Grid container item spacing={3}>
           <Grid item xs>
             {/* <Paper variant="outlined" elevation={3} className={classes.paper}/> */}

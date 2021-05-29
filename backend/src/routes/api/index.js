@@ -1,10 +1,8 @@
 import { Router } from 'express';
-import scoreCardRouter from './scoreCard';
-import register from './register'
+import account from './account'
 
 const router = Router();
 
-router.use('/', scoreCardRouter);
-router.use('/register', register)
+router.use('/', account)
 
 export default router;

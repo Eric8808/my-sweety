@@ -5,36 +5,135 @@ import axios from '../../api'
 import Yuri from '../../myimages/yuri.jpg'
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import './login.css'
-// import './loginBG.module.css'
-import {useHistory} from "react-router-dom"
+import { makeStyles } from '@material-ui/core/styles';
 
+import './login.css'
+import {useHistory} from "react-router-dom"
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+const useStyles = makeStyles((theme) => ({
+    root: {
+      width: '100%',
+      '& > * + *': {
+        marginTop: theme.spacing(2),
+      },
+    },
+  }));
 const handleChange = (func) => (event) => {
     func(event.target.value);
 };
 
 const LoginPage =()=>{
     let history = useHistory()
-    const [user, setUser] = useState('')
-    const [pwd, setPwd] = useState('')
+    const classes = useStyles();
+    const [signInInput, setSignInInput] = useState({username:'', password:''})
+    const [signUpInput, setSignUpInput] = useState({username:'', password:'', confirmPwd:'', compare:true})
     const [isLogin, setLogin] = useState(false)
     const [accMsg, setAccMsg] = useState()
     const [showMsg, setShowMsg] = useState(false)
+    const [messageState, setMessageState] = useState('')
     const [animationClass, setAnimationClass] = useState('container')
 
-    const handleRegister= async ()=>{
-        const {
-            data: {message, success},
-          } = await axios.post('/api/register',{
-            user: user,
-            pwd, pwd
-        })
-        setLogin(success)
-        setShowMsg(true)
-        setAccMsg(message)
+    const handleSignUpInput=(e)=>{
+        if(e.target.id==='Username'){
+            setSignUpInput((prev)=>({...prev, username:e.target.value }))
+        }
+        else if(e.target.id==="Password"){
+            setSignUpInput((prev)=>({
+                ...prev, 
+                password:e.target.value, 
+                compare:(e.target.value===prev.confirmPwd)}))
+        }
+        else if (e.target.id==='Confirm Password'){
+            setSignUpInput(prev=>({
+                ...prev, 
+                confirmPwd:e.target.value,
+                compare:(e.target.value===prev.password)
+            }))
+        }
     }
-    const handleLogin= async ()=>{
-        console.log('Hello')
+    const handleSignInInput=(e)=>{
+        if(e.target.id==='Username'){
+            setSignInInput((prev)=>({...prev, username:e.target.value }))
+        }
+        else if(e.target.id==="Password"){
+            setSignInInput((prev)=>({...prev, password:e.target.value}))
+        }
+    }
+    const handleRegister= async (e)=>{
+        // handle some error at frontend
+        e.preventDefault()
+        if(signUpInput.compare===false){
+            setShowMsg(true)
+            setMessageState('error')
+            setAccMsg('Failed! Confirm your password again!')
+            return
+        }
+        else if(!signUpInput.username || /^\s*$/.test(signUpInput.username) || !signUpInput.password || /^\s*$/.test(signUpInput.password)){
+            //If anybody is blank
+            setShowMsg(true)
+            setMessageState('error')
+            setAccMsg('Failed! Check your info again!')
+            return
+        }
+
+        // if info is complete
+        try{
+            const {
+                data: {message, success},
+              } = await axios.post('/api/register',{
+                username: signUpInput.username,
+                password: signUpInput.password
+            })
+            if(success){
+                setMessageState('success')
+            }
+            else{
+                setMessageState('error')
+            }
+            setShowMsg(true)
+            setAccMsg(message)
+        }catch(e){
+            // Maybe the server has some problem.
+            setMessageState('warning')
+            setShowMsg(true)
+            setAccMsg("Maybe the server has some problem...")
+        }
+    }
+    const handleLogin= async (e)=>{
+        e.preventDefault()
+        if(!signInInput.username || /^\s*$/.test(signInInput.username) || !signInInput.password || /^\s*$/.test(signInInput.password)){
+            //If anybody is blank
+            setMessageState('error')
+            setShowMsg(true)
+            setAccMsg('Failed! Check your info again!')
+            return
+        }
+        try{
+            const {
+                data: {message, success, token},
+              } = await axios.post('/api/login',{
+                username: signInInput.username,
+                password: signInInput.password
+            })
+            if(success){
+                setMessageState('success')
+                localStorage.setItem('token', token)
+                history.push("./profile")
+            }
+            else{
+                setMessageState('error')
+            }
+            setShowMsg(true)
+            setAccMsg(message)
+        }catch(e){
+            // Maybe the server has some problem...
+            setMessageState('warning')
+            setShowMsg(true)
+            setAccMsg("Maybe the server has some problem...")
+        }
+        
     }
     const handleClickAnimation=(e)=>{
         console.log(e.target.id)
@@ -46,27 +145,34 @@ const LoginPage =()=>{
         }
     }
     return(
+        <>
         <div className="Login-page-only">
         <div className={animationClass} id="container">
             <div className="form-container sign-up-container">
                 <form action="#">
                     <h1>Create Account</h1>
-                    <input type="text" placeholder="Userame" onChange={handleChange(setUser)}/>
-                    <input type="password" placeholder="Password" onChange={handleChange(setPwd)}/>
+                    <input type="text" placeholder="Userame"  id="Username" value={signUpInput.username} onChange={(e)=>handleSignUpInput(e)}/>
+                    <input type="password" placeholder="Password" id="Password" value={signUpInput.password} onChange={(e)=>handleSignUpInput(e)}/>
+                    <input type="password" placeholder="Confirm Password" id="Confirm Password" value={signUpInput.confirmPwd} onChange={(e)=>handleSignUpInput(e)}/>
+                    {signUpInput.compare?null:<div style={{color:"red"}}>Please confirm your password</div>}
                     <button onClick={handleRegister}>Sign Up</button>
                     <br></br>
-                    <button onClick={()=>{history.push("./profile")}} style={{backgroundColor:'green'}}>測試用，點了直接進app</button>
+                    <button onClick={()=>{history.push("./guest")}} style={{backgroundColor:'green'}}>Continue as a guest</button>
                 </form>
             </div>
             <div className="form-container sign-in-container">
                 <form action="#">
                     <h1>Sign in</h1>
-                    <input type="text" placeholder="Username" onChange={handleChange(setUser)}/>
-                    <input type="password" placeholder="Password" onChange={handleChange(setPwd)} />
-                    <a href="#">Forgot your password?</a>
-                    <button>Sign In</button>
+                    <input type="text" placeholder="Username" id="Username" value={signInInput.username} onChange={(e)=>handleSignInInput(e)}/>
+                    <input type="password" placeholder="Password" id="Password" value={signInInput.password} onChange={(e)=>handleSignInInput(e)} />
+                    <a style={{cursor:'pointer'}} onClick={()=>{
+                        setShowMsg(true)
+                        setMessageState('warning')
+                        setAccMsg('Take a rest. One day you will recall it.')
+                    }}>Forgot your password?</a>
+                    <button onClick={handleLogin}>Sign In</button>
                     <br></br>
-                    <button onClick={()=>{history.push("./profile")}} style={{backgroundColor:'green'}}>測試用，點了直接進app</button>
+                    <button onClick={()=>{history.push("./guest")}} style={{backgroundColor:'green'}}>Continue as a guest</button>
                 </form>
             </div>
             <div className="overlay-container">
@@ -88,6 +194,14 @@ const LoginPage =()=>{
             
         </div>
         </div>
+        
+        <Snackbar open={showMsg} autoHideDuration={6000} onClose={()=>setShowMsg(false)}>
+            <Alert onClose={()=>setShowMsg(false)} severity={messageState}>
+                {/* successState: error, warning, info, success */}
+                {accMsg}
+            </Alert>
+        </Snackbar>
+        </>
     )
 
 }
