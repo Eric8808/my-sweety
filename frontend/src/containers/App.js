@@ -40,10 +40,10 @@ function App(props) {
       <Grid container>
         <Header username={props.username}/>
         <Grid container item spacing={0} justify='space-around'>
-          <Grid item xs={1}>
-            {/* <Sweety/> */}
+          <Grid item xs={3}>
+            <Sweety/>
           </Grid>
-          <TodoList/>
+          {/* <TodoList/> */}
           <Grid item xs={7} className={classes.grid}>
             <Calender/>
             {/* <Paper variant="outlined" elevation={3} className={classes.paper}/> */}

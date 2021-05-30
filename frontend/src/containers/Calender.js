@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
         maxHeight: '70vh',
         // margin: '30px'
       },
+    table: {
+        // height: '70vh'
+    },
     demo: {
         backgroundColor: theme.palette.background.paper,
     },
@@ -42,7 +45,9 @@ const useStyles = makeStyles((theme) => ({
     },
     textCell:{
         borderBottom: '2px solid black',
+        maxHeight: '10px'
     },
+
     cell:{
         verticalAlign: 'top',
     },
@@ -107,7 +112,7 @@ function Calender() {
     const setNumDay = [setNumMon, setNumTue, setNumWed, setNumThu, setNumFri, setNumSat, setNumSun]
     return (
         <TableContainer className={classes.container}>
-            <Table stickyHeader aria-label="sticky table">
+            <Table  className={classes.table} stickyHeader aria-label="sticky table">
                 <TableHead className={classes.head}>
                     <TableRow>
                         {day.map((value,i) => (
