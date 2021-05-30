@@ -1,12 +1,13 @@
 import React, { Fragment } from 'react';
-import { useState } from 'react';
+import { useState, useRef} from 'react';
 
 import axios from '../../api'
 import Yuri from '../../myimages/yuri.jpg'
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
-
+import  Zoom  from '@material-ui/core/Zoom';
+import Fade from "@material-ui/core/Fade";
 import './login.css'
 import {useHistory} from "react-router-dom"
 function Alert(props) {
@@ -27,6 +28,8 @@ const handleChange = (func) => (event) => {
 const LoginPage =()=>{
     let history = useHistory()
     const classes = useStyles();
+    const enterPage = useRef(null);
+    const [enter, setEnter]=useState(false)
     const [signInInput, setSignInInput] = useState({username:'', password:''})
     const [signUpInput, setSignUpInput] = useState({username:'', password:'', confirmPwd:'', compare:true})
     const [isLogin, setLogin] = useState(false)
@@ -35,6 +38,11 @@ const LoginPage =()=>{
     const [messageState, setMessageState] = useState('')
     const [animationClass, setAnimationClass] = useState('container')
 
+    const handleEnter=(e)=>{
+        setEnter(true)
+        enterPage.current.style.display = 'block'
+        e.target.style.display='none'
+    }
     const handleSignUpInput=(e)=>{
         if(e.target.id==='Username'){
             setSignUpInput((prev)=>({...prev, username:e.target.value }))
@@ -147,7 +155,9 @@ const LoginPage =()=>{
     return(
         <>
         <div className="Login-page-only">
-        <div className={animationClass} id="container">
+        <button className="Enter-button" onClick={handleEnter}>Call My Sweety!</button>
+        <Fade in={enter} timeout={1000}>
+        <div className={animationClass} ref={enterPage} id="container">
             <div className="form-container sign-up-container">
                 <form action="#">
                     <h1>Create Account</h1>
@@ -193,8 +203,9 @@ const LoginPage =()=>{
             </div>
             
         </div>
-        </div>
         
+        </Fade>
+        </div>
         <Snackbar open={showMsg} autoHideDuration={6000} onClose={()=>setShowMsg(false)}>
             <Alert onClose={()=>setShowMsg(false)} severity={messageState}>
                 {/* successState: error, warning, info, success */}

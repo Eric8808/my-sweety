@@ -24,6 +24,49 @@ body {
 	height: 100vh;
 	margin: -20px 0 50px;
 } */
+
+button.Enter-button {
+	background-color: #1c89d6;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	border: none;
+	color: #FFFFFF;
+	cursor: pointer;
+	display: inline-block;
+	font-family: Arial;
+	font-size: 20px;
+	padding: 5px 10px;
+	text-align: center;
+	text-decoration: none;
+	-webkit-animation: glowing 1500ms infinite;
+	-moz-animation: glowing 1500ms infinite;
+	-o-animation: glowing 1500ms infinite;
+	animation: glowing 1500ms infinite;
+}
+@-webkit-keyframes glowing {
+  0% { background-color: #0038b2; -webkit-box-shadow: 0 0 3px #004db2; }
+  50% { background-color: #0059ff; -webkit-box-shadow: 0 0 40px #0077ff; }
+  100% { background-color: #0047b2; -webkit-box-shadow: 0 0 3px #0062b2; }
+}
+
+@-moz-keyframes glowing {
+  0% { background-color: #0047b2; -moz-box-shadow: 0 0 3px #0047b2; }
+  50% { background-color: #0084ff; -moz-box-shadow: 0 0 40px #0084ff; }
+  100% { background-color: #0038b2; -moz-box-shadow: 0 0 3px #0038b2; }
+}
+
+@-o-keyframes glowing {
+  0% { background-color: #0053b2; box-shadow: 0 0 3px #0053b2; }
+  50% { background-color: #008cff; box-shadow: 0 0 40px #008cff; }
+  100% { background-color: #005cb2; box-shadow: 0 0 3px #005cb2; }
+}
+
+@keyframes glowing {
+  0% { background-color: #002fb2; box-shadow: 0 0 3px #002fb2; }
+  50% { background-color: #0066ff; box-shadow: 0 0 40px #0066ff; }
+  100% { background-color: #004db2; box-shadow: 0 0 3px #004db2; }
+}
+
 * {
 	box-sizing: border-box;
 }
@@ -126,6 +169,7 @@ div.Login-page-only{
 }
 
 .Login-page-only .container {
+	display: none;
 	background-color: #fff;
 	border-radius: 10px;
   	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
