@@ -10,11 +10,11 @@ const Profile =()=>{
         let token = localStorage.getItem('token')
         if(token){
             setIsAuthenticated(true)
+            let tokenDecode = jwtDecode(token)
+            setUserName(tokenDecode.username)
         } else {
             setIsAuthenticated(false)
         }
-        let tokenDecode = jwtDecode(token)
-        setUserName(tokenDecode.username)
     }, [])
 
     if(isAuthenticated === null){
