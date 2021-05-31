@@ -1,5 +1,5 @@
 import {Tick,OBJModel} from 'react-3d-viewer'
-import sofa3D from './Open3DModel.com_07.obj'
+import sofa3D from '../Open3DModel.com_07.obj'
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -18,7 +18,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
-import TaskDialog from '../Components/TaskDialog'
+import TaskDialog from '../../Components/TaskDialog'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -123,9 +123,10 @@ function Sweety() {
           </Button> */}
         </DialogActions>
       </Dialog>
+      {/* <OBJModel src={sofa3D} texPath="" width={200} height={500}/> */}
     </div>
     
-        // <OBJModel src={sofa3D} texPath="" width={200} height={500}/>
+        
   )
 }
 
