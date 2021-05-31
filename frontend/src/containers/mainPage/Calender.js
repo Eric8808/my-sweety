@@ -7,13 +7,20 @@ import CardContent from '@material-ui/core/CardContent';
 import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles({
+    root: {
+        display: 'flex',
+      },
     drawer: {
       '& .MuiDrawer-paper':{
         height: 200
     },
     card: {
         minWidth: 275,
-        height: '10vh'
+        display: 'block',
+        width: '30vw',
+        transitionDuration: '0.3s',
+        height: 'auto',
+        background:"blue"
     },
     }
   });
@@ -155,6 +162,7 @@ function MyResponsiveBar() {
     
     return (
         <>
+        <Card className={classes.card}style={{width:"100%", height:"100%"}}>
         <ResponsiveBar
             data={data}
             keys={[ 'hot dog', 'burger', 'sandwich', 'kebab', 'fries', 'donut' ]}
@@ -248,7 +256,7 @@ function MyResponsiveBar() {
             animate={true}
             motionStiffness={90}
             motionDamping={15}
-            reverse
+            // reverse
             theme={{
                 // fontSize: 20,
                 axis: {
@@ -260,7 +268,7 @@ function MyResponsiveBar() {
                 
             }}}
             onClick={handleClick}
-        />
+        /></Card>
         <Drawer className={classes.drawer} 
                 ModalProps={{BackdropProps:{invisible:true}}} 
                 anchor={'right'} 

@@ -15,8 +15,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     // bottom: '10%',
     // border:'1px solid black',
-    height: '90vh',
-    // backgroundColor: 'black',
+    height: '100vh',
+    overflow:"auto",
+    // background: '#f5f5f5',
+    background:"#e1f5fe"
   },
   paper: {
     height: '500px',
@@ -27,7 +29,13 @@ const useStyles = makeStyles((theme) => ({
   },
   calenderContainer: {
     // border: '1px solid black',
-    height: '70vh'
+    height: '70vh',
+    // maxHeight: '50vh',
+    // overflow: 'auto',
+  },
+  calenderContainer1: {
+    // border: '1px solid black',
+    height: '35vh',
     // maxHeight: '50vh',
     // overflow: 'auto',
   }
@@ -40,15 +48,20 @@ function App(props) {
     <div className={classes.root}>
       <Grid container>
         <Header username={props.username}/>
-        <Grid container item spacing={0} justify='space-around'>
-          <Grid item xs={3}>
+        <Grid container item spacing={2} justify='space-around'>
+          <Grid item xs={2}>
             <SpeedDial/>
           </Grid>
           {/* <TodoList/> */}
-          <Grid item xs={7} className={classes.calenderContainer}>
+          <Grid item xs={6} className={classes.calenderContainer}>
             <Calender/>
-            {/* <Paper variant="outlined" elevation={3} className={classes.paper}/> */}
-          </Grid>  
+          </Grid>
+          <Grid item xs={3} className={classes.calenderContainer1}>
+            <Calender/>
+            <br></br>
+            <Calender/>
+          </Grid>
+                
         </Grid>
       </Grid>
     </div>
