@@ -10,6 +10,8 @@ import  Zoom  from '@material-ui/core/Zoom';
 import Fade from "@material-ui/core/Fade";
 import './login.css'
 import {useHistory} from "react-router-dom"
+import { FcCellPhone, FcPhone, FcCallback } from "react-icons/fc";
+import { FiPhoneCall } from "react-icons/fi";
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -155,7 +157,14 @@ const LoginPage =()=>{
     return(
         <>
         <div className="Login-page-only">
-        <button className="Enter-button" onClick={handleEnter}>Call My Sweety!</button>
+        {!enter?(
+            <FcCallback size={100} />
+        ):(
+            <Fade in={enter} timeout={1000}>
+                <FiPhoneCall size={50} />
+            </Fade>
+        )}
+        <h3 className="Enter-button" onClick={handleEnter}>Call My Sweety!</h3>
         <Fade in={enter} timeout={1000}>
         <div className={animationClass} ref={enterPage} id="container">
             <div className="form-container sign-up-container">
