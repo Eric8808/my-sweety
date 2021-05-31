@@ -14,16 +14,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import {yellow, orange, red } from '@material-ui/core/colors';
-import Fade from "@material-ui/core/Fade";
 import Grow from '@material-ui/core/Grow'
 
-import axios from '../api'
-import Yuri from '../myimages/yuri.jpg'
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
-function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -62,13 +54,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-function generate(element) {
-    return [0, 1, 2].map((value) =>
-        React.cloneElement(element, {
-        key: value,
-        }),
-    );
-}
+
 
 const handleChange = (func) => (event) => {
     func(event.target.value);
@@ -79,7 +65,6 @@ function TodoList() {
     const [list, setList] = useState([]);
     const [task, setTask] = useState('');
     const [priority, setPriority] = useState(1)
-    const [fadeTimeout, setFadeTimeout] = React.useState(0);
 
     const handleDelete = (i) => {
         setList(list.filter((_,index) => index!==i))
