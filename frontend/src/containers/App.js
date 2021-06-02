@@ -5,7 +5,8 @@ import Calender from './mainPage/Calender'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
-
+import Card from '@material-ui/core/Card';
+import Add from '../containers/mainPage/Add'
 
 
 
@@ -29,13 +30,14 @@ const useStyles = makeStyles((theme) => ({
   },
   calenderContainer: {
     // border: '1px solid black',
-    height: '70vh',
+    height: '65vh',
     // maxHeight: '50vh',
     // overflow: 'auto',
   },
   calenderContainer1: {
     // border: '1px solid black',
     height: '35vh',
+    // marginLeft: '5px',
     // maxHeight: '50vh',
     // overflow: 'auto',
   }
@@ -48,13 +50,24 @@ function App(props) {
     <div className={classes.root}>
       <Grid container>
         <Header username={props.username}/>
-        <Grid container item spacing={2} justify='space-around'>
-          <Grid item xs={2}>
-            <SpeedDial/>
+        <Grid container item spacing={0} justify='space-evenly'>
+          <Grid item xs={3}>
+            <Card style={{height:'40vh', marginBottom:'10px'}}>
+            </Card>
+            <Card style={{height:'40vh'}}>
+              <SpeedDial/>
+            </Card>
+            
           </Grid>
-          {/* <TodoList/> */}
-          <Grid item xs={6} className={classes.calenderContainer}>
-            <Calender/>
+          <Grid container item  xs={5} spacing={2}>
+            <Grid item xs={12}>
+              <Card style={{height:'20vh'}}>
+                <Add/>
+              </Card>
+            </Grid>
+            <Grid item xs={12} className={classes.calenderContainer}>
+              <Calender/>
+            </Grid>
           </Grid>
           <Grid item xs={3} className={classes.calenderContainer1}>
             <Calender/>

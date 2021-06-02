@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     card: {
         minWidth: 275,
         display: 'block',
-        width: '30vw',
+        // width: '30vw',
         transitionDuration: '0.3s',
         height: 'auto',
         background:"blue"
@@ -262,7 +262,7 @@ function MyResponsiveBar() {
                 axis: {
                     ticks: {
                         text: {
-                            // fontSize: 20,
+                            fontSize: 20,
                         },      
                 },
                 

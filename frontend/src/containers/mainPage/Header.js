@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         margin: '0px',
-        marginBottom: '40px',
+        marginBottom: '20px',
         width:"100%",
     },
     bar:{

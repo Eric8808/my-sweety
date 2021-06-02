@@ -174,8 +174,7 @@ function TodoList() {
                         </div>
                     </Grow>
                 ))}
-            </List>
-             
+            </List> 
         </Grid>
     );
 }
