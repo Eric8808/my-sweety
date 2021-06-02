@@ -8,25 +8,17 @@ import Card from '@material-ui/core/Card';
 import Add from '../containers/mainPage/Add'
 import TodoList from '../containers/mainPage/TodoList'
 import useTodoList from '../hooks/useTodoList'
-
+import Pie from './mainPage/block/Pie'
+import AllTodo from './mainPage/block/AllTodo'
+import Sweety from './mainPage/block/sweety'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     justifyContent: "center",
-    // bottom: '10%',
-    // border:'1px solid black',
     height: '100vh',
     overflow:"auto",
-    // background: '#f5f5f5',
-    background:"#e1f5fe"
-  },
-  paper: {
-    height: '500px',
-    // width: '100%',
-    // backgroundColor: 'green',
-    color: 'white',
-    padding: theme.spacing(2)
+    background:"#e3f2fd"
   },
   calenderContainer: {
     // border: '1px solid black',
@@ -40,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
     // marginLeft: '5px',
     // maxHeight: '50vh',
     // overflow: 'auto',
+  },
+  block:{
+    background:"white"
   }
 
 }));
@@ -50,29 +45,46 @@ function App(props) {
   return (
     <div className={classes.root}>
       <Grid container>
-        <Header username={props.username}/>
         <Grid container item spacing={0} justify='space-evenly'>
-          <Grid item xs={3}>
-            <Card style={{height:'40vh', marginBottom:'10px'}}>
-            </Card>
-            <Card style={{height:'40vh'}}>
-              {/* <SpeedDial/> */}
-              <TodoList todoList={todoList} deleteItem={deleteItem}/>
-            </Card>
-            
-          </Grid>
-          <Grid container item  xs={5} spacing={2}>
-            <Grid container item xs={12}>
-              <Add addItem={addItem}/>
+          <Grid container item spacing={2} xs={3}justify='space-evenly'>
+            <Grid item xs={12} >
+              <Card className={classes.block} style={{height:'40vh', marginTop:'1vh',borderRadius:'50%'}}>
+                <Sweety/>
+              </Card>
             </Grid>
-            <Grid item xs={12} className={classes.calenderContainer}>
-              <Calender/>
+            <Grid item xs={12}>
+              <Card className={classes.block} style={{height:'55vh',}}>
+                <TodoList todoList={todoList} deleteItem={deleteItem}/>
+              </Card>
             </Grid>
           </Grid>
-          <Grid item xs={3} className={classes.calenderContainer1}>
-            <Calender/>
-            <br></br>
-            <Calender/>
+
+          {/* middle block inside-space:2 whole-width:6 */}
+          <Grid container item spacing={2} xs={6} justify='space-evenly'>
+            <Grid item xs={12} >
+              {/* <Card className={classes.block} style={{height:'20vh', marginTop:'1vh'}}> */}
+                <Add addItem={addItem}/>
+              {/* </Card> */}
+            </Grid>
+            <Grid item xs={12}>
+              <Card className={classes.block} style={{height:'75vh'}}>
+                <Calender/>
+              </Card>
+            </Grid>
+          </Grid>
+
+          {/* right block inside-space:2 whole-width:3*/}
+          <Grid container item spacing={2} xs={3} justify='space-evenly'>
+            <Grid item xs={12} >
+              <Card className={classes.block} style={{height:'40vh', marginTop:'1vh'}}>
+                <Pie/>
+              </Card>
+            </Grid>
+            <Grid item xs={12}>
+              <Card className={classes.block} style={{height:'55vh',}}>
+                <AllTodo/>
+              </Card>
+            </Grid>
           </Grid>
                 
         </Grid>
