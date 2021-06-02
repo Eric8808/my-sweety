@@ -7,39 +7,20 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import Card from '@material-ui/core/Card';
 import Add from '../containers/mainPage/Add'
-
-
+import Pie from './mainPage/block/Pie'
+import AllTodo from './mainPage/block/AllTodo'
+import Sweety from './mainPage/block/sweety'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     justifyContent: "center",
-    // bottom: '10%',
-    // border:'1px solid black',
     height: '100vh',
     overflow:"auto",
-    // background: '#f5f5f5',
-    background:"#e1f5fe"
+    background:"#e3f2fd"
   },
-  paper: {
-    height: '500px',
-    // width: '100%',
-    // backgroundColor: 'green',
-    color: 'white',
-    padding: theme.spacing(2)
-  },
-  calenderContainer: {
-    // border: '1px solid black',
-    height: '65vh',
-    // maxHeight: '50vh',
-    // overflow: 'auto',
-  },
-  calenderContainer1: {
-    // border: '1px solid black',
-    height: '35vh',
-    // marginLeft: '5px',
-    // maxHeight: '50vh',
-    // overflow: 'auto',
+  block:{
+    background:"white"
   }
 
 }));
@@ -49,30 +30,46 @@ function App(props) {
   return (
     <div className={classes.root}>
       <Grid container>
-        <Header username={props.username}/>
         <Grid container item spacing={0} justify='space-evenly'>
-          <Grid item xs={3}>
-            <Card style={{height:'40vh', marginBottom:'10px'}}>
-            </Card>
-            <Card style={{height:'40vh'}}>
-              <SpeedDial/>
-            </Card>
-            
-          </Grid>
-          <Grid container item  xs={5} spacing={2}>
+          {/* left block inside-space:2 whole-width:3 */}
+          <Grid container item spacing={2} xs={3}justify='space-evenly'>
+            <Grid item xs={12} >
+              <Card className={classes.block} style={{height:'40vh', marginTop:'1vh',borderRadius:'50%'}}>
+                <Sweety/>
+              </Card>
+            </Grid>
             <Grid item xs={12}>
-              <Card style={{height:'20vh'}}>
+              <Card className={classes.block} style={{height:'55vh',}}>
+              </Card>
+            </Grid>
+          </Grid>
+
+          {/* middle block inside-space:2 whole-width:6 */}
+          <Grid container item spacing={2} xs={6} justify='space-evenly'>
+            <Grid item xs={12} >
+              <Card className={classes.block} style={{height:'20vh', marginTop:'1vh'}}>
                 <Add/>
               </Card>
             </Grid>
-            <Grid item xs={12} className={classes.calenderContainer}>
-              <Calender/>
+            <Grid item xs={12}>
+              <Card className={classes.block} style={{height:'75vh'}}>
+                <Calender/>
+              </Card>
             </Grid>
           </Grid>
-          <Grid item xs={3} className={classes.calenderContainer1}>
-            <Calender/>
-            <br></br>
-            <Calender/>
+
+          {/* right block inside-space:2 whole-width:3*/}
+          <Grid container item spacing={2} xs={3} justify='space-evenly'>
+            <Grid item xs={12} >
+              <Card className={classes.block} style={{height:'40vh', marginTop:'1vh'}}>
+                <Pie/>
+              </Card>
+            </Grid>
+            <Grid item xs={12}>
+              <Card className={classes.block} style={{height:'55vh',}}>
+                <AllTodo/>
+              </Card>
+            </Grid>
           </Grid>
                 
         </Grid>
