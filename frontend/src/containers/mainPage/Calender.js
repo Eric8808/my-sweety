@@ -162,7 +162,7 @@ function MyResponsiveBar() {
     
     return (
         <>
-        <Card className={classes.card}style={{width:"100%", height:"100%"}}>
+        <Card className={classes.card} style={{width:"100%", height:"100%"}}>
         <ResponsiveBar
             data={data}
             keys={[ 'hot dog', 'burger', 'sandwich', 'kebab', 'fries', 'donut' ]}
