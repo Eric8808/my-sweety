@@ -22,6 +22,8 @@ const useStyles = makeStyles((theme) => ({
       },
   },
   grid: {
+    
+    marginTop:'1vh',
     height: '25vh'
   },
   addBtn: {

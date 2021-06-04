@@ -67,7 +67,7 @@ function App(props) {
               {/* </Card> */}
             </Grid>
             <Grid item xs={12}>
-              <Card className={classes.block} style={{height:'75vh'}}>
+              <Card className={classes.block} style={{height:'70vh'}}>
                 <Calender/>
               </Card>
             </Grid>
