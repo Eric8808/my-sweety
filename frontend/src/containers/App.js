@@ -48,9 +48,9 @@ function App(props) {
         <Grid container item spacing={0} justify='space-evenly'>
           <Grid container item spacing={2} xs={3}justify='space-evenly'>
             <Grid item xs={12} >
-              <Card className={classes.block} style={{height:'40vh', marginTop:'1vh',borderRadius:'50%'}}>
+              {/* <Card className={classes.block} style={{height:'40vh', marginTop:'1vh',borderRadius:'50%'}}> */}
                 <Sweety/>
-              </Card>
+              {/* </Card> */}
             </Grid>
             <Grid item xs={12}>
               <Card className={classes.block} style={{height:'55vh',}}>

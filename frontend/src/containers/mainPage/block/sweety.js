@@ -10,7 +10,7 @@ const Sweety=()=>{
   return(
     <Canvas>
       <OrbitControls />
-      <ambientLight intensity={0.6} />
+      <ambientLight intensity={1} />
       <directionalLight intensity={0.5} />
       <Suspense fallback={null}>
         <Girl />
