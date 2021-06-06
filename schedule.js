@@ -33,7 +33,10 @@ const schedule = async (events, available, startdate ,revise_time) => {
     //check max needtime
     let available_max = available.reduce(function(a, b) {return Math.max(a, b);})
     for(let i = 0;i<events.length;i++){
-        if(events[i].needtime/events[i].seperate > available_max)return -1;
+        if(events[i].needtime/events[i].seperate > available_max){
+            console.log('the maximum event can\'t be put into the schedule.')
+            return -1;
+        };
     }
 
     Seperate_events = [];
@@ -45,7 +48,6 @@ const schedule = async (events, available, startdate ,revise_time) => {
 
     let n = Seperate_events.length;
     let used = Array.from(Array(events.length), ()=>0 );
-    let possible_schedule = [];
     let solution = Array.from(Array(n), ()=>0 );
    
     const get_revise_time = (d) =>{
@@ -112,7 +114,6 @@ const schedule = async (events, available, startdate ,revise_time) => {
 
     permutation(0)
 
-    console.log(possible_schedule);
     console.log(available);
 
     //check deadline
@@ -120,6 +121,10 @@ const schedule = async (events, available, startdate ,revise_time) => {
     //optimize cost
     console.log('--------------------------------------------------------------------------------------------------------------------------------------------')
     let max_cost = 0,max_i=0;
+    if(possible_day_events.length === 0 ) {
+        console.log("cn't generate the schedule.");
+        return 0;
+    }
     for(let i=0;i<possible_day_events.length;i++){
         //console.log(possible_day_events[i]);
         let eachcost=0;
