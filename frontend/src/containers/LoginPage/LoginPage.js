@@ -92,7 +92,7 @@ const LoginPage =()=>{
         try{
             const {
                 data: {message, success},
-              } = await axios.post('/api/register',{
+              } = await axios.post('/api/account/register',{
                 username: signUpInput.username,
                 password: signUpInput.password
             })
@@ -123,7 +123,7 @@ const LoginPage =()=>{
         try{
             const {
                 data: {message, success, token},
-              } = await axios.post('/api/login',{
+              } = await axios.post('/api/account/login',{
                 username: signInInput.username,
                 password: signInInput.password
             })

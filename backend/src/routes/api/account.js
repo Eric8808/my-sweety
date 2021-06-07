@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken'
 const JWT_SECRET = "1651w64f5wefwgrw$%^&g89wg913245%^&*("
 
 const router = Router()
+//http://localhost:4000/api/account/XXX
 
 router.post('/register',async (req, res)=>{
     try {

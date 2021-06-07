@@ -6,18 +6,26 @@ import React, { useRef, useEffect } from 'react'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import { AccordionActions } from '@material-ui/core'
 
+function usePrevious(value){
+  const ref = useRef(value)
+  useEffect(()=>{
+    ref.current = value
+  })
+  return ref.current
+}
 export default function Model(props) {
   const group = useRef()
-  const { nodes, materials, animations } = useGLTF('/girl.gltf')
+  const { nodes, materials, animations } = useGLTF('/girlTenActions.gltf')
   const { actions } = useAnimations(animations, group)
-  console.log(actions)
+  const nowAnimation = props.myAnimation
+  const prevAnimation = usePrevious(nowAnimation)
   useEffect(()=>{
-    // actions.playDrum.play()
-    actions.silly_dance.play()
-  },[])
+    actions[prevAnimation].stop()
+    actions[nowAnimation].play()
+  },[nowAnimation])
   return (
     <group ref={group} {...props} dispose={null}>
-      <group rotation={[Math.PI / 2, 0, 0]} scale={[0.01, 0.01, 0.01]}>
+      <group rotation={[Math.PI / 2, 0, 0]} scale={[0.032, 0.032, 0.032]} position={[0,-2.5,0]}>
         <primitive object={nodes.Hips} />
         <skinnedMesh
           geometry={nodes.Girl_Body_Geo.geometry}
@@ -44,4 +52,4 @@ export default function Model(props) {
   )
 }
 
-useGLTF.preload('/girl.gltf')
+useGLTF.preload('/girlTenActions.gltf')

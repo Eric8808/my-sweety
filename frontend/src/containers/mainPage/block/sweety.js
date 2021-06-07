@@ -5,7 +5,7 @@ import Girl from "./Girl.js";
 
 import { OrbitControls } from "@react-three/drei";
 
-const Sweety=()=>{
+const Sweety=({myAnimation})=>{
 
   return(
     <Canvas>
@@ -13,7 +13,7 @@ const Sweety=()=>{
       <ambientLight intensity={1} />
       <directionalLight intensity={0.5} />
       <Suspense fallback={null}>
-        <Girl />
+        <Girl myAnimation={myAnimation}/>
       </Suspense>
     </Canvas>
   )

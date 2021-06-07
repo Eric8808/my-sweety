@@ -12,6 +12,8 @@ import Pie from './mainPage/block/Pie'
 import AllTodo from './mainPage/block/AllTodo'
 import Sweety from './mainPage/block/sweety'
 
+import { useState } from 'react';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -42,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 function App(props) {
   const classes = useStyles();
   const {todoList, addItem, deleteItem} = useTodoList()
+  const [myAnimation, setMyAnimation] = useState('flair')
   return (
     <div className={classes.root}>
       <Grid container>
@@ -49,7 +52,7 @@ function App(props) {
           <Grid container item spacing={2} xs={3}justify='space-evenly'>
             <Grid item xs={12} >
               {/* <Card className={classes.block} style={{height:'40vh', marginTop:'1vh',borderRadius:'50%'}}> */}
-                <Sweety/>
+                <Sweety myAnimation={myAnimation}/>
               {/* </Card> */}
             </Grid>
             <Grid item xs={12}>
@@ -64,6 +67,16 @@ function App(props) {
             <Grid item xs={12} >
               {/* <Card className={classes.block} style={{height:'20vh', marginTop:'1vh'}}> */}
                 <Add addItem={addItem}/>
+                <button onClick={()=>setMyAnimation('assasination')}>assasination</button>
+                <button onClick={()=>setMyAnimation('break1990')}>break1990</button>
+                <button onClick={()=>setMyAnimation('breakFreeze')}>breakFreeze</button>
+                <button onClick={()=>setMyAnimation('flair')}>flair</button>
+                <button onClick={()=>setMyAnimation('hip-hop')}>hip-hop</button>
+                <button onClick={()=>setMyAnimation('sitting')}>sitting</button>
+                <button onClick={()=>setMyAnimation('situpus')}>situpus</button>
+                <button onClick={()=>setMyAnimation('zombie-down')}>zombie-down</button>
+                <button onClick={()=>setMyAnimation('playDrum')}>playDrum</button>
+                <button onClick={()=>setMyAnimation('silly_dance')}>silly_dance</button>
               {/* </Card> */}
             </Grid>
             <Grid item xs={12}>
