@@ -5,7 +5,7 @@ import Calender from './mainPage/Calender'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card';
-import Add from '../containers/mainPage/Add'
+import Panel from './mainPage/Panel'
 import TodoList from '../containers/mainPage/TodoList'
 import useTodoList from '../hooks/useTodoList'
 import Pie from './mainPage/block/Pie'
@@ -66,7 +66,7 @@ function App(props) {
           <Grid container item spacing={2} xs={6} justify='space-evenly'>
             <Grid item xs={12} >
               {/* <Card className={classes.block} style={{height:'20vh', marginTop:'1vh'}}> */}
-                <Add addItem={addItem}/>
+                <Panel addItem={addItem}/>
                 <button onClick={()=>setMyAnimation('assasination')}>assasination</button>
                 <button onClick={()=>setMyAnimation('break1990')}>break1990</button>
                 <button onClick={()=>setMyAnimation('breakFreeze')}>breakFreeze</button>
