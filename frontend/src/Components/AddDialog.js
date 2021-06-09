@@ -32,6 +32,7 @@ function AddDialog({showBlock, handleBack, setShowBtn, addItem}) {
   const [priority, setPriority] = useState(1)
   const [needTime, setNeedTime] = useState(1)
   const [deadline, setDeadline] = useState('')
+  const [separate, setSeparate] = useState(1)
   const taskRef = useRef(null)
 
   const handleAddItem = () => {
@@ -68,24 +69,10 @@ function AddDialog({showBlock, handleBack, setShowBtn, addItem}) {
                 onChange={handleChange(setTask)}
                 fullWidth
                 inputRef={taskRef}
+                // variant="filled"
                 />
           </Grid>
-          
-          <Grid item xs={3}>
-            <TextField
-                id="outlined-number"
-                inputProps={{style: { textAlign: 'center' }}} 
-                label="NeedTime"
-                value={needTime}
-                onChange={handleChange(setNeedTime)}
-                type="number"
-                InputLabelProps={{
-                    shrink: true,
-                }}
-                fullWidth
-            />
-          </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={2}>
             <TextField
                 id="filled-number"
                 inputProps={{style: { textAlign: 'center' }}}
@@ -96,7 +83,37 @@ function AddDialog({showBlock, handleBack, setShowBtn, addItem}) {
                 InputLabelProps={{
                     shrink: true,
                 }}
-                variant="filled"
+                // variant="filled"
+                fullWidth
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <TextField
+                id="outlined-number"
+                inputProps={{style: { textAlign: 'center' }}} 
+                label="Total Time"
+                value={needTime}
+                onChange={handleChange(setNeedTime)}
+                type="number"
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                // variant="outlined"
+                fullWidth
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <TextField
+                id="outlined-number"
+                inputProps={{style: { textAlign: 'center' }}} 
+                label="Separate"
+                value={separate}
+                onChange={handleChange(setSeparate)}
+                type="number"
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                // variant="outlined"
                 fullWidth
             />
           </Grid>
