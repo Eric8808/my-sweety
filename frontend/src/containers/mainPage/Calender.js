@@ -163,17 +163,50 @@ const handleChange = (func, event) => {
 
 
 // const MyResponsiveBar = () => (
-function MyResponsiveBar() {
+function MyResponsiveBar({todoList, schedule, day, setDay}) {
     const classes = useStyles();
     const [drawerOpen, setDrawerOpen] = useState(false)
     const [drawerContent, setDrawerContent] = useState('')
-    const {day, setDay} = useCalender()
-    const [task, setTask] = useState(
-      day.map(( value, i ) => (
-      {
-        "day": weekDay[i],
-        "empty": value
-      })))
+
+    const todoEvents = {} // 把事件和對應的時間包成物件
+    todoList.forEach(({name, separate, needtime}) => {
+      todoEvents[name] = needtime/separate
+    })
+
+    // transform schedule to task for calender
+    const scheduleToTask = () => {
+      if (schedule.length === 0) {
+        return day.map((value, i) => (
+          {
+            day: weekDay[i],
+            empty: value,
+            totalTime: value,
+          }
+        ))
+      }
+      const today = new Date(schedule[0].date)
+      const newTask = day.map(( value, i ) => {
+        let tempEvents = {
+          day: weekDay[i],
+          empty: value,
+          totalTime: value
+        }
+        // 篩選這星期的schedule
+        if (i > today.getDay()-1) {
+          const index = i-today.getDay()+1
+          let eventsTime = 0
+          schedule[index].events.forEach((value) => {
+            tempEvents[value] = todoEvents[value]
+            eventsTime += todoEvents[value]
+          })
+          tempEvents.empty = tempEvents.totalTime - eventsTime
+        }
+        return tempEvents
+        })
+      return newTask;
+     }
+
+    const [task, setTask] = useState(scheduleToTask())
 
     const handleClick = (data) => {
         setDrawerContent(data)
@@ -183,7 +216,8 @@ function MyResponsiveBar() {
 
     const changeDay = (i, event) => {
       const newTask = [...task]
-      newTask[i].empty = event.target.value
+      newTask[i].empty += event.target.value - newTask[i].totalTime
+      newTask[i].totalTime = event.target.value
       setTask(newTask)
     }
 
@@ -194,14 +228,19 @@ function MyResponsiveBar() {
         setDrawerOpen(open);
         setDrawerContent('')
       };
-    
+    console.log(task)
+
+    useEffect(() => {
+      setTask(scheduleToTask())
+    }, [schedule])
     return (
         <>
         <div className={classes.calender}>
           <ResponsiveBar
               data={task}
               // keys={[ 'hot dog', 'burger', 'sandwich', 'kebab', 'fries', 'donut' ]}
-              keys={['empty']}
+              // keys={['empty']}
+              keys={['empty', ...Object.keys(todoEvents)]}
               indexBy="day"
               margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
               padding={0.3}
