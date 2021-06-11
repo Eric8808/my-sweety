@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function Panel({addItem,todoList,setSchedule}) {
+function Panel({addItem, todoList, setSchedule, day}) {
   const classes = useStyles();
   const [showBtn, setShowBtn] = useState(true)
   const [showBlock, setShowBlock] = useState(false)
@@ -37,7 +37,7 @@ function Panel({addItem,todoList,setSchedule}) {
 
     const m = await axios.post('/api/scheduling/calculate',{
       events : todoList.map((e)=>{return {name: e.name, needtime:parseInt(e.needtime,10), seperate: parseInt(e.separate,10), deadline: new Date(e.deadline.getFullYear(),e.deadline.getMonth(),e.deadline.getDate())}}), 
-      available : [5,2,3,4,6,7,3],
+      available : day, //[5,2,3,4,6,7,3],
       nowdata : now_date,
       edittime : {}
     })

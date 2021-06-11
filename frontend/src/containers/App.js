@@ -12,9 +12,9 @@ import Pie from './mainPage/block/Pie'
 import AllTodo from './mainPage/block/AllTodo'
 import Sweety from './mainPage/block/sweety'
 import TextField from '@material-ui/core/TextField'
-
 import { useEffect, useState } from 'react';
 import axios from './api';
+import useCalender from '../hooks/useCalender'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 function App(props) {
   const classes = useStyles();
   const {todoList, addItem, deleteItem, setTodoList} = useTodoList()
+  const {day, setDay} = useCalender()
   const [myAnimation, setMyAnimation] = useState('flair')
   const [schedule,setSchedule] = useState([])
   console.log(schedule)
@@ -93,7 +94,7 @@ function App(props) {
           <Grid container item spacing={2} xs={6} justify='space-evenly'>
             <Grid item xs={12} >
               {/* <Card className={classes.block} style={{height:'20vh', marginTop:'1vh'}}> */}
-                <Panel addItem={addItem} todoList={todoList} setSchedule={setSchedule}/>
+                <Panel addItem={addItem} todoList={todoList} setSchedule={setSchedule} day={day}/>
                 <button onClick={()=>setMyAnimation('assasination')}>assasination</button>
                 <button onClick={()=>setMyAnimation('break1990')}>break1990</button>
                 <button onClick={()=>setMyAnimation('breakFreeze')}>breakFreeze</button>
@@ -108,7 +109,7 @@ function App(props) {
             </Grid>
             <Grid item xs={12}>
               <Card className={classes.block} style={{height:'70vh'}}>
-                <Calender/>
+                <Calender todoList={todoList} schedule={schedule} day={day} setDay={setDay}/>
               </Card>
             </Grid>
           </Grid>
