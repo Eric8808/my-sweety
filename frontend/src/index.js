@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import './index.css';
 import App from './containers/App';
-import Profile from './containers/ProfilePage/Profile'
+import Authenticate from './containers/Authenticate'
 import LoginPage from './containers/LoginPage/LoginPage.js'
 import reportWebVitals from './reportWebVitals';
 import { AppBar } from '@material-ui/core';
@@ -13,8 +13,8 @@ ReactDOM.render(
     <Router>
       <Switch>
         <Route exact path="/" component={LoginPage}/>
-        <Route exact path="/profile" component={Profile}/>
-        <Route exact path="/guest" component={()=><App username='Boy'/>}/>
+        <Route exact path="/profile" component={Authenticate}/>
+        <Route exact path="/guest" component={()=><App username={null}/>}/>
       </Switch>
     </Router>
   </React.StrictMode>,

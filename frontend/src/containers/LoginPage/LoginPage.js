@@ -1,8 +1,7 @@
 import React, { Fragment } from 'react';
 import { useState, useRef} from 'react';
 
-import axios from '../../api'
-import Yuri from '../../myimages/yuri.jpg'
+import axios from '../api'
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';

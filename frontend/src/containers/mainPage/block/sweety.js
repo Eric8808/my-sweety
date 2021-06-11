@@ -1,7 +1,6 @@
-import girlImg from '../../../myimages/yuri.jpg'
 import React, { Suspense } from "react";
 import { Canvas } from "react-three-fiber";
-import Girl from "./Girl.js";
+import Model3D from "./model3D.js";
 
 import { OrbitControls } from "@react-three/drei";
 
@@ -13,7 +12,7 @@ const Sweety=({myAnimation})=>{
       <ambientLight intensity={1} />
       <directionalLight intensity={0.5} />
       <Suspense fallback={null}>
-        <Girl myAnimation={myAnimation}/>
+        <Model3D myAnimation={myAnimation}/>
       </Suspense>
     </Canvas>
   )

@@ -1,9 +1,9 @@
 import React, { useEffect, useState} from 'react';
 import { Route, Redirect } from 'react-router-dom'
-import App from '../App'
+import App from './App'
 import jwtDecode from 'jwt-decode'
 
-const Profile =()=>{
+const Authenticate =()=>{
     const [isAuthenticated, setIsAuthenticated] = useState(null)
     const [username, setUserName] = useState('')  
     useEffect(() => {
@@ -22,6 +22,7 @@ const Profile =()=>{
     }
 
     return (
+        // If there's jwt token in localstorage, then direct to App. Else, redirect to login page.
         <Route render={() =>
             !isAuthenticated ? (
             <Redirect to='/'/>
@@ -33,4 +34,4 @@ const Profile =()=>{
     );
 };
 
-export default Profile;
+export default Authenticate;

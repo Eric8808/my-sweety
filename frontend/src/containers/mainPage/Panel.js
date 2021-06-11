@@ -6,7 +6,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import AddDialog from '../../Components/AddDialog'
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
-import axios from '../../api'
+import axios from '../api'
 
 const useStyles = makeStyles((theme) => ({
   grid: {

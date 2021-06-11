@@ -71,7 +71,7 @@ h3.Enter-button {
 	box-sizing: border-box;
 }
 div.Login-page-only::after{
-	background-image: url('../../myimages/OL2.jpg');
+	background-image: url('../../OL2.jpg');
     background-size: cover;
     content: "";
     opacity: 0.4;
