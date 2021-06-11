@@ -194,12 +194,14 @@ function MyResponsiveBar({todoList, schedule, day, setDay}) {
         // 篩選這星期的schedule
         if (i > today.getDay()-1) {
           const index = i-today.getDay()+1
-          let eventsTime = 0
-          schedule[index].events.forEach((value) => {
-            tempEvents[value] = todoEvents[value]
-            eventsTime += todoEvents[value]
-          })
-          tempEvents.empty = tempEvents.totalTime - eventsTime
+          if (index < schedule.length) {
+            let eventsTime = 0
+            schedule[index].events.forEach((value) => {
+              tempEvents[value] = todoEvents[value]
+              eventsTime += todoEvents[value]
+            })
+            tempEvents.empty = tempEvents.totalTime - eventsTime
+          }
         }
         return tempEvents
         })
