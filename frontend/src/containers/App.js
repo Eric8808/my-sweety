@@ -12,8 +12,9 @@ import Pie from './mainPage/block/Pie'
 import AllTodo from './mainPage/block/AllTodo'
 import Sweety from './mainPage/block/sweety'
 import TextField from '@material-ui/core/TextField'
+import { useEffect, useState } from 'react';
+import axios from './api';
 import useCalender from '../hooks/useCalender'
-import { useState } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,11 +45,34 @@ const useStyles = makeStyles((theme) => ({
 
 function App(props) {
   const classes = useStyles();
-  const {todoList, addItem, deleteItem} = useTodoList()
+  const {todoList, addItem, deleteItem, setTodoList} = useTodoList()
   const {day, setDay} = useCalender()
   const [myAnimation, setMyAnimation] = useState('flair')
   const [schedule,setSchedule] = useState([])
-  console.log(schedule)///print schedule
+  console.log(schedule)
+  useEffect(async()=>{
+    // schedule, todolist initialization
+    if(props.username!=null){
+      const {
+        data:{todoList, schedule}
+      } = await axios.get('/api/data/init',{
+          params:{username: props.username}
+      })
+      console.log('user data init successfully!')
+      //setSchedule(schedule=>schedule)
+      //setTodoList(todoList=>todoList)
+    }
+  },[])
+
+  useEffect(async()=>{
+    // send data to backend for every re-render.
+    if(props.username!=null){
+       await axios.post('/api/data/update',{
+          username: props.username
+      })
+      console.log('user data sent to backend successfully!')
+    }
+  },[schedule, todoList])
   return (
     <div className={classes.root}>
       <Grid container>

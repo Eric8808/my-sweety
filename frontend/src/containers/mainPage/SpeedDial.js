@@ -1,5 +1,4 @@
 import {Tick,OBJModel} from 'react-3d-viewer'
-import sofa3D from '../Open3DModel.com_07.obj'
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
