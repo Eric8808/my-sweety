@@ -47,32 +47,50 @@ function App(props) {
   const classes = useStyles();
   const {todoList, addItem, deleteItem, setTodoList} = useTodoList()
   const {day, setDay} = useCalender()
-  const [myAnimation, setMyAnimation] = useState('flair')
+  const [myAnimation, setMyAnimation] = useState('sitting')
   const [schedule,setSchedule] = useState([])
-  console.log(schedule)
+  
   useEffect(async()=>{
     // schedule, todolist initialization
     if(props.username!=null){
-      const {
-        data:{todoList, schedule}
-      } = await axios.get('/api/data/init',{
-          params:{username: props.username}
-      })
-      console.log('user data init successfully!')
-      //setSchedule(schedule=>schedule)
-      //setTodoList(todoList=>todoList)
+      console.log('start fetch from backend!')
+      try{
+        const {
+          data:{todoList, schedule, day}
+        } = await axios.get('/api/data/init',{
+            params:{username: props.username}
+        })
+        console.log('user data init successfully!')
+        // transform deadline of todoList to new Date()
+        todoList.map(event=>{event.deadline = new Date(event.deadline); return event})
+        schedule.map(event=>{event.date = new Date(event.date); return event})
+
+        setDay.forEach((setter, i)=>{setter(day[i])})
+        setTodoList(todoList)
+        setSchedule(schedule)
+      } catch(e){
+        console.log('initial fetch error QQ', e)
+      }
     }
   },[])
 
   useEffect(async()=>{
-    // send data to backend for every re-render.
-    if(props.username!=null){
-       await axios.post('/api/data/update',{
-          username: props.username
-      })
-      console.log('user data sent to backend successfully!')
+    // send data to backend if todoList or schedule changes.
+    try{
+      if(props.username!=null){
+        console.log('start update to backend!')
+        const {data:{message}} = await axios.post('/api/data/update',{
+          username: props.username,
+          todoList: todoList,
+          schedule: schedule,
+          day: day
+        })
+        console.log('user data sent to backend successfully!')
+      }
+    }catch(e){
+      console.log('send to backend error QQ', e)
     }
-  },[schedule, todoList])
+  },[schedule, todoList, day])
   return (
     <div className={classes.root}>
       <Grid container>

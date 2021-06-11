@@ -19,7 +19,7 @@ import Slide from '@material-ui/core/Slide';
 
 const useStyles = makeStyles((theme) => ({
   list:{
-    maxHeight: '35vh',
+    height: '50vh',
     overflow: 'auto',
     backgroundColor: theme.palette.background.paper,
     '& .MuiListItem-container': {

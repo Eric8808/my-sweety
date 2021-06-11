@@ -361,7 +361,8 @@ function MyResponsiveBar({todoList, schedule, day, setDay}) {
                   label={value}
                   value={day[i]}
                   onChange={ (e) => {
-                      handleChange(setDay[i], e)
+                      // handleChange(setDay[i], e)
+                      setDay[i](parseInt(e.target.value))
                       changeDay(i, e)
                     }  
                   }
