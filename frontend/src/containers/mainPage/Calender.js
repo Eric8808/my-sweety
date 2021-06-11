@@ -1,12 +1,13 @@
 import { ResponsiveBar } from '@nivo/bar'
 import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { Typography } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
+import useCalender from '../../hooks/useCalender'
 
 const useStyles = makeStyles({
     root: {
@@ -145,46 +146,45 @@ const data = [
     }
   ]
 
-const task = [
-  {
-    "day": "Sun",
-    "empty": 1, 
-  },
-  {
-    "day": "Mon",
-    "empty": 1, 
-  },
-  {
-    "day": "Tue",
-    "empty": 1, 
-  },
-  {
-    "day": "Wed",
-    "empty": 1, 
-  },
-  {
-    "day": "Thu",
-    "empty": 8, 
-  },
-  {
-    "day": "Fri",
-    "empty": 1, 
-  },
-  {
-    "day": "Sat",
-    "empty": 2, 
-  },
+const weekDay = [
+    "Sun",
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
 ]
+
+const handleChange = (func, event) => {
+  func(event.target.value);
+};
+
+
 
 // const MyResponsiveBar = () => (
 function MyResponsiveBar() {
     const classes = useStyles();
     const [drawerOpen, setDrawerOpen] = useState(false)
     const [drawerContent, setDrawerContent] = useState('')
+    const {day, setDay} = useCalender()
+    const [task, setTask] = useState(
+      day.map(( value, i ) => (
+      {
+        "day": weekDay[i],
+        "empty": value
+      })))
+
     const handleClick = (data) => {
         setDrawerContent(data)
         setDrawerOpen(true)
         console.log(data)
+    }
+
+    const changeDay = (i, event) => {
+      const newTask = [...task]
+      newTask[i].empty = event.target.value
+      setTask(newTask)
     }
 
     const toggleDrawer = (open) => (event) => {
@@ -312,14 +312,18 @@ function MyResponsiveBar() {
           <Grid item xs={1}>
 
           </Grid>
-          {[1,2,3,4,5,6,7,].map((value) => (
+          {weekDay.map((value, i) => (
             <Grid item xs={1} key={`day${value}`}>
               <TextField
                   id="outlined-number"
                   inputProps={{style: { textAlign: 'center' }}} 
                   label={value}
-                  // value={needTime}
-                  // onChange={handleChange(setNeedTime)}
+                  value={day[i]}
+                  onChange={ (e) => {
+                      handleChange(setDay[i], e)
+                      changeDay(i, e)
+                    }  
+                  }
                   type="number"
                   InputLabelProps={{
                       shrink: true,
