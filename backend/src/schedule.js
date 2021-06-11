@@ -1,5 +1,4 @@
 
-
 const schedule = async (events, available, startdate ,revise_time) => {
     /*
     events:
@@ -17,13 +16,14 @@ const schedule = async (events, available, startdate ,revise_time) => {
         int,int,...,int (n=7)//1~7
     ]
     */
+   console.log(events)
     const geteventsdata = (name,gettype)=>{
         for(let iii=0;iii<events.length;iii++){
             if(events[iii].name===name){
-                if(gettype==="name")return events[iii].name;
-                if(gettype==="deadline")return events[iii].deadline;
-                if(gettype==="needtime")return events[iii].needtime;
-                if(gettype==="seperate")return events[iii].seperate;
+                if(gettype==="name")return new Date(events[iii].name);
+                if(gettype==="deadline")return new Date(events[iii].deadline);
+                if(gettype==="needtime")return new Date(events[iii].needtime);
+                if(gettype==="seperate")return new Date(events[iii].seperate);
             }
         }
     }
@@ -39,7 +39,7 @@ const schedule = async (events, available, startdate ,revise_time) => {
         };
     }
 
-    Seperate_events = [];
+    let Seperate_events = [];
     events.map( (e)=>{
         for(let i=0 ; i<e.seperate ; i++){
             Seperate_events.push({ name:e.name, time:e.needtime/e.seperate })
@@ -144,44 +144,10 @@ const schedule = async (events, available, startdate ,revise_time) => {
     }
     console.log(`credit : ${max_cost}`)
     console.log(possible_day_events[max_i]);
+
+    return possible_day_events[max_i];
 }
 //test
-let tempdate = new Date();
-
-let tempdate1 = new Date();
-tempdate1.setDate(tempdate.getDate()+10);
-let d1 = new Date(tempdate1);
-let tempdate2 = new Date();
-tempdate2.setDate(tempdate.getDate()+2);
-let d2 = new Date(tempdate2);
-let tempdate3 = new Date();
-tempdate3.setDate(tempdate.getDate()+30);
-let d3 = new Date(tempdate3);
-
-let tempdate4 = new Date();
-tempdate4.setDate(tempdate.getDate()+5);
-let d4 = new Date(tempdate4);
-let tempdate5 = new Date();
-tempdate5.setDate(tempdate.getDate()+7);
-let d5 = new Date(tempdate5);
-let tempdate6 = new Date();
-tempdate6.setDate(tempdate.getDate()+3);
-let d6 = new Date(tempdate6);
-
-schedule(
-    [
-        {name:'a',needtime:12,seperate:3,deadline:d1},
-        {name:'b',needtime:2,seperate:2,deadline:d2},
-        //{name:'c',needtime:25,seperate:25,deadline:d3},
-        {name:'d',needtime:3,seperate:1,deadline:d1},
-        {name:'e',needtime:5,seperate:2,deadline:d2},
-        {name:'f',needtime:18,seperate:3,deadline:d3},
-        {name:'g',needtime:3,seperate:1,deadline:d1}
-    ],
-    [5,2,3,4,6,7,3],
-    tempdate,
-    {}
-);
 
 
-//export default schedule;
+export default schedule;

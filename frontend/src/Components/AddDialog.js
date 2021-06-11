@@ -37,7 +37,8 @@ function AddDialog({showBlock, handleBack, setShowBtn, addItem}) {
 
   const handleAddItem = () => {
     if (task && priority) {
-        addItem(task, priority)
+        let temp_deadline = new Date(deadline)
+        addItem(task, priority,separate,needTime,temp_deadline)
         setTask('')
         setPriority(1)
         taskRef.current.focus()

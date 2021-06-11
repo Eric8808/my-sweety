@@ -6,6 +6,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import AddDialog from '../../Components/AddDialog'
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import axios from '../../api'
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -24,13 +25,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function Panel({addItem}) {
+function Panel({addItem,todoList,setSchedule}) {
   const classes = useStyles();
   const [showBtn, setShowBtn] = useState(true)
   const [showBlock, setShowBlock] = useState(false)
 
-  const handleSchedule = () => {
+  const handleSchedule = async () => {
 
+    let tempdate = new Date();
+    let now_date = new Date(tempdate.getFullYear(),tempdate.getMonth(),tempdate.getDate());
+
+    const m = await axios.post('/api/scheduling/calculate',{
+      events : todoList.map((e)=>{return {name: e.name, needtime:parseInt(e.needtime,10), seperate: parseInt(e.separate,10), deadline: new Date(e.deadline.getFullYear(),e.deadline.getMonth(),e.deadline.getDate())}}), 
+      available : [5,2,3,4,6,7,3],
+      nowdata : now_date,
+      edittime : {}
+    })
+
+    setSchedule(m.data.ans)
   }
 
   const handleAdd = () => {

@@ -46,6 +46,8 @@ function App(props) {
   const classes = useStyles();
   const {todoList, addItem, deleteItem} = useTodoList()
   const [myAnimation, setMyAnimation] = useState('flair')
+  const [schedule,setSchedule] = useState([])
+  console.log(schedule)///print schedule
   return (
     <div className={classes.root}>
       <Grid container>
@@ -67,7 +69,7 @@ function App(props) {
           <Grid container item spacing={2} xs={6} justify='space-evenly'>
             <Grid item xs={12} >
               {/* <Card className={classes.block} style={{height:'20vh', marginTop:'1vh'}}> */}
-                <Panel addItem={addItem}/>
+                <Panel addItem={addItem} todoList={todoList} setSchedule={setSchedule}/>
                 <button onClick={()=>setMyAnimation('assasination')}>assasination</button>
                 <button onClick={()=>setMyAnimation('break1990')}>break1990</button>
                 <button onClick={()=>setMyAnimation('breakFreeze')}>breakFreeze</button>
