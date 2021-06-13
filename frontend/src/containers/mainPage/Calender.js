@@ -184,25 +184,53 @@ function MyResponsiveBar({todoList, schedule, day, setDay}) {
           }
         ))
       }
-      const today = new Date(schedule[0].date)
+      const firstDate = new Date(schedule[0].date)
+      const today = new Date()
+      let tempDate = new Date(today)
+      const week = 0
+      let weekSchedule = [] // 將設定星期的schedule取出
+
+      // 檢查設定的星期的第一天是否在 schedule 的第一天之前
+      // 如果是，則取出的 weekSchedule 會小於7天
+      if (tempDate.setDate(today.getDate()-today.getDay() + week*7) < firstDate) {
+        // 檢查設定的星期的最後一天是否在 schedule 的第一天之後
+        if (tempDate.setDate(tempDate.getDate() - tempDate.getDay() + 6) >= firstDate) {
+          weekSchedule = schedule.slice(0, tempDate.getDay() - firstDate.getDay() + 1)
+        }  
+      }
+      else {
+        const i = Math.round((tempDate - firstDate)/(1000*60*60*24))
+        weekSchedule = schedule.slice(i, i+7)
+      }
+      const length = weekSchedule.length
+
+      // 根據 weekSchedule 將每天的事件放入
       const newTask = day.map(( value, i ) => {
         let tempEvents = {
           day: weekDay[i],
           empty: value,
           totalTime: value
         }
-        // 篩選這星期的schedule
-        if (i > today.getDay()-1) {
-          const index = i-today.getDay()+1
-          if (index < schedule.length) {
-            let eventsTime = 0
-            schedule[index].events.forEach((value) => {
-              tempEvents[value] = todoEvents[value]
-              eventsTime += todoEvents[value]
-            })
-            tempEvents.empty = tempEvents.totalTime - eventsTime
-          }
+        if (i >= 7-length) {
+          let eventsTime = 0;
+          weekSchedule[i].events.forEach((value) => {
+            tempEvents[value] = todoEvents[value]
+            eventsTime += todoEvents[value]
+          })
+          tempEvents.empty = tempEvents.totalTime - eventsTime
         }
+        // 篩選這星期的schedule
+        // if (i > today.getDay()-1) {
+        //   const index = i-today.getDay()+1
+        //   if (index < schedule.length) {
+        //     let eventsTime = 0
+        //     schedule[index].events.forEach((value) => {
+        //       tempEvents[value] = todoEvents[value]
+        //       eventsTime += todoEvents[value]
+        //     })
+        //     tempEvents.empty = tempEvents.totalTime - eventsTime
+        //   }
+        // }
         return tempEvents
         })
       return newTask;
