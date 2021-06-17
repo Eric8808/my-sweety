@@ -143,8 +143,11 @@ const schedule = async (events, available, startdate ,revise_time) => {
         }
     }
     console.log(`credit : ${max_cost}`)
+    possible_day_events[max_i].forEach((_, i) => {
+      const date = possible_day_events[max_i][i].date
+      date.setDate(date.getDate()+1)
+    })
     console.log(possible_day_events[max_i]);
-
     return possible_day_events[max_i];
 }
 //test

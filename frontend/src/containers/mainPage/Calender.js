@@ -1,20 +1,20 @@
 import { ResponsiveBar } from '@nivo/bar'
-import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
 import {useState, useEffect} from 'react'
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import { Typography } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
-import useCalender from '../../hooks/useCalender'
-
+import { Typography } from '@material-ui/core';
+import CalenderDrawer from '../../Components/CalenderDrawer';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import CalenderDate from '../../Components/CalenderDates'
 const useStyles = makeStyles({
     root: {
         display: 'flex',
       },
     calender: {
-      height:'60vh'
+      height:'56vh'
     },
     drawer: {
       '& .MuiDrawer-paper':{
@@ -28,6 +28,12 @@ const useStyles = makeStyles({
         height: 'auto',
         background:"blue"
     },
+    date: {
+      textAlign: 'center',
+    },
+    arrow: {
+      fontSize: 40,
+    }
     }
   });
 
@@ -167,6 +173,7 @@ function MyResponsiveBar({todoList, schedule, day, setDay}) {
     const classes = useStyles();
     const [drawerOpen, setDrawerOpen] = useState(false)
     const [drawerContent, setDrawerContent] = useState('')
+    const [week, setWeek] = useState(0)
 
     const todoEvents = {} // 把事件和對應的時間包成物件
     todoList.forEach(({name, separate, needtime}) => {
@@ -185,25 +192,29 @@ function MyResponsiveBar({todoList, schedule, day, setDay}) {
         ))
       }
       const firstDate = new Date(schedule[0].date)
+      firstDate.setDate(firstDate.getDate()-1)
       const today = new Date()
       let tempDate = new Date(today)
-      const week = 0
+      console.log(tempDate)
+      // const week = week
       let weekSchedule = [] // 將設定星期的schedule取出
 
       // 檢查設定的星期的第一天是否在 schedule 的第一天之前
       // 如果是，則取出的 weekSchedule 會小於7天
       if (tempDate.setDate(today.getDate()-today.getDay() + week*7) < firstDate) {
-        // 檢查設定的星期的最後一天是否在 schedule 的第一天之後
+        // 檢查設定的星期的最後一天是否在 schedule ㄇ的第一天之後
         if (tempDate.setDate(tempDate.getDate() - tempDate.getDay() + 6) >= firstDate) {
+          // console.log(firstDate)
           weekSchedule = schedule.slice(0, tempDate.getDay() - firstDate.getDay() + 1)
         }  
       }
       else {
-        const i = Math.round((tempDate - firstDate)/(1000*60*60*24))
+        console.log(tempDate)
+        const i = Math.round((tempDate - firstDate)/(1000*60*60*24)) - 1
         weekSchedule = schedule.slice(i, i+7)
       }
       const length = weekSchedule.length
-
+      console.log(weekSchedule)
       // 根據 weekSchedule 將每天的事件放入
       const newTask = day.map(( value, i ) => {
         let tempEvents = {
@@ -211,9 +222,18 @@ function MyResponsiveBar({todoList, schedule, day, setDay}) {
           empty: value,
           totalTime: value
         }
-        if (i >= 7-length) {
+        let index = 0
+        if (week === 0) {
+          index = i + length - 7
+        }
+        else {
+          if (length !== 7) {
+            index = (i < length)? i : -1
+          }
+        }
+        if (index >= 0) {
           let eventsTime = 0;
-          weekSchedule[i].events.forEach((value) => {
+          weekSchedule[index].events.forEach((value) => {
             tempEvents[value] = todoEvents[value]
             eventsTime += todoEvents[value]
           })
@@ -262,9 +282,10 @@ function MyResponsiveBar({todoList, schedule, day, setDay}) {
 
     useEffect(() => {
       setTask(scheduleToTask())
-    }, [schedule])
+    }, [schedule, week])
     return (
         <>
+        <CalenderDate week={week} setWeek={setWeek}/>
         <div className={classes.calender}>
           <ResponsiveBar
               data={task}
@@ -272,7 +293,7 @@ function MyResponsiveBar({todoList, schedule, day, setDay}) {
               // keys={['empty']}
               keys={['empty', ...Object.keys(todoEvents)]}
               indexBy="day"
-              margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+              margin={{ top: 20, right: 130, bottom: 20, left: 60 }}
               padding={0.3}
               // reverse={true}
               valueScale={{ type: 'linear' }}
@@ -378,9 +399,7 @@ function MyResponsiveBar({todoList, schedule, day, setDay}) {
           />
         </div>
         <Grid container justify='space-around'>
-          <Grid item xs={1}>
-
-          </Grid>
+          <Grid item xs={1}/>
           {weekDay.map((value, i) => (
             <Grid item xs={1} key={`day${value}`}>
               <TextField
@@ -403,29 +422,13 @@ function MyResponsiveBar({todoList, schedule, day, setDay}) {
               />
           </Grid>
           ))}
-          <Grid item xs={1}>
-
-          </Grid>
-          <Grid item xs={1}>
-
-          </Grid>
+          <Grid item xs={1}/>
+          <Grid item xs={1}/>
         </Grid>
-        
-        <Drawer className={classes.drawer} 
-                ModalProps={{BackdropProps:{invisible:true}}} 
-                anchor={'right'} 
-                open={drawerOpen}
-                onClose={toggleDrawer(false)}>
-            <Card className={classes.card} elevation={0}>
-                <CardContent>
-                    {Object.keys(drawerContent).map((value) => (
-                        <Typography>
-                            {`${value}: ${drawerContent[value]}`}
-                        </Typography>
-                    ))}
-                </CardContent>
-            </Card>
-        </Drawer>
+        <CalenderDrawer
+           open={drawerOpen}
+           toggleDrawer={toggleDrawer}
+           content={drawerContent}/>
         </>
     )
 }
