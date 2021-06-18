@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import CalenderDate from '../../Components/CalenderDates'
+import CalenderPopUpWindow from '../../Components/CalenderPopUpWindow'
 const useStyles = makeStyles({
     root: {
         display: 'flex',
@@ -169,7 +170,7 @@ const handleChange = (func, event) => {
 
 
 // const MyResponsiveBar = () => (
-function MyResponsiveBar({todoList, schedule, day, setDay}) {
+function MyResponsiveBar({todoList, schedule, day, setDay, setMyAnimation}) {
     const classes = useStyles();
     const [drawerOpen, setDrawerOpen] = useState(false)
     const [drawerContent, setDrawerContent] = useState('')
@@ -261,6 +262,7 @@ function MyResponsiveBar({todoList, schedule, day, setDay}) {
     const handleClick = (data) => {
         setDrawerContent(data)
         setDrawerOpen(true)
+        setMyAnimation("flair")
         console.log(data)
     }
 
@@ -425,10 +427,16 @@ function MyResponsiveBar({todoList, schedule, day, setDay}) {
           <Grid item xs={1}/>
           <Grid item xs={1}/>
         </Grid>
-        <CalenderDrawer
+        {/* <CalenderDrawer
            open={drawerOpen}
            toggleDrawer={toggleDrawer}
-           content={drawerContent}/>
+           content={drawerContent}/>*/}
+        <CalenderPopUpWindow
+          drawerOpen={drawerOpen}
+          setDrawerOpen={setDrawerOpen}
+          content={drawerContent}
+          setMyAnimation={setMyAnimation}
+        />
         </>
     )
 }
