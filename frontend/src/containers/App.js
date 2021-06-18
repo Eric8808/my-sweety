@@ -5,6 +5,8 @@ import Calender from './mainPage/Calender'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import Panel from './mainPage/Panel'
 import TodoList from '../containers/mainPage/TodoList'
 import useTodoList from '../hooks/useTodoList'
@@ -15,6 +17,10 @@ import TextField from '@material-ui/core/TextField'
 import { useEffect, useState } from 'react';
 import axios from './api';
 import useCalender from '../hooks/useCalender'
+import useDisplayStatus from '../hooks/useDisplayStatus'
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,10 +54,17 @@ function App(props) {
   const {todoList, addItem, deleteItem, setTodoList} = useTodoList()
   const {day, setDay} = useCalender()
   const [myAnimation, setMyAnimation] = useState('sitting')
+  const {msg, setMsg, showMsg, setShowMsg, messageState, setMessageState} = useDisplayStatus();
   const [schedule,setSchedule] = useState([])
-  
+  const [lockOpen, setLockOpen] = useState(false)
+  function displayStatus(state, msg){
+    // state: 'success', 'error', 'warning', 'info'
+    setMsg(msg)
+    setShowMsg(true)
+    setMessageState(state)
+  }
   useEffect(async()=>{
-    // schedule, todolist initialization
+    // schedule, todolist initialization (if signed in.)
     if(props.username!=null){
       console.log('start fetch from backend!')
       try{
@@ -68,14 +81,21 @@ function App(props) {
         setDay.forEach((setter, i)=>{setter(day[i])})
         setTodoList(todoList)
         setSchedule(schedule)
+        displayStatus('success', 'User data initialization successfully!')
+        setLockOpen(true)
       } catch(e){
         console.log('initial fetch error QQ', e)
+        displayStatus('error', 'Server is not on.')
       }
     }
   },[])
 
   useEffect(async()=>{
-    // send data to backend if todoList or schedule changes.
+    // send data to backend if todoList, day or schedule changes.
+    if(!lockOpen){
+      // to avoid sending init data to update DB before fetching the account data.
+      return
+    }
     try{
       if(props.username!=null){
         console.log('start update to backend!')
@@ -89,6 +109,7 @@ function App(props) {
       }
     }catch(e){
       console.log('send to backend error QQ', e)
+      displayStatus('error', 'Server is not on.')
     }
   },[schedule, todoList, day])
   return (
@@ -148,6 +169,12 @@ function App(props) {
                 
         </Grid>
       </Grid>
+      <Snackbar open={showMsg} autoHideDuration={6000} onClose={()=>setShowMsg(false)}>
+          <Alert onClose={()=>setShowMsg(false)} severity={messageState}>
+              {/* successState: error, warning, info, success */}
+              {msg}
+          </Alert>
+      </Snackbar>
     </div>
     
       // <Header/>
