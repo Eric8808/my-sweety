@@ -53,7 +53,8 @@ export default function AlertDialog({drawerOpen, setDrawerOpen, content, setMyAn
           <DialogContent 
             style={{
                 borderRadius:"30px",
-                padding:"50px 80px 30px 40px"}}>
+                padding:"50px 80px 30px 40px",
+                }}>
             <DialogContentText id="alert-dialog-description" style={{color:"black", fontSize:"large"}}>
                 {`Event: ${event}`}
                 <br></br>
@@ -61,12 +62,15 @@ export default function AlertDialog({drawerOpen, setDrawerOpen, content, setMyAn
                 <br></br>
                 {`Working Day: ${day}`}
             </DialogContentText>
-            <DialogActions>
-                <button onClick={handleClose}>close</button>
-                <button onClick={handleClose}>close</button>
-            </DialogActions>
+            
           </DialogContent>
-          
+          <DialogActions style={{
+                borderRadius:"30px",
+                padding:"0px 80px 0px 0px",
+                }}>
+            <button onClick={handleClose}>close</button>
+            <button onClick={handleClose}>close</button>
+        </DialogActions>
         </Dialog>
       </div>
     );
