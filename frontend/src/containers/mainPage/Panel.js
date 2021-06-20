@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function Panel({addItem, todoList, setSchedule, day, setDisplayStatus}) {
+function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule}) {
   const classes = useStyles();
   const [showBtn, setShowBtn] = useState(true)
   const [showBlock, setShowBlock] = useState(false)
@@ -35,18 +35,46 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus}) {
     let tempdate = new Date();
     let now_date = new Date(tempdate.getFullYear(),tempdate.getMonth(),tempdate.getDate());
 
-    const m = await axios.post('/api/scheduling/calculate',{
-      events : todoList.map((e)=>{return {name: e.name, needtime:parseInt(e.needtime,10), seperate: parseInt(e.separate,10), deadline: new Date(e.deadline.getFullYear(),e.deadline.getMonth(),e.deadline.getDate())}}), 
-      available : day, //[5,2,3,4,6,7,3],
-      nowdata : now_date,
-      edittime : {}
-    })
-    // 小黑記得處理算不出來的例外
-    if(!m.data.ans.error){
-      setSchedule(m.data.ans)
-    }else{
-      setDisplayStatus('error',m.data.ans.error)
+    const gettime = (name) =>{
+      return 0;
     }
+    
+    if(schedule.length===0){
+      const m = await axios.post('/api/scheduling/calculate',{
+        events : todoList.map((e)=>{return {name: e.name, needtime:parseInt(e.needtime,10), seperate: parseInt(e.separate,10), deadline: new Date(e.deadline.getFullYear(),e.deadline.getMonth(),e.deadline.getDate())}}), 
+        available : day, //[5,2,3,4,6,7,3],
+        nowdata : now_date,
+        edittime : {}
+      })
+      // 小黑記得處理算不出來的例外
+      if(!m.data.ans.error){
+        setSchedule(m.data.ans)
+      }else{
+        setDisplayStatus('error',m.data.ans.error)
+      }
+    }else{
+      let getedittime = {};
+      for(let i=0;i<schedule.length;i++){
+        let totaltime = 0;
+        for(let j=0;j<schedule[i].events.length;j++){
+          totaltime += gettime(schedule[i].events[j])
+        }
+        getedittime[schedule[i].date] = totaltime;
+      }
+      const m = await axios.post('/api/scheduling/calculate',{
+        events : todoList.map((e)=>{return {name: e.name, needtime:parseInt(e.needtime,10), seperate: parseInt(e.separate,10), deadline: new Date(e.deadline.getFullYear(),e.deadline.getMonth(),e.deadline.getDate())}}), 
+        available : day, //[5,2,3,4,6,7,3],
+        nowdata : now_date,
+        edittime : getedittime
+      })
+      // 小黑記得處理算不出來的例外
+      if(!m.data.ans.error){
+        setSchedule(m.data.ans)
+      }else{
+        setDisplayStatus('error',m.data.ans.error)
+      }
+    }
+    
     
   }
 

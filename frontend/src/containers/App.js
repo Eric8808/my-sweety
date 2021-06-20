@@ -128,7 +128,7 @@ function App(props) {
           <Grid container item spacing={2} xs={6} justify='space-evenly'>
             <Grid item xs={12} >
               {/* <Card className={classes.block} style={{height:'20vh', marginTop:'1vh'}}> */}
-                <Panel addItem={addItem} todoList={todoList} setSchedule={setSchedule} day={day} setDisplayStatus={setDisplayStatus}/>
+                <Panel addItem={addItem} todoList={todoList} setSchedule={setSchedule} day={day} setDisplayStatus={setDisplayStatus} schedule={schedule}/>
                 <button onClick={()=>setMyAnimation('assasination')}>assasination</button>
                 <button onClick={()=>setMyAnimation('break1990')}>break1990</button>
                 <button onClick={()=>setMyAnimation('breakFreeze')}>breakFreeze</button>
