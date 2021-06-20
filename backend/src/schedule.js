@@ -35,7 +35,7 @@ const schedule = async (events, available, startdate ,revise_time) => {
     for(let i = 0;i<events.length;i++){
         if(events[i].needtime/events[i].seperate > available_max){
             console.log('the maximum event can\'t be put into the schedule.')
-            return -1;
+            return {error:'the maximum event can\'t be put into the schedule.'};
         };
     }
 
@@ -122,8 +122,8 @@ const schedule = async (events, available, startdate ,revise_time) => {
     console.log('--------------------------------------------------------------------------------------------------------------------------------------------')
     let max_cost = 0,max_i=0;
     if(possible_day_events.length === 0 ) {
-        console.log("cn't generate the schedule.");
-        return 0;
+        console.log("can't generate the schedule.");
+        return {error:"can't generate the schedule."};
     }
     for(let i=0;i<possible_day_events.length;i++){
         //console.log(possible_day_events[i]);

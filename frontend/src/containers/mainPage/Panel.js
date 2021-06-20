@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function Panel({addItem, todoList, setSchedule, day}) {
+function Panel({addItem, todoList, setSchedule, day, setDisplayStatus}) {
   const classes = useStyles();
   const [showBtn, setShowBtn] = useState(true)
   const [showBlock, setShowBlock] = useState(false)
@@ -42,7 +42,12 @@ function Panel({addItem, todoList, setSchedule, day}) {
       edittime : {}
     })
     // 小黑記得處理算不出來的例外
-    setSchedule(m.data.ans)
+    if(!m.data.ans.error){
+      setSchedule(m.data.ans)
+    }else{
+      setDisplayStatus('error',m.data.ans.error)
+    }
+    
   }
 
   const handleAdd = () => {
