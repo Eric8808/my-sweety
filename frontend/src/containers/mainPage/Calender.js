@@ -338,7 +338,9 @@ function MyResponsiveBar({todoList, schedule, day, setDay, setMyAnimation}) {
                   //     id: 'lines'
                   // }
               ]}
-              borderColor={{ from: 'color', modifiers: [ [ 'darker', '1.6' ] ] }}
+              borderRadius={6}
+              borderWidth={2}
+              borderColor={{ from: 'color', modifiers: [ [ 'darker', '3' ] ] }}
               axisTop={{
                   tickSize: 0,
                   tickPadding: 5,

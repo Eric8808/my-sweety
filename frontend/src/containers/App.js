@@ -15,6 +15,7 @@ import AllTodo from './mainPage/block/AllTodo'
 import Sweety from './mainPage/block/sweety'
 import TextField from '@material-ui/core/TextField'
 import { useEffect, useState } from 'react';
+import Zoom from '@material-ui/core/Zoom';
 import axios from './api';
 import useCalender from '../hooks/useCalender'
 import useDisplayStatus from '../hooks/useDisplayStatus'
@@ -47,7 +48,8 @@ const useStyles = makeStyles((theme) => ({
   },
   block:{
     // background:"linear-gradient(45deg, #ba68c8 30%, #e1bee7 90%)"
-    background:"#c5cae9"
+    background:"#c5cae9",
+    borderColor:"black"
   }
 
 }));
@@ -61,6 +63,7 @@ function App(props) {
   // status: success, error, info, warning
   const [schedule,setSchedule] = useState([])
   const [lockOpen, setLockOpen] = useState(false)
+  const [zoom, setZoom] = useState(false)
   
   useEffect(async()=>{
     // schedule, todolist initialization (if signed in.)
@@ -96,6 +99,8 @@ function App(props) {
       return
     }
     try{
+      
+      // setTimeout(()=>setZoom(true),1000)
       if(props.username!=null){
         console.log('start update to backend!')
         const {data:{message}} = await axios.post('/api/data/update',{
@@ -113,11 +118,14 @@ function App(props) {
   },[schedule, todoList, day])
   return (
     <div className={classes.root}>
+      {/* <Zoom in={zoom}> */}
       <Grid container>
         <Grid container item spacing={0} justify='space-evenly'>
           <Grid container item spacing={2} xs={3}justify='space-evenly'>
+            
             <Grid item xs={12} >
               {/* <Card className={classes.block} style={{height:'40vh', marginTop:'1vh',borderRadius:'50%'}}> */}
+                {/* {zoom?<Sweety myAnimation={myAnimation}/>:<></>} */}
                 <Sweety myAnimation={myAnimation}/>
               {/* </Card> */}
             </Grid>
@@ -146,9 +154,11 @@ function App(props) {
               {/* </Card> */}
             </Grid>
             <Grid item xs={12}>
+              {/* <Zoom in={zoom}> */}
               <Card className={classes.block} style={{height:'70vh'}}>
                 <Calender todoList={todoList} schedule={schedule} day={day} setDay={setDay} setMyAnimation={setMyAnimation}/>
               </Card>
+              {/* </Zoom> */}
             </Grid>
           </Grid>
 
@@ -174,6 +184,7 @@ function App(props) {
               {msg}
           </Alert>
       </Snackbar>
+      {/* </Zoom> */}
     </div>
     
       // <Header/>

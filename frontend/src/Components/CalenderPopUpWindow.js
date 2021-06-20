@@ -41,11 +41,12 @@ export default function AlertDialog({drawerOpen, setDrawerOpen, content, setMyAn
               backgroundImage: "url('dialog.png')",
               backgroundColor:"transparent",
               backgroundRepeat:"no-repeat",
-              backgroundSize:"400px 230px",
+              backgroundSize:"20vw 23vh",
               boxShadow: 'none',
               position: 'absolute',
               left:"15vw",
-              height:"35vh"
+              height:"26vh",
+              width:"20vw"
 
           }}}
         >
@@ -53,7 +54,7 @@ export default function AlertDialog({drawerOpen, setDrawerOpen, content, setMyAn
           <DialogContent 
             style={{
                 borderRadius:"30px",
-                padding:"50px 80px 30px 40px",
+                padding:"5vh 2vw 0vh 2vw",
                 }}>
             <DialogContentText id="alert-dialog-description" style={{color:"black", fontSize:"large"}}>
                 {`Event: ${event}`}
@@ -66,7 +67,7 @@ export default function AlertDialog({drawerOpen, setDrawerOpen, content, setMyAn
           </DialogContent>
           <DialogActions style={{
                 borderRadius:"30px",
-                padding:"0px 80px 0px 0px",
+                padding:"0px 0px 0px 0px",
                 }}>
             <button onClick={handleClose}>close</button>
             <button onClick={handleClose}>close</button>
