@@ -28,7 +28,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     height: '100vh',
     overflow:"auto",
-    background:"#e3f2fd"
+    // background:"#e3f2fd"
+    background:"linear-gradient(45deg, #3f51b5 10%, #7986cb 90%)"
+    // background:"#424242"
   },
   calenderContainer: {
     // border: '1px solid black',
@@ -44,7 +46,8 @@ const useStyles = makeStyles((theme) => ({
     // overflow: 'auto',
   },
   block:{
-    background:"white"
+    // background:"linear-gradient(45deg, #ba68c8 30%, #e1bee7 90%)"
+    background:"#c5cae9"
   }
 
 }));
@@ -55,6 +58,7 @@ function App(props) {
   const {day, setDay} = useCalender()
   const [myAnimation, setMyAnimation] = useState('sitting')
   const {msg, showMsg, messageState, setDisplayStatus, setShowMsg} = useDisplayStatus();
+  // status: success, error, info, warning
   const [schedule,setSchedule] = useState([])
   const [lockOpen, setLockOpen] = useState(false)
   

@@ -21,7 +21,8 @@ const useStyles = makeStyles((theme) => ({
   list:{
     height: '50vh',
     overflow: 'auto',
-    backgroundColor: theme.palette.background.paper,
+    // backgroundColor: theme.palette.background.paper,
+    background:"#c5cae9",
     '& .MuiListItem-container': {
       '& .MuiIconButton-root': {
         display: 'none' 
