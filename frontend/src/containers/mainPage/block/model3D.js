@@ -19,13 +19,19 @@ export default function Model(props) {
   const { actions } = useAnimations(animations, group)
   const nowAnimation = props.myAnimation
   const prevAnimation = usePrevious(nowAnimation)
+  let scale = [0.032, 0.032, 0.032]
+  let position = [0,-2.5,0]
+  if(props.start){
+    scale = [0.02, 0.02, 0.02]
+    position = [-0.8, -1.5, 0]
+  }
   useEffect(()=>{
     actions[prevAnimation].stop()
     actions[nowAnimation].play()
   },[nowAnimation])
   return (
     <group ref={group} {...props} dispose={null}>
-      <group rotation={[Math.PI / 2, 0, 0]} scale={[0.032, 0.032, 0.032]} position={[0,-2.5,0]}>
+      <group rotation={[Math.PI / 2, 0, 0]} scale={scale} position={position}>
         <primitive object={nodes.Hips} />
         <skinnedMesh
           geometry={nodes.Girl_Body_Geo.geometry}

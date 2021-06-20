@@ -4,7 +4,7 @@ import Model3D from "./model3D.js";
 
 import { OrbitControls } from "@react-three/drei";
 
-const Sweety=({myAnimation})=>{
+const Sweety=({myAnimation, start})=>{
 
   return(
     <Canvas>
@@ -12,7 +12,7 @@ const Sweety=({myAnimation})=>{
       <ambientLight intensity={1} />
       <directionalLight intensity={0.5} />
       <Suspense fallback={null}>
-        <Model3D myAnimation={myAnimation}/>
+        <Model3D myAnimation={myAnimation} start={start}/>
       </Suspense>
     </Canvas>
   )

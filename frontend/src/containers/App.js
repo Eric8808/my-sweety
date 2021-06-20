@@ -99,8 +99,7 @@ function App(props) {
       return
     }
     try{
-      
-      // setTimeout(()=>setZoom(true),1000)
+      setTimeout(()=>setZoom(true),4000)
       if(props.username!=null){
         console.log('start update to backend!')
         const {data:{message}} = await axios.post('/api/data/update',{
@@ -119,15 +118,14 @@ function App(props) {
   return (
     <div className={classes.root}>
       {/* <Zoom in={zoom}> */}
+      {!zoom?<Sweety myAnimation="breakFreeze" start={true}/>:
+      <>
       <Grid container>
         <Grid container item spacing={0} justify='space-evenly'>
           <Grid container item spacing={2} xs={3}justify='space-evenly'>
             
             <Grid item xs={12} >
-              {/* <Card className={classes.block} style={{height:'40vh', marginTop:'1vh',borderRadius:'50%'}}> */}
-                {/* {zoom?<Sweety myAnimation={myAnimation}/>:<></>} */}
                 <Sweety myAnimation={myAnimation}/>
-              {/* </Card> */}
             </Grid>
             <Grid item xs={12}>
               <Card className={classes.block} style={{height:'55vh',}}>
@@ -136,10 +134,8 @@ function App(props) {
             </Grid>
           </Grid>
 
-          {/* middle block inside-space:2 whole-width:6 */}
           <Grid container item spacing={2} xs={6} justify='space-evenly'>
             <Grid item xs={12} >
-              {/* <Card className={classes.block} style={{height:'20vh', marginTop:'1vh'}}> */}
                 <Panel addItem={addItem} todoList={todoList} setSchedule={setSchedule} day={day} setDisplayStatus={setDisplayStatus} schedule={schedule}/>
                 <button onClick={()=>setMyAnimation('assasination')}>assasination</button>
                 <button onClick={()=>setMyAnimation('break1990')}>break1990</button>
@@ -151,18 +147,14 @@ function App(props) {
                 <button onClick={()=>setMyAnimation('zombie-down')}>zombie-down</button>
                 <button onClick={()=>setMyAnimation('playDrum')}>playDrum</button>
                 <button onClick={()=>setMyAnimation('silly_dance')}>silly_dance</button>
-              {/* </Card> */}
             </Grid>
             <Grid item xs={12}>
-              {/* <Zoom in={zoom}> */}
               <Card className={classes.block} style={{height:'70vh'}}>
                 <Calender todoList={todoList} schedule={schedule} day={day} setDay={setDay} setMyAnimation={setMyAnimation}/>
               </Card>
-              {/* </Zoom> */}
             </Grid>
           </Grid>
 
-          {/* right block inside-space:2 whole-width:3*/}
           <Grid container item spacing={2} xs={3} justify='space-evenly'>
             <Grid item xs={12} >
               <Card className={classes.block} style={{height:'40vh', marginTop:'1vh'}}>
@@ -184,15 +176,9 @@ function App(props) {
               {msg}
           </Alert>
       </Snackbar>
-      {/* </Zoom> */}
+      </>
+      }      
     </div>
-    
-      // <Header/>
-      // <Grid container className={classes.root} spacing={10} >
-      //   <Grid item height='100%'>
-      //     <Paper variant="outlined" className={classes.paper} elevation={8}/>
-      //   </Grid>
-      // </Grid>
   );
 }
 
