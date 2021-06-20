@@ -63,9 +63,18 @@ function App(props) {
   // status: success, error, info, warning
   const [schedule,setSchedule] = useState([])
   const [lockOpen, setLockOpen] = useState(false)
-  const [zoom, setZoom] = useState(false)
+  const [start, setStart] = useState(false)
+  const [zoom1, setZoom1] = useState(false)
+  const [zoom2, setZoom2] = useState(false)
+  const [zoom3, setZoom3] = useState(false)
+  const [zoom4, setZoom4] = useState(false)
   
   useEffect(async()=>{
+    setTimeout(()=>setStart(true),4000)
+    setTimeout(()=>setZoom1(true),4000)
+    setTimeout(()=>setZoom2(true),4200)
+    setTimeout(()=>setZoom3(true),4200)
+    setTimeout(()=>setZoom4(true),4200)
     // schedule, todolist initialization (if signed in.)
     if(props.username!=null){
       console.log('start fetch from backend!')
@@ -99,7 +108,6 @@ function App(props) {
       return
     }
     try{
-      setTimeout(()=>setZoom(true),4000)
       if(props.username!=null){
         console.log('start update to backend!')
         const {data:{message}} = await axios.post('/api/data/update',{
@@ -118,19 +126,21 @@ function App(props) {
   return (
     <div className={classes.root}>
       {/* <Zoom in={zoom}> */}
-      {!zoom?<Sweety myAnimation="breakFreeze" start={true}/>:
+      {!start?<Sweety myAnimation="breakFreeze" start={true}/>:
       <>
       <Grid container>
         <Grid container item spacing={0} justify='space-evenly'>
           <Grid container item spacing={2} xs={3}justify='space-evenly'>
-            
-            <Grid item xs={12} >
+            <Grid item xs={12} style={{height:"45vh"}}>
                 <Sweety myAnimation={myAnimation}/>
             </Grid>
             <Grid item xs={12}>
-              <Card className={classes.block} style={{height:'55vh',}}>
-                <TodoList todoList={todoList} deleteItem={deleteItem}/>
-              </Card>
+              <Zoom in={zoom1}>
+                <Card className={classes.block} style={{height:'55vh',}}>
+                  <TodoList todoList={todoList} deleteItem={deleteItem}/>
+                </Card>
+              </Zoom>
+              
             </Grid>
           </Grid>
 
@@ -149,22 +159,30 @@ function App(props) {
                 <button onClick={()=>setMyAnimation('silly_dance')}>silly_dance</button>
             </Grid>
             <Grid item xs={12}>
-              <Card className={classes.block} style={{height:'70vh'}}>
-                <Calender todoList={todoList} schedule={schedule} day={day} setDay={setDay} setMyAnimation={setMyAnimation}/>
-              </Card>
+              <Zoom in={zoom2}>
+                <Card className={classes.block} style={{height:'70vh'}}>
+                  <Calender todoList={todoList} schedule={schedule} day={day} setDay={setDay} setMyAnimation={setMyAnimation}/>
+                </Card>
+              </Zoom>
+              
             </Grid>
           </Grid>
 
           <Grid container item spacing={2} xs={3} justify='space-evenly'>
             <Grid item xs={12} >
-              <Card className={classes.block} style={{height:'40vh', marginTop:'1vh'}}>
-                <Pie/>
-              </Card>
+              <Zoom in={zoom3}>
+                <Card className={classes.block} style={{height:'40vh', marginTop:'1vh'}}>
+                  <Pie/>
+                </Card>
+              </Zoom>
+              
             </Grid>
             <Grid item xs={12}>
-              <Card className={classes.block} style={{height:'55vh',}}>
-                <AllTodo/>
-              </Card>
+              <Zoom in={zoom4}>
+                <Card className={classes.block} style={{height:'55vh',}}>
+                  <AllTodo/>
+                </Card>
+              </Zoom>
             </Grid>
           </Grid>
                 
