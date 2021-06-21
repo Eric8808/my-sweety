@@ -13,6 +13,13 @@ const UserSchema = new Schema({
     needtime: Number,
     deadline: String
   }],
+  scheduledList:[{
+    name: String,
+    priority: String,
+    separate: Number,
+    needtime: Number,
+    deadline: String
+  }],
   schedule:[{
     date: String,
     events: [String]

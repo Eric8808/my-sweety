@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule}) {
+function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule, setScheduledList, clearTodoList}) {
   const classes = useStyles();
   const [showBtn, setShowBtn] = useState(true)
   const [showBlock, setShowBlock] = useState(false)
@@ -49,6 +49,8 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule}
       // 小黑記得處理算不出來的例外
       if(!m.data.ans.error){
         setSchedule(m.data.ans)
+        setScheduledList(todoList)
+        clearTodoList()
       }else{
         setDisplayStatus('error',m.data.ans.error)
       }
@@ -70,6 +72,8 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule}
       // 小黑記得處理算不出來的例外
       if(!m.data.ans.error){
         setSchedule(m.data.ans)
+        setScheduledList(todoList)
+        clearTodoList()
       }else{
         setDisplayStatus('error',m.data.ans.error)
       }

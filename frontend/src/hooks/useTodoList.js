@@ -17,7 +17,11 @@ const useTodoList = () => {
     setTodoList(todoList.filter((_,index) => index!==i))
   }
 
-  return {todoList, addItem, deleteItem, setTodoList};
+  const clearTodoList = () => {
+    setTodoList([])
+  }
+
+  return {todoList, addItem, deleteItem, clearTodoList, setTodoList};
 };
 
 export default useTodoList;

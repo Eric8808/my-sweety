@@ -15,7 +15,7 @@ const useStyles = makeStyles({
         display: 'flex',
       },
     calender: {
-      height:'56vh'
+      height:'52vh'
     },
     drawer: {
       '& .MuiDrawer-paper':{
@@ -170,19 +170,21 @@ const handleChange = (func, event) => {
 
 
 // const MyResponsiveBar = () => (
-function MyResponsiveBar({todoList, schedule, day, setDay, setMyAnimation}) {
+function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation}) {
     const classes = useStyles();
     const [drawerOpen, setDrawerOpen] = useState(false)
     const [drawerContent, setDrawerContent] = useState('')
     const [week, setWeek] = useState(0)
 
-    const todoEvents = {} // 把事件和對應的時間包成物件
-    todoList.forEach(({name, separate, needtime}) => {
-      todoEvents[name] = needtime/separate
-    })
+    
 
     // transform schedule to task for calender
     const scheduleToTask = () => {
+      const todoEvents = {} // 把事件和對應的時間包成物件
+      scheduledList.forEach(({name, separate, needtime}) => {
+        todoEvents[name] = needtime/separate
+        console.log(todoEvents)
+      })
       if (schedule.length === 0) {
         return day.map((value, i) => (
           {
@@ -224,19 +226,23 @@ function MyResponsiveBar({todoList, schedule, day, setDay, setMyAnimation}) {
           totalTime: value
         }
         let index = 0
+        let tempToday = new Date()
         if (week === 0) {
-          index = i + length - 7
+          index = i - tempToday.getDay()
         }
         else {
           if (length !== 7) {
             index = (i < length)? i : -1
           }
         }
-        if (index >= 0) {
+        if (index >= 0 && index < length) {
           let eventsTime = 0;
           weekSchedule[index].events.forEach((value) => {
             tempEvents[value] = todoEvents[value]
-            eventsTime += todoEvents[value]
+            console.log(todoEvents[value])
+            if (todoEvents[value]) {
+              eventsTime += todoEvents[value]
+            }
           })
           tempEvents.empty = tempEvents.totalTime - eventsTime
         }
@@ -252,12 +258,14 @@ function MyResponsiveBar({todoList, schedule, day, setDay, setMyAnimation}) {
         //     tempEvents.empty = tempEvents.totalTime - eventsTime
         //   }
         // }
+        // console.log(tempEvents)
         return tempEvents
         })
+      console.log(newTask)
       return newTask;
      }
 
-    const [task, setTask] = useState(scheduleToTask())
+    const [task, setTask] = useState([])
 
     const handleClick = (data) => {
         setDrawerContent(data)
@@ -280,11 +288,11 @@ function MyResponsiveBar({todoList, schedule, day, setDay, setMyAnimation}) {
         setDrawerOpen(open);
         setDrawerContent('')
       };
-    console.log(task)
 
     useEffect(() => {
+      console.log('effect')
       setTask(scheduleToTask())
-    }, [schedule, week])
+    }, [scheduledList, week])
     return (
         <>
         <CalenderDate week={week} setWeek={setWeek}/>
@@ -293,7 +301,7 @@ function MyResponsiveBar({todoList, schedule, day, setDay, setMyAnimation}) {
               data={task}
               // keys={[ 'hot dog', 'burger', 'sandwich', 'kebab', 'fries', 'donut' ]}
               // keys={['empty']}
-              keys={['empty', ...Object.keys(todoEvents)]}
+              keys={['empty', ...scheduledList.map((value)=>(value.name))]}
               indexBy="day"
               margin={{ top: 20, right: 130, bottom: 20, left: 60 }}
               padding={0.3}

@@ -44,15 +44,17 @@ const router = Router()
 router.get('/init', async(req, res)=>{
     const {username} = req.query
     console.log(`User ${username} comes to init data!`)
-    const {todoList, schedule, day} = await User.findOne({username:username});
+    const {todoList, schedule, scheduledList, day} = await User.findOne({username:username});
     //take something from database 記得error handle
     console.log(todoList)
     console.log(schedule)
     console.log(day)
+    console.log(scheduledList)
     if(day.length === 0){
       res.json({
         todoList: todoList,
         schedule: schedule,
+        scheduledList: scheduledList,
         day: [1,1,1,1,1,1,1]
       })
     }
@@ -60,21 +62,24 @@ router.get('/init', async(req, res)=>{
       res.json({
         todoList: todoList,
         schedule: schedule,
+        scheduledList: scheduledList,
         day: day
       })
     }
 })
 
 router.post('/update', async(req, res)=>{
-    const {username, todoList, schedule, day} = req.body
+    const {username, todoList, schedule, scheduledList, day} = req.body
     console.log(`User ${username} comes to update data!`)
     console.log(todoList)
     console.log(schedule)
     console.log(day)
+    console.log(scheduledList)
     try{
       await User.updateOne({username: username},{
         todoList: todoList,
         schedule: schedule,
+        scheduledList: scheduledList,
         day: day
       })
       res.json({message:'success'})

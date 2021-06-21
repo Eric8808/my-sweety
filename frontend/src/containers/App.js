@@ -19,6 +19,7 @@ import Zoom from '@material-ui/core/Zoom';
 import axios from './api';
 import useCalender from '../hooks/useCalender'
 import useDisplayStatus from '../hooks/useDisplayStatus'
+import ScheduledList from './mainPage/ScheduledList';
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -56,7 +57,8 @@ const useStyles = makeStyles((theme) => ({
 
 function App(props) {
   const classes = useStyles();
-  const {todoList, addItem, deleteItem, setTodoList} = useTodoList()
+  const {todoList, addItem, deleteItem, setTodoList, clearTodoList} = useTodoList()
+  const [scheduledList, setScheduledList] = useState([])
   const {day, setDay} = useCalender()
   const [myAnimation, setMyAnimation] = useState('sitting')
   const {msg, showMsg, messageState, setDisplayStatus, setShowMsg} = useDisplayStatus();
@@ -80,7 +82,7 @@ function App(props) {
       console.log('start fetch from backend!')
       try{
         const {
-          data:{todoList, schedule, day}
+          data:{todoList, schedule, day, scheduledList}
         } = await axios.get('/api/data/init',{
             params:{username: props.username}
         })
@@ -92,6 +94,7 @@ function App(props) {
         setDay.forEach((setter, i)=>{setter(day[i])})
         setTodoList(todoList)
         setSchedule(schedule)
+        setScheduledList(scheduledList)
         setDisplayStatus('success', 'User data initialization successfully!')
         setLockOpen(true)
       } catch(e){
@@ -114,6 +117,7 @@ function App(props) {
           username: props.username,
           todoList: todoList,
           schedule: schedule,
+          scheduledList: scheduledList,
           day: day
         })
         console.log('user data sent to backend successfully!')
@@ -122,7 +126,7 @@ function App(props) {
       console.log('send to backend error QQ', e)
       setDisplayStatus('error', 'Server is not on.')
     }
-  },[schedule, todoList, day])
+  },[schedule, todoList, scheduledList, day])
   return (
     <div className={classes.root}>
       {/* <Zoom in={zoom}> */}
@@ -146,7 +150,15 @@ function App(props) {
 
           <Grid container item spacing={2} xs={6} justify='space-evenly'>
             <Grid item xs={12} >
-                <Panel addItem={addItem} todoList={todoList} setSchedule={setSchedule} day={day} setDisplayStatus={setDisplayStatus} schedule={schedule}/>
+                <Panel 
+                  addItem={addItem} 
+                  todoList={todoList} 
+                  setSchedule={setSchedule}
+                  day={day} 
+                  setDisplayStatus={setDisplayStatus} 
+                  schedule={schedule}
+                  clearTodoList={clearTodoList}
+                  setScheduledList={setScheduledList}/>
                 <button onClick={()=>setMyAnimation('assasination')}>assasination</button>
                 <button onClick={()=>setMyAnimation('break1990')}>break1990</button>
                 <button onClick={()=>setMyAnimation('breakFreeze')}>breakFreeze</button>
@@ -161,7 +173,7 @@ function App(props) {
             <Grid item xs={12}>
               <Zoom in={zoom2}>
                 <Card className={classes.block} style={{height:'70vh'}}>
-                  <Calender todoList={todoList} schedule={schedule} day={day} setDay={setDay} setMyAnimation={setMyAnimation}/>
+                  <Calender scheduledList={scheduledList} schedule={schedule} day={day} setDay={setDay} setMyAnimation={setMyAnimation}/>
                 </Card>
               </Zoom>
               
@@ -180,7 +192,8 @@ function App(props) {
             <Grid item xs={12}>
               <Zoom in={zoom4}>
                 <Card className={classes.block} style={{height:'55vh',}}>
-                  <AllTodo/>
+                  <ScheduledList scheduledList={scheduledList} setScheduledList={setScheduledList}/>
+                  {/* <AllTodo/> */}
                 </Card>
               </Zoom>
             </Grid>
