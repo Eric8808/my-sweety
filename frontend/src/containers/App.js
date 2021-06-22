@@ -74,9 +74,9 @@ function App(props) {
   useEffect(async()=>{
     const openTime = 0 //4000
     setTimeout(()=>setStart(true),openTime)
-    setTimeout(()=>setZoom1(true),openTime)
+    setInterval(()=>setZoom1((zoom1)=>!zoom1),openTime+4000)
     setTimeout(()=>setZoom2(true),openTime+200)
-    setTimeout(()=>setZoom3(true),openTime+200)
+    setTimeout(()=>setZoom3(true),openTime+400)
     setTimeout(()=>setZoom4(true),openTime+200)
     // schedule, todolist initialization (if signed in.)
     if(props.username!=null){
@@ -136,16 +136,26 @@ function App(props) {
       <Grid container>
         <Grid container item spacing={0} justify='space-evenly'>
           <Grid container item spacing={2} xs={3}justify='space-evenly'>
-            <Grid item xs={12} style={{height:"45vh"}}>
-                <Sweety myAnimation={myAnimation}/>
-            </Grid>
             <Grid item xs={12}>
-              <Zoom in={zoom1}>
-                <Card className={classes.block} style={{height:'55vh',}}>
-                  <TodoList todoList={todoList} deleteItem={deleteItem}/>
+              <Zoom in={zoom1} timeout={300}>
+                <Card className={classes.block} 
+                      style={{
+                          backgroundImage: "url('dialog3.png')",
+                          backgroundColor:"transparent",
+                          backgroundRepeat:"no-repeat",
+                          backgroundSize:"24vw 33vh",
+                          boxShadow: 'none',
+                          position: 'absolute',
+                          height:"35vh",
+                          width:"25vw"
+
+                      }}>
+                  {/* <TodoList todoList={todoList} deleteItem={deleteItem}/> */}
                 </Card>
               </Zoom>
-              
+            </Grid>
+            <Grid item xs={12} >
+                <Sweety myAnimation={myAnimation}/>
             </Grid>
           </Grid>
 
@@ -161,7 +171,7 @@ function App(props) {
                   clearTodoList={clearTodoList}
                   setScheduledList={setScheduledList}
                   scheduledList={scheduledList}/>
-                <button onClick={()=>setMyAnimation('assasination')}>assasination</button>
+                {/* <button onClick={()=>setMyAnimation('assasination')}>assasination</button>
                 <button onClick={()=>setMyAnimation('break1990')}>break1990</button>
                 <button onClick={()=>setMyAnimation('breakFreeze')}>breakFreeze</button>
                 <button onClick={()=>setMyAnimation('flair')}>flair</button>
@@ -170,7 +180,7 @@ function App(props) {
                 <button onClick={()=>setMyAnimation('situpus')}>situpus</button>
                 <button onClick={()=>setMyAnimation('zombie-down')}>zombie-down</button>
                 <button onClick={()=>setMyAnimation('playDrum')}>playDrum</button>
-                <button onClick={()=>setMyAnimation('silly_dance')}>silly_dance</button>
+                <button onClick={()=>setMyAnimation('silly_dance')}>silly_dance</button> */}
             </Grid>
             <Grid item xs={12}>
               <Zoom in={zoom2}>
@@ -185,15 +195,15 @@ function App(props) {
           <Grid container item spacing={2} xs={3} justify='space-evenly'>
             <Grid item xs={12} >
               <Zoom in={zoom3}>
-                <Card className={classes.block} style={{height:'40vh', marginTop:'1vh'}}>
-                  <Pie/>
+                <Card className={classes.block} style={{height:'45vh', marginTop:'1vh'}}>
+                <TodoList todoList={todoList} deleteItem={deleteItem}/>
                 </Card>
               </Zoom>
               
             </Grid>
             <Grid item xs={12}>
               <Zoom in={zoom4}>
-                <Card className={classes.block} style={{height:'55vh',}}>
+                <Card className={classes.block} style={{height:'50vh',}}>
                   <ScheduledList scheduledList={scheduledList} setScheduledList={setScheduledList}/>
                   {/* <AllTodo/> */}
                 </Card>

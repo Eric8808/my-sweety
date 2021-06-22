@@ -22,6 +22,8 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import Fab from '@material-ui/core/Fab';
 import Collapse from '@material-ui/core/Collapse';
 
+import { FcBarChart } from "react-icons/fc";
+
 const useStyles = makeStyles((theme) => ({
   list:{
     height: '50vh',
@@ -60,7 +62,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: yellow[500],
   },
   listItem:{
-    paddingBottom:theme.spacing(0)
+    paddingBottom:theme.spacing(0),
+    paddingTop:theme.spacing(0)
   },
   nested: {
     // paddingLeft: theme.spacing(4),
@@ -141,13 +144,14 @@ function ScheduledList({scheduledList, setScheduledList}) {
                           <ListItemText 
                               primary={
                                 <>
+                                <FcBarChart style={{marginRight:"10px"}}/>
                                 <Button 
                                   className={classes.itemButton}
                                   size="small"
                                   variant="contained" 
                                   style={{
                                     borderRadius: 50,
-                                    height:"20px",
+                                    // height:"20px",
                                     color:"black",
                                     backgroundColor: colorList[i+1],
                                     fontStyle:"italic"
@@ -159,12 +163,7 @@ function ScheduledList({scheduledList, setScheduledList}) {
                               }
                               secondary={
                                 <>
-                                {([...Array(parseInt(value.separate))]).map((key)=>(
-                                  <Button style={{maxWidth: '30px', maxHeight: '30px', minWidth: '25px', minHeight: '10px'}} className={classes.doneButton}></Button>
-                                ))}
-                                {([...Array(parseInt(value.separate))]).map((key)=>(
-                                  <Button style={{maxWidth: '30px', maxHeight: '30px', minWidth: '25px', minHeight: '10px'}} className={classes.undoneButton}></Button>
-                                ))}
+                                
                                 </>
                               }
                           >
@@ -184,7 +183,15 @@ function ScheduledList({scheduledList, setScheduledList}) {
                           <ListItem button className={classes.nested}>
                             <ListItemText 
                                 primary={
-                                  Object.keys(value).map((key)=>{
+                                  <>
+                                  {([...Array(parseInt(value.separate))]).map((key)=>(
+                                  <Button style={{maxWidth: '30px', maxHeight: '30px', minWidth: '25px', minHeight: '10px'}} className={classes.doneButton}></Button>
+                                ))}
+                                {([...Array(parseInt(value.separate))]).map((key)=>(
+                                  <Button style={{maxWidth: '30px', maxHeight: '30px', minWidth: '25px', minHeight: '10px'}} className={classes.undoneButton}></Button>
+                                ))}
+                                  <br></br>
+                                  {Object.keys(value).map((key)=>{
                                     if(key==="_id"){
                                       return
                                     }
@@ -206,7 +213,8 @@ function ScheduledList({scheduledList, setScheduledList}) {
                                       <br></br>
                                       </>
                                     )
-                                  }) 
+                                  })}
+                                  </> 
                                 }
                             />
                           </ListItem>
