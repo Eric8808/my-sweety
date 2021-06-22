@@ -17,6 +17,7 @@ const schedule = async (events, available, startdate ,revise_time) => {
     ]
     */
    console.log(events)
+   console.log(revise_time)
     const geteventsdata = (name,gettype)=>{
         for(let iii=0;iii<events.length;iii++){
             if(events[iii].name===name){
@@ -56,7 +57,7 @@ const schedule = async (events, available, startdate ,revise_time) => {
         let temp = Object.keys(revise_time);
         for(let i=0;i<temp.length;i++){
             let temp2 = new Date(temp[i]);
-            if(temp2.getDate()===dd.getDate() && 
+            if(temp2.getDate()-1===dd.getDate() && 
             temp2.getMonth()===dd.getMonth() &&
             temp2.getFullYear()===dd.getFullYear()){
                 return revise_time[temp[i]];

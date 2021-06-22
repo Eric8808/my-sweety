@@ -158,7 +158,8 @@ function App(props) {
                   setDisplayStatus={setDisplayStatus} 
                   schedule={schedule}
                   clearTodoList={clearTodoList}
-                  setScheduledList={setScheduledList}/>
+                  setScheduledList={setScheduledList}
+                  scheduledList={scheduledList}/>
                 <button onClick={()=>setMyAnimation('assasination')}>assasination</button>
                 <button onClick={()=>setMyAnimation('break1990')}>break1990</button>
                 <button onClick={()=>setMyAnimation('breakFreeze')}>breakFreeze</button>
