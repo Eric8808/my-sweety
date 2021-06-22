@@ -113,6 +113,7 @@ function ScheduledList({scheduledList, setScheduledList}) {
 
   useEffect(() => {
     setOpen(Array(scheduledList.length).fill(false))
+    console.log("scheduled list changed!!!", scheduledList)
   }, [scheduledList]);
 
   useEffect(()=>{
@@ -199,7 +200,8 @@ function ScheduledList({scheduledList, setScheduledList}) {
                                           fontStyle:"italic"
                                         }}
                                       >
-                                        {key}: {value[key]}
+                                        {key}: {value[key].toString()}
+                                        {/* 123 */}
                                       </Typography>
                                       <br></br>
                                       </>

@@ -7,7 +7,7 @@ const schedule = async (events, available, startdate ,revise_time) => {
             name: string
             deadline: date
             needtime: int
-            seperate: int
+            separate: int
         }
     ]
 
@@ -16,14 +16,18 @@ const schedule = async (events, available, startdate ,revise_time) => {
         int,int,...,int (n=7)//1~7
     ]
     */
+
+    events.sort((event1, event2)=>(event1.priority - event2.priority))
+
    console.log(events)
+   console.log(revise_time)
     const geteventsdata = (name,gettype)=>{
         for(let iii=0;iii<events.length;iii++){
             if(events[iii].name===name){
                 if(gettype==="name")return new Date(events[iii].name);
                 if(gettype==="deadline")return new Date(events[iii].deadline);
                 if(gettype==="needtime")return new Date(events[iii].needtime);
-                if(gettype==="seperate")return new Date(events[iii].seperate);
+                if(gettype==="separate")return new Date(events[iii].separate);
             }
         }
     }
@@ -33,20 +37,20 @@ const schedule = async (events, available, startdate ,revise_time) => {
     //check max needtime
     let available_max = available.reduce(function(a, b) {return Math.max(a, b);})
     for(let i = 0;i<events.length;i++){
-        if(events[i].needtime/events[i].seperate > available_max){
+        if(events[i].needtime/events[i].separate > available_max){
             console.log('the maximum event can\'t be put into the schedule.')
             return {error:'the maximum event can\'t be put into the schedule.'};
         };
     }
 
-    let Seperate_events = [];
+    let separate_events = [];
     events.map( (e)=>{
-        for(let i=0 ; i<e.seperate ; i++){
-            Seperate_events.push({ name:e.name, time:e.needtime/e.seperate })
+        for(let i=0 ; i<e.separate ; i++){
+            separate_events.push({ name:e.name, time:e.needtime/e.separate })
         }
     })
 
-    let n = Seperate_events.length;
+    let n = separate_events.length;
     let used = Array.from(Array(events.length), ()=>0 );
     let solution = Array.from(Array(n), ()=>0 );
    
@@ -56,7 +60,7 @@ const schedule = async (events, available, startdate ,revise_time) => {
         let temp = Object.keys(revise_time);
         for(let i=0;i<temp.length;i++){
             let temp2 = new Date(temp[i]);
-            if(temp2.getDate()===dd.getDate() && 
+            if(temp2.getDate()-1===dd.getDate() && 
             temp2.getMonth()===dd.getMonth() &&
             temp2.getFullYear()===dd.getFullYear()){
                 return revise_time[temp[i]];
@@ -75,7 +79,7 @@ const schedule = async (events, available, startdate ,revise_time) => {
         //console.log(aschedule);
         let possible_day_event=[],dayevent=[];
         while(j<aschedule.length && j!==-1){
-            temp+=geteventsdata(aschedule[j],"needtime")/geteventsdata(aschedule[j],"seperate")
+            temp+=geteventsdata(aschedule[j],"needtime")/geteventsdata(aschedule[j],"separate")
             if(temp<=available[sday.getDay()]+get_revise_time(sday) && !dayevent.includes(aschedule[j]) ){
                 let temp2 = geteventsdata(aschedule[j],"deadline")
                 if(temp2.getTime()<sday.getTime()){return;}
@@ -102,7 +106,7 @@ const schedule = async (events, available, startdate ,revise_time) => {
             is_schedule_exceed_deadline(t);
         }else{
             for(let i=0;i<events.length;i++){
-                if(used[i]<events[i].seperate){
+                if(used[i]<events[i].separate){
                     used[i]++;
                     solution[x] = i;
                     permutation(x+1);

@@ -17,7 +17,7 @@ router.post('/calculate', async (req, res)=>{
     const available = req.body.available;
     const nowdata = new Date(req.body.nowdata);
     const edittime = req.body.edittime;
-    
+
     let result = await schedule(
         events,
         available,
