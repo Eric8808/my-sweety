@@ -42,7 +42,7 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
     
     if(schedule.length===0){
       const m = await axios.post('/api/scheduling/calculate',{
-        events : todoList.map((e)=>{return {name: e.name, needtime:parseInt(e.needtime,10), seperate: parseInt(e.separate,10), deadline: new Date(e.deadline.getFullYear(),e.deadline.getMonth(),e.deadline.getDate()) , priority: parseInt(e.priority,10)}}), 
+        events : todoList.map((e)=>{return {name: e.name, needtime:parseInt(e.needtime,10), separate: parseInt(e.separate,10), deadline: new Date(e.deadline.getFullYear(),e.deadline.getMonth(),e.deadline.getDate()) , priority: parseInt(e.priority,10)}}), 
         available : day, //[5,2,3,4,6,7,3],
         nowdata : now_date,
         edittime : {}
@@ -65,7 +65,7 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
         getedittime[schedule[i].date] = -totaltime;
       }
       const m = await axios.post('/api/scheduling/calculate',{
-        events : todoList.map((e)=>{return {name: e.name, needtime:parseInt(e.needtime,10), seperate: parseInt(e.separate,10), deadline: new Date(e.deadline.getFullYear(),e.deadline.getMonth(),e.deadline.getDate()), priority: parseInt(e.priority,10)}}), 
+        events : todoList.map((e)=>{return {name: e.name, needtime:parseInt(e.needtime,10), separate: parseInt(e.separate,10), deadline: new Date(e.deadline.getFullYear(),e.deadline.getMonth(),e.deadline.getDate()), priority: parseInt(e.priority,10)}}), 
         available : day, //[5,2,3,4,6,7,3],
         nowdata : now_date,
         edittime : getedittime
