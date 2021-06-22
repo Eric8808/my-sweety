@@ -34,9 +34,6 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
 
     let tempdate = new Date();
     let now_date = new Date(tempdate.getFullYear(),tempdate.getMonth(),tempdate.getDate());
-    console.log(scheduledList);
-    console.log(schedule);
-    console.log(todoList)
     const gettime = (name) =>{
       for(let i=0;i<scheduledList.length;i++){
         if(name===scheduledList[i].name) return parseInt(scheduledList[i].needtime,10)/parseInt(scheduledList[i].separate,10)
@@ -45,7 +42,7 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
     
     if(schedule.length===0){
       const m = await axios.post('/api/scheduling/calculate',{
-        events : todoList.map((e)=>{return {name: e.name, needtime:parseInt(e.needtime,10), seperate: parseInt(e.separate,10), deadline: new Date(e.deadline.getFullYear(),e.deadline.getMonth(),e.deadline.getDate())}}), 
+        events : todoList.map((e)=>{return {name: e.name, needtime:parseInt(e.needtime,10), seperate: parseInt(e.separate,10), deadline: new Date(e.deadline.getFullYear(),e.deadline.getMonth(),e.deadline.getDate()) , priority: parseInt(e.priority,10)}}), 
         available : day, //[5,2,3,4,6,7,3],
         nowdata : now_date,
         edittime : {}
@@ -68,7 +65,7 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
         getedittime[schedule[i].date] = -totaltime;
       }
       const m = await axios.post('/api/scheduling/calculate',{
-        events : todoList.map((e)=>{return {name: e.name, needtime:parseInt(e.needtime,10), seperate: parseInt(e.separate,10), deadline: new Date(e.deadline.getFullYear(),e.deadline.getMonth(),e.deadline.getDate())}}), 
+        events : todoList.map((e)=>{return {name: e.name, needtime:parseInt(e.needtime,10), seperate: parseInt(e.separate,10), deadline: new Date(e.deadline.getFullYear(),e.deadline.getMonth(),e.deadline.getDate()), priority: parseInt(e.priority,10)}}), 
         available : day, //[5,2,3,4,6,7,3],
         nowdata : now_date,
         edittime : getedittime
@@ -91,7 +88,6 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
             }
           }
         }
-        console.log(concatschedule);
         setSchedule(concatschedule)
         setScheduledList(scheduledList.concat(todoList))
         clearTodoList()

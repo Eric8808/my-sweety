@@ -16,6 +16,9 @@ const schedule = async (events, available, startdate ,revise_time) => {
         int,int,...,int (n=7)//1~7
     ]
     */
+
+    events.sort((event1, event2)=>(event1.priority - event2.priority))
+
    console.log(events)
    console.log(revise_time)
     const geteventsdata = (name,gettype)=>{
