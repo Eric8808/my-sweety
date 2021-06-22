@@ -72,11 +72,12 @@ function App(props) {
   const [zoom4, setZoom4] = useState(false)
   
   useEffect(async()=>{
-    setTimeout(()=>setStart(true),4000)
-    setTimeout(()=>setZoom1(true),4000)
-    setTimeout(()=>setZoom2(true),4200)
-    setTimeout(()=>setZoom3(true),4200)
-    setTimeout(()=>setZoom4(true),4200)
+    const openTime = 0 //4000
+    setTimeout(()=>setStart(true),openTime)
+    setTimeout(()=>setZoom1(true),openTime)
+    setTimeout(()=>setZoom2(true),openTime+200)
+    setTimeout(()=>setZoom3(true),openTime+200)
+    setTimeout(()=>setZoom4(true),openTime+200)
     // schedule, todolist initialization (if signed in.)
     if(props.username!=null){
       console.log('start fetch from backend!')

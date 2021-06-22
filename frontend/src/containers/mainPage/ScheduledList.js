@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import List from '@material-ui/core/List';
@@ -16,6 +16,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import {yellow, orange, red } from '@material-ui/core/colors';
 import Grow from '@material-ui/core/Grow'
 import Slide from '@material-ui/core/Slide';
+import { Typography } from '@material-ui/core';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import Fab from '@material-ui/core/Fab';
+import Collapse from '@material-ui/core/Collapse';
 
 const useStyles = makeStyles((theme) => ({
   list:{
@@ -37,23 +42,51 @@ const useStyles = makeStyles((theme) => ({
   },
   listSection: {
     backgroundColor: 'inherit',
-    },
-    ul: {
-      backgroundColor: 'inherit',
-      padding: 0,
-    },
-    prior1: {
-      color: theme.palette.getContrastText(red[500]),
-      backgroundColor: red[500],
-    },
-    prior2: {
-      color: theme.palette.getContrastText(orange[500]),
-      backgroundColor: orange[500],
-    },
-    prior3: {
-      color: theme.palette.getContrastText(yellow[500]),
-      backgroundColor: yellow[500],
-    },
+  },
+  ul: {
+    backgroundColor: 'inherit',
+    padding: 0,
+  },
+  prior1: {
+    color: theme.palette.getContrastText(red[500]),
+    backgroundColor: red[500],
+  },
+  prior2: {
+    color: theme.palette.getContrastText(orange[500]),
+    backgroundColor: orange[500],
+  },
+  prior3: {
+    color: theme.palette.getContrastText(yellow[500]),
+    backgroundColor: yellow[500],
+  },
+  listItem:{
+    paddingBottom:theme.spacing(0)
+  },
+  nested: {
+    // paddingLeft: theme.spacing(4),
+    paddingTop:theme.spacing(0)
+  },
+  doneButton:{
+    backgroundColor:"green",
+    fontSize:"xx-small",
+    color:"white",
+    pointerEvents: "none",
+    margin:"5px 3px 0px 0px",
+  },
+  undoneButton:{
+    // maxWidth:"300px",
+    backgroundColor:"red",
+    fontSize:"xx-small",
+    color:"white",
+    pointerEvents: "none",
+    margin:"5px 3px 0px 0px",
+  },
+  itemButton:{
+    textTransform: "none",
+    margin:"0px 3px 0px 0px",
+  },
+  
+
   }));
 
 
@@ -64,11 +97,29 @@ function ScheduledList({scheduledList, setScheduledList}) {
     setScheduledList(scheduledList.filter((_,index) => index!==i))
       // deleteItem(i)
     }
+  const [open, setOpen] = useState(Array(scheduledList.length).fill(false));
+  const [colorList, setColorList] = useState([])
+  const handleClick = (i) => {
+    setOpen((state)=>{
+      state[i] = !state[i]
+      return [...state]
+    })
+  };
+  const makeColor=(specifier)=>{
+    var n = specifier.length / 6 | 0, colors = new Array(n), i = 0;
+    while (i < n) colors[i] = "#" + specifier.slice(i * 6, ++i * 6);
+    return colors;
+  }
 
-  // React.useEffect(() => {
-  //     setFadeTimeout(1500);
-  //   }, []);
+  useEffect(() => {
+    setOpen(Array(scheduledList.length).fill(false))
+  }, [scheduledList]);
 
+  useEffect(()=>{
+    const specifiers = "8dd3c7ffffb3bebadafb807280b1d3fdb462b3de69fccde5d9d9d9bc80bdccebc5ffed6f"
+    const colorList = makeColor(specifiers)
+    setColorList(colorList)
+  },[])
   return (
     <Grid item>
       <List className={classes.list} subheader={<li />}>
@@ -79,21 +130,86 @@ function ScheduledList({scheduledList, setScheduledList}) {
                 <Slide direction='right' in timeout={200}>
                     <div>
                       {(i===0)? <></> : <Divider />}
-                      <ListItem button className={classes.listItem}>
-                          <ListItemAvatar>
+                      <ListItem button className={classes.listItem} onClick={()=>{handleClick(i)}}>
+                          
+                          {/* <ListItemAvatar>
                               <Avatar className={classes[`prior${value.priority}`]}>
                                   {value.priority}
                               </Avatar>
-                          </ListItemAvatar>
-                          <ListItemText
-                              primary={value.name}
-                          />
+                          </ListItemAvatar> */}
+                          <ListItemText 
+                              primary={
+                                <>
+                                <Button 
+                                  className={classes.itemButton}
+                                  size="small"
+                                  variant="contained" 
+                                  style={{
+                                    borderRadius: 50,
+                                    height:"20px",
+                                    color:"black",
+                                    backgroundColor: colorList[i+1],
+                                    fontStyle:"italic"
+                                  }}
+                                >
+                                  {value.name}
+                                </Button>
+                                </>
+                              }
+                              secondary={
+                                <>
+                                {([...Array(parseInt(value.separate))]).map((key)=>(
+                                  <Button style={{maxWidth: '30px', maxHeight: '30px', minWidth: '25px', minHeight: '10px'}} className={classes.doneButton}></Button>
+                                ))}
+                                {([...Array(parseInt(value.separate))]).map((key)=>(
+                                  <Button style={{maxWidth: '30px', maxHeight: '30px', minWidth: '25px', minHeight: '10px'}} className={classes.undoneButton}></Button>
+                                ))}
+                                </>
+                              }
+                          >
+                          </ListItemText>
+                              
+                          
+                          {open[i] ? <ExpandLess /> : <ExpandMore />}
                           <ListItemSecondaryAction>
                               <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(i)}>
                                   <DeleteIcon />
                               </IconButton>
                           </ListItemSecondaryAction>
+
                       </ListItem>
+                      <Collapse in={open[i]} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding>
+                          <ListItem button className={classes.nested}>
+                            <ListItemText 
+                                primary={
+                                  Object.keys(value).map((key)=>{
+                                    if(key==="_id"){
+                                      return
+                                    }
+                                    return (
+                                      <>
+                                      <Typography 
+                                        size="small"
+                                        variant="contained" 
+                                        style={{
+                                          borderRadius: 0,
+                                          height:"20px",
+                                          color:"black",
+                                          fontStyle:"italic"
+                                        }}
+                                      >
+                                        {key}: {value[key]}
+                                      </Typography>
+                                      <br></br>
+                                      </>
+                                    )
+                                  }) 
+                                }
+                            />
+                          </ListItem>
+                        </List>
+                      </Collapse>
                     </div>
                 </Slide>
             ))}
