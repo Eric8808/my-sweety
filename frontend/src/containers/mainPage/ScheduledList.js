@@ -97,14 +97,23 @@ function ScheduledList({scheduledList, setScheduledList, setSchedule}) {
   const classes = useStyles();
 
   const handleDelete = (i) => {
-    setSchedule((schedule)=>(
-      schedule.map((day)=>{
+    setSchedule((schedule)=>{
+      schedule = schedule.map((day)=>{
         console.log(scheduledList[i].name)
         day.events = day.events.filter((eventName)=>eventName!==scheduledList[i].name)
         return day
       })
-      
-    ))
+
+      for(let i = schedule.length-1;i>=0;i--){
+        if(schedule[i].events.length === 0){
+          schedule.pop()
+        }
+        else{
+          break
+        }
+      }
+      return schedule
+    })
     setScheduledList(scheduledList.filter((_,index) => index!==i))
       // deleteItem(i)
     }

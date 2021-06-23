@@ -232,7 +232,7 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation})
           empty: value,
           totalTime: value
         }
-        let index = 0
+        let index = i
         let tempToday = new Date()
         if (week === 0) {
           index = i - tempToday.getDay()
