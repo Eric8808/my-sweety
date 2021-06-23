@@ -39,7 +39,7 @@ function CalenderDate({week, setWeek}) {
         return (
           <Grid item xs={1} key={`date${value}`}>
             <Typography align='center' variant='h6'>
-              {`${today.getMonth()}/${today.getDate()}`}
+              {`${today.getMonth()+1}/${today.getDate()}`}
             </Typography>
           </Grid>
         )
