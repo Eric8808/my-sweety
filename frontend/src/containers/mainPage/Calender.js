@@ -208,6 +208,7 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation})
         // 檢查設定的星期的最後一天是否在 schedule 的第一天之後
         if (tempDate.setDate(tempDate.getDate() + 6) >= firstDate) {
           // console.log(firstDate)
+          console.log("schedule", schedule)
           weekSchedule = schedule.slice(0, tempDate.getDay() - firstDate.getDay() + 1)
         }  
         else {
@@ -219,6 +220,7 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation})
         const i = Math.round((tempDate.setHours(0) - firstDate)/(1000*60*60*24))
         console.log(firstDate)
         console.log(i)
+        console.log("schedule", schedule)
         weekSchedule = schedule.slice(i, i+7)
       }
       const length = weekSchedule.length
@@ -249,6 +251,8 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation})
               eventsTime += todoEvents[value]
             }
           })
+          
+          console.log(eventsTime, value)
           tempEvents.empty = tempEvents.totalTime - eventsTime
         }
         // 篩選這星期的schedule
@@ -265,7 +269,7 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation})
         // }
         // console.log(tempEvents)
         return tempEvents
-        })
+      })
       console.log(newTask)
       return newTask;
      }
@@ -315,7 +319,7 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation})
               indexScale={{ type: 'band', round: true }}
               minValue={0}
               maxValue={10}
-              colors={{ scheme: 'set3' }}
+              colors={{ scheme: 'paired' }}
               // colors={({ id, data }) => data[`${id}Color`]}
               defs={[
                   {

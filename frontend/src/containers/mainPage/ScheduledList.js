@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     height: '50vh',
     overflow: 'auto',
     // backgroundColor: theme.palette.background.paper,
-    background:"#c5cae9",
+    background:"inherit",
     '& .MuiListItem-container': {
       '& .MuiIconButton-root': {
         display: 'none' 
@@ -125,11 +125,13 @@ function ScheduledList({scheduledList, setScheduledList}) {
     setColorList(colorList)
   },[])
   return (
-    <Grid item>
+    <Grid item style={{backgroundColor:'inherit'}}>
       <List className={classes.list} subheader={<li />}>
         <li className={classes.listSection}>
           <ul className={classes.ul}>
-            <ListSubheader>Scheduled List</ListSubheader>
+            <ListSubheader>
+              <Button className={classes.itemButton} size="small" variant="contained" style={{fontSize:"large",borderRadius: 0,color:"white",backgroundColor: "#e57373",fontStyle:"italic",marginBottom:"10px"}}>Scheduled List</Button>
+            </ListSubheader>
             {scheduledList.map((value,i) => (
                 <Slide direction='right' in timeout={200}>
                     <div>

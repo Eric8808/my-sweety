@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
     overflow:"auto",
     // background:"#e3f2fd"
-    background:"linear-gradient(45deg, #3f51b5 10%, #7986cb 90%)"
+    background:"linear-gradient(45deg, #ef9a9a 40%, #ffcdd2 100%)"
     // background:"#424242"
   },
   calenderContainer: {
@@ -49,8 +49,12 @@ const useStyles = makeStyles((theme) => ({
   },
   block:{
     // background:"linear-gradient(45deg, #ba68c8 30%, #e1bee7 90%)"
-    background:"#c5cae9",
-    borderColor:"black"
+    // background:"#c5cae9",
+    background:'white',
+    // boxShadow:"none",
+    borderColor:"black",
+    // borderRadius:50,
+    margin:"5px",
   }
 
 }));
@@ -70,10 +74,12 @@ function App(props) {
   const [zoom2, setZoom2] = useState(false)
   const [zoom3, setZoom3] = useState(false)
   const [zoom4, setZoom4] = useState(false)
-  
+  console.log("todolist", todoList)
+  console.log("schedule", schedule)
+  console.log("scheduled list", scheduledList)
   useEffect(async()=>{
-    const openTime = 0 //4000
-    setTimeout(()=>setStart(true),openTime)
+    const openTime = 1000 //4000
+    setTimeout(()=>setStart(true),0)
     setInterval(()=>setZoom1((zoom1)=>!zoom1),openTime+4000)
     setTimeout(()=>setZoom2(true),openTime+200)
     setTimeout(()=>setZoom3(true),openTime+400)
@@ -136,7 +142,7 @@ function App(props) {
       <Grid container>
         <Grid container item spacing={0} justify='space-evenly'>
           <Grid container item spacing={2} xs={3}justify='space-evenly'>
-            <Grid item xs={12}>
+            <Grid item xs={12} style={{position:'relative'}}>
               <Zoom in={zoom1} timeout={300}>
                 <Card className={classes.block} 
                       style={{
@@ -182,9 +188,25 @@ function App(props) {
                 <button onClick={()=>setMyAnimation('playDrum')}>playDrum</button>
                 <button onClick={()=>setMyAnimation('silly_dance')}>silly_dance</button> */}
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} style={{position:'relative',padding:'0px',}}>
+              <Card className={classes.block} 
+                    style={{
+                        backgroundImage: "url('thumbstack.png')",
+                        backgroundColor:"transparent",
+                        backgroundRepeat:"no-repeat",
+                        backgroundSize:"24vw 33vh",
+                        boxShadow: 'none',
+                        position: 'absolute',
+                        height:"35vh",
+                        width:"25vw",
+                        top:'50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        visibility:zoom2? 'hidden' : 'visible'
+                    }}>
+                </Card>
               <Zoom in={zoom2}>
-                <Card className={classes.block} style={{height:'70vh'}}>
+                <Card className={classes.block} style={{height:'70vh', background:'transparent', boxShadow:"none",}}>
                   <Calender scheduledList={scheduledList} schedule={schedule} day={day} setDay={setDay} setMyAnimation={setMyAnimation}/>
                 </Card>
               </Zoom>
@@ -193,19 +215,34 @@ function App(props) {
           </Grid>
 
           <Grid container item spacing={2} xs={3} justify='space-evenly'>
-            <Grid item xs={12} >
+            <Grid item xs={12} style={{paddingBottom:"0px"}}>
               <Zoom in={zoom3}>
-                <Card className={classes.block} style={{height:'45vh', marginTop:'1vh'}}>
+                <Card className={classes.block} 
+                      style={{
+                        padding:"10% 10% 0% 20%",
+                        height:'45vh', 
+                        background:'url("note4.png")', 
+                        backgroundPosition:"50% 50%", 
+                        backgroundSize:"100% 100%", 
+                        backgroundRepeat:"no-repeat",
+                        boxShadow:"none"
+                      }}>
                 <TodoList todoList={todoList} deleteItem={deleteItem}/>
                 </Card>
               </Zoom>
               
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} style={{position:'relative'}}>
               <Zoom in={zoom4}>
-                <Card className={classes.block} style={{height:'50vh',}}>
+                <Card className={classes.block} style={{
+                        height:'50vh',
+                        padding:"10% 5% 20% 5%",
+                        background:'url("note5.png")', 
+                        backgroundPosition:"50% 50%", 
+                        backgroundSize:"110% 110%", 
+                        backgroundRepeat:"no-repeat",
+                        boxShadow:"none"}}>
                   <ScheduledList scheduledList={scheduledList} setScheduledList={setScheduledList}/>
-                  {/* <AllTodo/> */}
                 </Card>
               </Zoom>
             </Grid>

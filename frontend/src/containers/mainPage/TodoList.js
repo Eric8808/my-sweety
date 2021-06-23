@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     height: '50vh',
     overflow: 'auto',
     // backgroundColor: theme.palette.background.paper,
-    background:"#c5cae9",
+    background:"inherit",
     '& .MuiListItem-container': {
       '& .MuiIconButton-root': {
         display: 'none' 
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   listSection: {
-    backgroundColor: 'inherit',
+    backgroundColor:"inherit",
     },
     ul: {
       backgroundColor: 'inherit',
@@ -69,7 +69,7 @@ function TodoList({todoList, deleteItem}) {
   //   }, []);
 
   return (
-    <Grid item>
+    <Grid item style={{backgroundColor:'inherit'}}>
       <List className={classes.list} subheader={<li />}>
         <li className={classes.listSection}>
           <ul className={classes.ul}>
