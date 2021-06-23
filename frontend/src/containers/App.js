@@ -242,7 +242,7 @@ function App(props) {
                         backgroundSize:"110% 110%", 
                         backgroundRepeat:"no-repeat",
                         boxShadow:"none"}}>
-                  <ScheduledList scheduledList={scheduledList} setScheduledList={setScheduledList}/>
+                  <ScheduledList scheduledList={scheduledList} setScheduledList={setScheduledList} setSchedule={setSchedule}/>
                 </Card>
               </Zoom>
             </Grid>

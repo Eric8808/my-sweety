@@ -93,10 +93,18 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
-function ScheduledList({scheduledList, setScheduledList}) {
+function ScheduledList({scheduledList, setScheduledList, setSchedule}) {
   const classes = useStyles();
 
   const handleDelete = (i) => {
+    setSchedule((schedule)=>(
+      schedule.map((day)=>{
+        console.log(scheduledList[i].name)
+        day.events = day.events.filter((eventName)=>eventName!==scheduledList[i].name)
+        return day
+      })
+      
+    ))
     setScheduledList(scheduledList.filter((_,index) => index!==i))
       // deleteItem(i)
     }

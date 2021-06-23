@@ -244,6 +244,7 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation})
         }
         if (index >= 0 && index < length) {
           let eventsTime = 0;
+          console.log(index)
           weekSchedule[index].events.forEach((value) => {
             tempEvents[value] = todoEvents[value]
             console.log(todoEvents[value])
@@ -319,7 +320,7 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation})
               indexScale={{ type: 'band', round: true }}
               minValue={0}
               maxValue={10}
-              colors={{ scheme: 'paired' }}
+              colors={{ scheme: 'set3' }}
               // colors={({ id, data }) => data[`${id}Color`]}
               defs={[
                   {

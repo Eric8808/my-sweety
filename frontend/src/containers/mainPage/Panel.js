@@ -74,12 +74,13 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
       if(!m.data.ans.error){
         let concatschedule=[];
         let newschedule = [...m.data.ans]
+        console.log(schedule)
         concatschedule = [...schedule]
         for(let i=0;i<newschedule.length;i++){
           for(let j=0;j<concatschedule.length;j++){
             let temp2 = new Date(newschedule[i].date)
             let dd = new Date(concatschedule[j].date)
-            console.log(`date1:${temp2.getDate()} date2:${dd.getDate()}`)
+            // console.log(`date1:${temp2.getDate()} date2:${dd.getDate()}`)
             if(temp2.getDate()===dd.getDate() && 
             temp2.getMonth()===dd.getMonth() &&
             temp2.getFullYear()===dd.getFullYear()){
@@ -88,6 +89,7 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
             }
           }
         }
+        console.log(concatschedule)
         setSchedule(concatschedule)
         setScheduledList(scheduledList.concat(todoList))
         clearTodoList()
