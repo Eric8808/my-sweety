@@ -6,7 +6,17 @@ const JWT_SECRET = "1651w64f5wefwgrw$%^&g89wg913245%^&*("
 
 const router = Router()
 //http://localhost:4000/api/account/XXX
-
+router.post('/delete',async (req, res)=>{
+  try{
+    const {username} = req.body
+    console.log(`User ${username} comes to delete itself!`)
+    await User.deleteOne({username:username})
+    res.json({message:`Delete User ${username} Succesfully!`, success:true})
+    console.log(`Delete User ${username} Succesfully!`)
+  }catch(e){
+    res.json({message: 'Deletion failed...', success:false})
+  }
+})
 router.post('/register',async (req, res)=>{
     try {
         const {username, password:plainTextPwd} = req.body

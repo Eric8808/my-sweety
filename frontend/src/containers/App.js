@@ -20,6 +20,8 @@ import axios from './api';
 import useCalender from '../hooks/useCalender'
 import useDisplayStatus from '../hooks/useDisplayStatus'
 import ScheduledList from './mainPage/ScheduledList';
+import SignOutPanel from '../Components/SignOutPanel';
+
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -60,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App(props) {
+  
   const classes = useStyles();
   const {todoList, addItem, deleteItem, setTodoList, clearTodoList} = useTodoList()
   const [scheduledList, setScheduledList] = useState([])
@@ -74,9 +77,9 @@ function App(props) {
   const [zoom2, setZoom2] = useState(false)
   const [zoom3, setZoom3] = useState(false)
   const [zoom4, setZoom4] = useState(false)
-  console.log("todolist", todoList)
-  console.log("schedule", schedule)
-  console.log("scheduled list", scheduledList)
+  // console.log("todolist", todoList)
+  // console.log("schedule", schedule)
+  // console.log("scheduled list", scheduledList)
   useEffect(async()=>{
     const openTime = 1000 //4000
     setTimeout(()=>setStart(true),0)
@@ -136,12 +139,14 @@ function App(props) {
   },[schedule, todoList, scheduledList, day])
   return (
     <div className={classes.root}>
-      {/* <Zoom in={zoom}> */}
       {!start?<Sweety myAnimation="breakFreeze" start={true}/>:
       <>
       <Grid container>
         <Grid container item spacing={0} justify='space-evenly'>
+
+          {/* =================================left most grid container===================================== */}
           <Grid container item spacing={2} xs={3}justify='space-evenly'>
+            {/* -------------------dialog image------------------------- */}
             <Grid item xs={12} style={{position:'relative'}}>
               <Zoom in={zoom1} timeout={300}>
                 <Card className={classes.block} 
@@ -156,16 +161,25 @@ function App(props) {
                           width:"25vw"
 
                       }}>
-                  {/* <TodoList todoList={todoList} deleteItem={deleteItem}/> */}
                 </Card>
               </Zoom>
             </Grid>
+            {/* -------------------sweety model------------------------- */}
             <Grid item xs={12} >
                 <Sweety myAnimation={myAnimation}/>
+                {/* assasination, break1990, breakFreeze, flair, hip-hop, sitting, situpus, zombie-down, playDrum, silly_dance */}
             </Grid>
-          </Grid>
 
+            {/* ------------------------bottom panel------------------------- */}
+            <Grid container item xs={12} style={{paddingBottom:"13px"}} alignItems="center" justify="center">
+                <SignOutPanel username={props.username} setMyAnimation={setMyAnimation}/>
+            </Grid>
+          
+          </Grid>
+          
+          {/* =================================middle grid container===================================== */}
           <Grid container item spacing={2} xs={6} justify='space-evenly'>
+            {/* --------------------------panel----------------------------- */}
             <Grid item xs={12} >
                 <Panel 
                   addItem={addItem} 
@@ -177,17 +191,9 @@ function App(props) {
                   clearTodoList={clearTodoList}
                   setScheduledList={setScheduledList}
                   scheduledList={scheduledList}/>
-                {/* <button onClick={()=>setMyAnimation('assasination')}>assasination</button>
-                <button onClick={()=>setMyAnimation('break1990')}>break1990</button>
-                <button onClick={()=>setMyAnimation('breakFreeze')}>breakFreeze</button>
-                <button onClick={()=>setMyAnimation('flair')}>flair</button>
-                <button onClick={()=>setMyAnimation('hip-hop')}>hip-hop</button>
-                <button onClick={()=>setMyAnimation('sitting')}>sitting</button>
-                <button onClick={()=>setMyAnimation('situpus')}>situpus</button>
-                <button onClick={()=>setMyAnimation('zombie-down')}>zombie-down</button>
-                <button onClick={()=>setMyAnimation('playDrum')}>playDrum</button>
-                <button onClick={()=>setMyAnimation('silly_dance')}>silly_dance</button> */}
             </Grid>
+
+            {/* ----------------------calendar-------------------------- */}
             <Grid item xs={12} style={{position:'relative',padding:'0px',}}>
               <Card className={classes.block} 
                     style={{
@@ -214,7 +220,10 @@ function App(props) {
             </Grid>
           </Grid>
 
+          {/* ====================================================rightmost grid container============================================ */}
           <Grid container item spacing={2} xs={3} justify='space-evenly'>
+
+            {/* ---------------------------TodoList------------------------------- */}
             <Grid item xs={12} style={{paddingBottom:"0px"}}>
               <Zoom in={zoom3}>
                 <Card className={classes.block} 
@@ -230,13 +239,14 @@ function App(props) {
                 <TodoList todoList={todoList} deleteItem={deleteItem}/>
                 </Card>
               </Zoom>
-              
             </Grid>
+
+            {/* ---------------------------Scheduled List----------------------------- */}
             <Grid item xs={12} style={{position:'relative'}}>
               <Zoom in={zoom4}>
                 <Card className={classes.block} style={{
                         height:'50vh',
-                        padding:"10% 5% 20% 5%",
+                        padding:"10% 0% 0% 5%",
                         background:'url("note5.png")', 
                         backgroundPosition:"50% 50%", 
                         backgroundSize:"110% 110%", 
@@ -250,6 +260,7 @@ function App(props) {
                 
         </Grid>
       </Grid>
+
       <Snackbar open={showMsg} autoHideDuration={6000} onClose={()=>setShowMsg(false)}>
           <Alert onClose={()=>setShowMsg(false)} severity={messageState}>
               {/* successState: error, warning, info, success */}

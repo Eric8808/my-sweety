@@ -7,6 +7,7 @@ import {React, useState} from 'react';
 import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
+import Button from '@material-ui/core/Button'
 
 function PaperComponent(props) {
     return (
@@ -15,18 +16,28 @@ function PaperComponent(props) {
       </Draggable>
     );
   }
-export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content, setMyAnimation}) {
-  
-    const handleClickOpen = () => {
-      setDrawerOpen(true)
-    };
-  
+export default function SignOutrPopUpWindow({
+  drawerOpen, 
+  setDrawerOpen, 
+  content, 
+  setMyAnimation, 
+  setConfirm,
+  handleDeleteAccount,
+  handleSignOut
+}) {
     const handleClose = () => {
       setDrawerOpen(false)
       setMyAnimation("sitting")
     };
+    const handleConfirm=()=>{
+      if(content === "sign out?"){
+        handleSignOut()
+      }
+      else{
+        handleDeleteAccount()
+      }
+    }
     
-    const {id: event, value: hours, indexValue: day } = content
     return (
       <div>
         <Dialog
@@ -45,7 +56,7 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
               boxShadow: 'none',
               position: 'absolute',
               left:"15vw",
-              height:"26vh",
+              height:"27vh",
               width:"20vw"
 
           }}}
@@ -54,14 +65,11 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
           <DialogContent 
             style={{
                 borderRadius:"30px",
-                padding:"5vh 2vw 0vh 2vw",
+                padding:"5vh 0vw 0vh 2vw",
+                marginBottom:"1vh",
                 }}>
-            <DialogContentText id="alert-dialog-description" style={{color:"black", fontSize:"large"}}>
-                {`Event: ${event}`}
-                <br></br>
-                {`Hours: ${hours}`}
-                <br></br>
-                {`Working Day: ${day}`}
+            <DialogContentText id="alert-dialog-description" style={{color:"black", fontSize:"large",height:"50%"}}>
+                {`Are you sure you want to ${content}`}
             </DialogContentText>
             
           </DialogContent>
@@ -69,8 +77,28 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
                 borderRadius:"30px",
                 padding:"0px 0px 0px 0px",
                 }}>
-            <button onClick={handleClose}>close</button>
-            <button onClick={handleClose}>close</button>
+            <Button size="small" variant="contained"
+                onClick={()=>handleConfirm(true)}
+                style={{
+                borderRadius: 50,
+                color:"white",
+                background:content==='sign out?'? '#9e9e9e':"#dd2c00",
+                fontStyle:"italic",
+                margin:"0px 0px 0px 10px",
+                }}>
+              {content==='sign out?'? 'sign out' : 'delete account'}
+            </Button>
+            <Button size="small" variant="contained" 
+                onClick={()=>handleClose()}
+                style={{
+                borderRadius: 50,
+                color:"black",
+                background:"white",
+                fontStyle:"italic",
+                margin:"0px 0px 0px 10px",
+                }}>
+              Close
+            </Button>
         </DialogActions>
         </Dialog>
       </div>

@@ -26,7 +26,7 @@ import { FcBarChart } from "react-icons/fc";
 
 const useStyles = makeStyles((theme) => ({
   list:{
-    height: '50vh',
+    height: '46vh',
     overflow: 'auto',
     // backgroundColor: theme.palette.background.paper,
     background:"inherit",
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
   ul: {
     backgroundColor: 'inherit',
-    padding: 0,
+    padding:"0px 0px 0px 0px"
   },
   prior1: {
     color: theme.palette.getContrastText(red[500]),
@@ -147,19 +147,13 @@ function ScheduledList({scheduledList, setScheduledList, setSchedule}) {
         <li className={classes.listSection}>
           <ul className={classes.ul}>
             <ListSubheader>
-              <Button className={classes.itemButton} size="small" variant="contained" style={{fontSize:"large",borderRadius: 0,color:"white",backgroundColor: "#e57373",fontStyle:"italic",marginBottom:"10px"}}>Scheduled List</Button>
+              <Button className={classes.itemButton} size="small" variant="contained" style={{pointerEvents: "none",fontSize:"large",borderRadius: 0,color:"white",backgroundColor: "#e57373",fontStyle:"italic",marginBottom:"10px"}}>Scheduled List</Button>
             </ListSubheader>
             {scheduledList.map((value,i) => (
                 <Slide direction='right' in timeout={200}>
                     <div>
                       {(i===0)? <></> : <Divider />}
                       <ListItem button className={classes.listItem} onClick={()=>{handleClick(i)}}>
-                          
-                          {/* <ListItemAvatar>
-                              <Avatar className={classes[`prior${value.priority}`]}>
-                                  {value.priority}
-                              </Avatar>
-                          </ListItemAvatar> */}
                           <ListItemText 
                               primary={
                                 <>
@@ -170,7 +164,7 @@ function ScheduledList({scheduledList, setScheduledList, setSchedule}) {
                                   variant="contained" 
                                   style={{
                                     borderRadius: 50,
-                                    // height:"20px",
+                                    pointerEvents: "none",
                                     color:"black",
                                     backgroundColor: colorList[i+1],
                                     fontStyle:"italic"
@@ -178,11 +172,6 @@ function ScheduledList({scheduledList, setScheduledList, setSchedule}) {
                                 >
                                   {value.name}
                                 </Button>
-                                </>
-                              }
-                              secondary={
-                                <>
-                                
                                 </>
                               }
                           >
@@ -204,11 +193,11 @@ function ScheduledList({scheduledList, setScheduledList, setSchedule}) {
                                 primary={
                                   <>
                                   {([...Array(parseInt(value.separate))]).map((key)=>(
-                                  <Button style={{maxWidth: '30px', maxHeight: '30px', minWidth: '25px', minHeight: '10px'}} className={classes.doneButton}></Button>
-                                ))}
-                                {([...Array(parseInt(value.separate))]).map((key)=>(
-                                  <Button style={{maxWidth: '30px', maxHeight: '30px', minWidth: '25px', minHeight: '10px'}} className={classes.undoneButton}></Button>
-                                ))}
+                                    <Button style={{maxWidth: '30px', maxHeight: '30px', minWidth: '25px', minHeight: '10px'}} className={classes.doneButton}></Button>
+                                  ))}
+                                  {([...Array(parseInt(value.separate))]).map((key)=>(
+                                    <Button style={{maxWidth: '30px', maxHeight: '30px', minWidth: '25px', minHeight: '10px'}} className={classes.undoneButton}></Button>
+                                  ))}
                                   <br></br>
                                   {Object.keys(value).map((key)=>{
                                     if(key==="_id"){
