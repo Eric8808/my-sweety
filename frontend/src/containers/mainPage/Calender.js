@@ -205,15 +205,20 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation})
       // 檢查設定的星期的第一天是否在 schedule 的第一天之前
       // 如果是，則取出的 weekSchedule 會小於7天
       if (tempDate.setDate(today.getDate()-today.getDay() + week*7) < firstDate) {
-        // 檢查設定的星期的最後一天是否在 schedule ㄇ的第一天之後
-        if (tempDate.setDate(tempDate.getDate() - tempDate.getDay() + 6) >= firstDate) {
+        // 檢查設定的星期的最後一天是否在 schedule 的第一天之後
+        if (tempDate.setDate(tempDate.getDate() + 6) >= firstDate) {
           // console.log(firstDate)
           weekSchedule = schedule.slice(0, tempDate.getDay() - firstDate.getDay() + 1)
         }  
+        else {
+          weekSchedule = [];
+        }
       }
       else {
         console.log(tempDate)
-        const i = Math.round((tempDate - firstDate)/(1000*60*60*24)) - 1
+        const i = Math.round((tempDate.setHours(0) - firstDate)/(1000*60*60*24))
+        console.log(firstDate)
+        console.log(i)
         weekSchedule = schedule.slice(i, i+7)
       }
       const length = weekSchedule.length
