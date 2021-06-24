@@ -26,7 +26,21 @@ const SignOutPanel = ({username, setMyAnimation}) =>{
         localStorage.removeItem('token')
     }
     if(username===null){
-        return
+        return(
+            <Button size="small" variant="contained"
+            onClick={()=>{
+                history.push("./")
+            }} 
+            style={{
+            borderRadius: 50,
+            color:"white",
+            background:"#9e9e9e",
+            fontStyle:"italic",
+            margin:"0px 0px 0px 10px"
+            }}>
+            Back To Home
+            </Button>
+        )
     }
     return(
         <>
