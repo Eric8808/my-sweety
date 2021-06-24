@@ -21,7 +21,10 @@ import useCalender from '../hooks/useCalender'
 import useDisplayStatus from '../hooks/useDisplayStatus'
 import ScheduledList from './mainPage/ScheduledList';
 import SignOutPanel from '../Components/SignOutPanel';
+import Evaluation from './Evaluation';
+import ModePanel from '../Components/ModePanel';
 
+import Button from '@material-ui/core/Button'
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -33,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
     overflow:"auto",
     // background:"#e3f2fd"
-    background:"linear-gradient(45deg, #ef9a9a 40%, #ffcdd2 100%)"
+    background:"linear-gradient(45deg, #64b5f6 40%, #bbdefb 100%)"
     // background:"#424242"
   },
   calenderContainer: {
@@ -77,6 +80,7 @@ function App(props) {
   const [zoom2, setZoom2] = useState(false)
   const [zoom3, setZoom3] = useState(false)
   const [zoom4, setZoom4] = useState(false)
+  const [openEvaluation, setOpenEvaluation] = useState(false)
   // console.log("todolist", todoList)
   // console.log("schedule", schedule)
   // console.log("scheduled list", scheduledList)
@@ -165,8 +169,9 @@ function App(props) {
               </Zoom>
             </Grid>
             {/* -------------------sweety model------------------------- */}
-            <Grid item xs={12} >
+            <Grid item xs={12} style={{position:"relative"}}>
                 <Sweety myAnimation={myAnimation}/>
+                <ModePanel openEvaluation={openEvaluation} setOpenEvaluation={setOpenEvaluation}/>
                 {/* assasination, break1990, breakFreeze, flair, hip-hop, sitting, situpus, zombie-down, playDrum, silly_dance */}
             </Grid>
 
@@ -174,9 +179,11 @@ function App(props) {
             <Grid container item xs={12} style={{paddingBottom:"13px"}} alignItems="center" justify="center">
                 <SignOutPanel username={props.username} setMyAnimation={setMyAnimation}/>
             </Grid>
-          
           </Grid>
-          
+
+          {openEvaluation?
+          <Evaluation/>:
+          <>
           {/* =================================middle grid container===================================== */}
           <Grid container item spacing={2} xs={6} justify='space-evenly'>
             {/* --------------------------panel----------------------------- */}
@@ -246,10 +253,10 @@ function App(props) {
               <Zoom in={zoom4}>
                 <Card className={classes.block} style={{
                         height:'50vh',
-                        padding:"10% 0% 0% 5%",
-                        background:'url("note5.png")', 
-                        backgroundPosition:"50% 50%", 
-                        backgroundSize:"110% 110%", 
+                        padding:"10% 5% 0% 5%",
+                        background:'url("note7.png")', 
+                        backgroundPosition:"50% 0%", 
+                        backgroundSize:"150% 110%", 
                         backgroundRepeat:"no-repeat",
                         boxShadow:"none"}}>
                   <ScheduledList scheduledList={scheduledList} setScheduledList={setScheduledList} setSchedule={setSchedule}/>
@@ -257,7 +264,8 @@ function App(props) {
               </Zoom>
             </Grid>
           </Grid>
-                
+          </>
+          }
         </Grid>
       </Grid>
 

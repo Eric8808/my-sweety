@@ -24,7 +24,7 @@ import { FcFile } from "react-icons/fc";
 
 const useStyles = makeStyles((theme) => ({
   list:{
-    height: '40vh',
+    height: '35vh',
     overflow: 'auto',
     // backgroundColor: theme.palette.background.paper,
     background:"inherit",

@@ -26,7 +26,7 @@ import { FcBarChart } from "react-icons/fc";
 
 const useStyles = makeStyles((theme) => ({
   list:{
-    height: '46vh',
+    height: '41vh',
     overflow: 'auto',
     // backgroundColor: theme.palette.background.paper,
     background:"inherit",
@@ -147,7 +147,8 @@ function ScheduledList({scheduledList, setScheduledList, setSchedule}) {
         <li className={classes.listSection}>
           <ul className={classes.ul}>
             <ListSubheader>
-              <Button className={classes.itemButton} size="small" variant="contained" style={{pointerEvents: "none",fontSize:"large",borderRadius: 0,color:"white",backgroundColor: "#e57373",fontStyle:"italic",marginBottom:"10px"}}>Scheduled List</Button>
+              Scheduled List
+              {/* <Button className={classes.itemButton} size="small" variant="contained" style={{pointerEvents: "none",fontSize:"large",borderRadius: 0,color:"white",backgroundColor: "#e57373",fontStyle:"italic",marginBottom:"10px"}}>Scheduled List</Button> */}
             </ListSubheader>
             {scheduledList.map((value,i) => (
                 <Slide direction='right' in timeout={200}>
