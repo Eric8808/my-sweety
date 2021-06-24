@@ -1,50 +1,26 @@
-import React, { Fragment } from 'react';
 import { useState, useRef} from 'react';
 
 import axios from '../api'
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
-import  Zoom  from '@material-ui/core/Zoom';
 import Fade from "@material-ui/core/Fade";
 import './login.css'
 import {useHistory} from "react-router-dom"
-import { FcCellPhone, FcPhone, FcCallback } from "react-icons/fc";
-import { FiPhoneCall } from "react-icons/fi";
+
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-const useStyles = makeStyles((theme) => ({
-    root: {
-      width: '100%',
-      '& > * + *': {
-        marginTop: theme.spacing(2),
-      },
-      background:"linear-gradient(45deg, #64b5f6 40%, #bbdefb 100%)"
-    },
-  }));
-const handleChange = (func) => (event) => {
-    func(event.target.value);
-};
 
-const LoginPage =()=>{
+const LoginCard=()=>{
     let history = useHistory()
-    const classes = useStyles();
-    const enterPage = useRef(null);
-    const [enter, setEnter]=useState(false)
     const [signInInput, setSignInInput] = useState({username:'', password:''})
     const [signUpInput, setSignUpInput] = useState({username:'', password:'', confirmPwd:'', compare:true})
-    const [isLogin, setLogin] = useState(false)
     const [accMsg, setAccMsg] = useState()
     const [showMsg, setShowMsg] = useState(false)
     const [messageState, setMessageState] = useState('')
     const [animationClass, setAnimationClass] = useState('container')
 
-    const handleEnter=(e)=>{
-        setEnter(true)
-        enterPage.current.style.display = 'block'
-        e.target.style.display='none'
-    }
     const handleSignUpInput=(e)=>{
         if(e.target.id==='Username'){
             setSignUpInput((prev)=>({...prev, username:e.target.value }))
@@ -157,16 +133,8 @@ const LoginPage =()=>{
     return(
         <>
         <div className="Login-page-only">
-        {!enter?(
-            <FcCallback size={100} />
-        ):(
-            <Fade in={enter} timeout={1000}>
-                <FiPhoneCall size={50} />
-            </Fade>
-        )}
-        <h3 className="Enter-button" onClick={handleEnter}>Call My Sweety!</h3>
-        <Fade in={enter} timeout={1000}>
-        <div className={animationClass} ref={enterPage} id="container">
+        <Fade in={true} timeout={1000}>
+        <div className={animationClass} id="container" style={{display:"block"}}>
             <div className="form-container sign-up-container">
                 <form action="#">
                     <h1>Create Account</h1>
@@ -226,4 +194,4 @@ const LoginPage =()=>{
 
 }
 
-export default LoginPage
+export default LoginCard

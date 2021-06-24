@@ -1,6 +1,5 @@
 import '../App.css';
 import Header from './mainPage/Header'
-import SpeedDial from './mainPage/SpeedDial'
 import Calender from './mainPage/Calender'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid'
@@ -10,9 +9,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 import Panel from './mainPage/Panel'
 import TodoList from '../containers/mainPage/TodoList'
 import useTodoList from '../hooks/useTodoList'
-import Pie from './mainPage/block/Pie'
-import AllTodo from './mainPage/block/AllTodo'
-import Sweety from './mainPage/block/sweety'
+import Sweety from '../Components/sweety'
 import TextField from '@material-ui/core/TextField'
 import { useEffect, useState } from 'react';
 import Zoom from '@material-ui/core/Zoom';
@@ -21,7 +18,7 @@ import useCalender from '../hooks/useCalender'
 import useDisplayStatus from '../hooks/useDisplayStatus'
 import ScheduledList from './mainPage/ScheduledList';
 import SignOutPanel from '../Components/SignOutPanel';
-import Evaluation from './Evaluation';
+import Evaluation from './mainPage/Evaluation';
 import ModePanel from '../Components/ModePanel';
 
 import Button from '@material-ui/core/Button'

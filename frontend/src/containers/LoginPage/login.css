@@ -70,7 +70,7 @@ h3.Enter-button {
 * {
 	box-sizing: border-box;
 }
-div.Login-page-only::after{
+/* div.Login-page-only::after{
 	background-image: url('../../OL2.jpg');
     background-size: cover;
     content: "";
@@ -79,7 +79,7 @@ div.Login-page-only::after{
     height: 120%;
     width: 100%;
     z-index: -1;
-}
+} */
 div.Login-page-only{
 	height: 100%;
 	width: 100%;

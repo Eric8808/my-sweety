@@ -5,6 +5,7 @@ import './index.css';
 import App from './containers/App';
 import Authenticate from './containers/Authenticate'
 import LoginPage from './containers/LoginPage/LoginPage.js'
+import SweetyLoginPage from './containers/LoginPage/SweetyLoginPage';
 import reportWebVitals from './reportWebVitals';
 import { AppBar } from '@material-ui/core';
 
@@ -12,7 +13,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Switch>
-        <Route exact path="/" component={LoginPage}/>
+        <Route exact path="/" component={SweetyLoginPage}/>
         <Route exact path="/profile" component={Authenticate}/>
         <Route exact path="/guest" component={()=><App username={null}/>}/>
       </Switch>

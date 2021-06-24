@@ -1,16 +1,16 @@
-import Calender from './mainPage/Calender'
+import Calender from './Calender'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card';
-import MyResponsiveLine from './mainPage/EvalChart';
-import Panel from './mainPage/Panel'
-import TodoList from '../containers/mainPage/TodoList'
+import MyResponsiveLine from './EvalChart';
+import Panel from './Panel'
+import TodoList from './TodoList'
 import { useEffect, useState } from 'react';
 import Zoom from '@material-ui/core/Zoom';
-import axios from './api';
-import useCalender from '../hooks/useCalender'
-import useDisplayStatus from '../hooks/useDisplayStatus'
-import ScheduledList from './mainPage/ScheduledList';
+import axios from '../api';
+import useCalender from '../../hooks/useCalender'
+import useDisplayStatus from '../../hooks/useDisplayStatus'
+import ScheduledList from './ScheduledList';
 import { FcLineChart, FcComboChart } from "react-icons/fc";
 const useStyles = makeStyles((theme) => ({
     root: {
