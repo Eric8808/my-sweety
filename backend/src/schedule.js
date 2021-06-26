@@ -60,7 +60,8 @@ const schedule = async (events, available, startdate ,revise_time) => {
         let temp = Object.keys(revise_time);
         for(let i=0;i<temp.length;i++){
             let temp2 = new Date(temp[i]);
-            if(temp2.getDate()-1===dd.getDate() && 
+            temp2.setDate(temp2.getDate()-1)
+            if(temp2.getDate()===dd.getDate() && 
             temp2.getMonth()===dd.getMonth() &&
             temp2.getFullYear()===dd.getFullYear()){
                 return revise_time[temp[i]];
