@@ -112,54 +112,7 @@ function App(props) {
         setDisplayStatus('success', 'User data initialization successfully!')
         setLockOpen(true)
 
-        const shiftschedule = ()=>{
-          let newTodoList = [...todoList]
-    
-          const getAttr = (name,attr)=>{
-            for(let i=0;i<scheduledList.length;i++){
-              if(scheduledList[i]===name){
-                if(attr==="needtime") return scheduledList[i].needtime/scheduledList[i].separate;
-                else if(attr==="deadline") return scheduledList[i].deadline;
-                else if(attr==="priority") return scheduledList[i].priority;
-              }
-            }
-          }
-          let finalindex = 0;
-          for(let i=0;i<schedule.length;i++){
-            let tempdate = new Date(schedule[i].date)
-            let nowdate = new Date();
-            if(tempdate>=nowdate) break;
-            finalindex++;
-            for(let j=0;j<schedule[i].events.length;j++){
-              if(!schedule[i].events[j].completed){
-                let newTaskName = `${schedule[i].events[j].name}-undo`
-                let isInTodoList = false;
-                for(let k=0;k<newTodoList.length;k++){
-                  if(newTodoList[k].name===newTaskName) {
-                    isInTodoList=true;
-                    newTodoList[k].needtime=(newTodoList[k].needtime/newTodoList[k].separate)*(newTodoList[k].separate+1);
-                    newTodoList[k].separate++;
-                    break;
-                  }
-                }
-                console.log(newTaskName)
-                if(!isInTodoList){
-                  addItem(newTaskName,getAttr(schedule[i].events[j].name,"priority"),1,getAttr(schedule[i].events[j].name,"needtime"),getAttr(schedule[i].events[j].name,"deadline"))
-                  //task, priority,separate,needtime,deadline
-                  //newTodoList.push({name:newTaskName, needtime: getAttr(schedule[i].events[j].name,"needtime"),separate:1,deadline:getAttr(schedule[i].events[j].name,"deadline"),priority:getAttr(schedule[i].events[j].name,"priority")})
-                }
-              }
-            }
-          }
-          let newSchedule=[...schedule];
-            for(let i=0;i<finalindex;i++){
-              newSchedule.shift();
-            }
-            console.log(finalindex,newSchedule)
-            setSchedule(newSchedule)
-        }
         
-        //shiftschedule();
         
         console.log(schedule)
 
@@ -190,6 +143,56 @@ function App(props) {
         console.log('user data sent to backend successfully!')
       }
       
+      const shiftschedule = ()=>{
+        let newTodoList = [...todoList]
+  
+        const getAttr = (name,attr)=>{
+          for(let i=0;i<scheduledList.length;i++){
+            if(scheduledList[i].name===name){
+              if(attr==="needtime") return scheduledList[i].needtime/scheduledList[i].separate;
+              else if(attr==="deadline") return scheduledList[i].deadline;
+              else if(attr==="priority") return scheduledList[i].priority;
+            }
+          }
+        }
+
+        let finalindex = 0;
+        for(let i=0;i<schedule.length;i++){
+          let tempdate = new Date(schedule[i].date)
+          let nowdate = new Date();
+          if(tempdate>=nowdate) break;
+          finalindex++;
+          for(let j=0;j<schedule[i].events.length;j++){
+            if(!schedule[i].events[j].completed){
+              let newTaskName = `${schedule[i].events[j].name}-undo`
+              let isInTodoList = false;
+              for(let k=0;k<newTodoList.length;k++){
+                if(newTodoList[k].name===newTaskName) {
+                  isInTodoList=true;
+                  newTodoList[k].needtime=(newTodoList[k].needtime/newTodoList[k].separate)*(newTodoList[k].separate+1);
+                  newTodoList[k].separate++;
+                  break;
+                }
+              }
+              console.log(newTaskName)
+              if(!isInTodoList){
+                addItem(newTaskName,getAttr(schedule[i].events[j].name,"priority"),1,getAttr(schedule[i].events[j].name,"needtime"),getAttr(schedule[i].events[j].name,"deadline"))
+                //task, priority,separate,needtime,deadline
+                //newTodoList.push({name:newTaskName, needtime: getAttr(schedule[i].events[j].name,"needtime"),separate:1,deadline:getAttr(schedule[i].events[j].name,"deadline"),priority:getAttr(schedule[i].events[j].name,"priority")})
+              }
+            }
+          }
+        }
+        let newSchedule=[...schedule];
+          for(let i=0;i<finalindex;i++){
+            newSchedule.shift();
+          }
+          console.log(finalindex,newSchedule)
+          if(finalindex!==0) setSchedule(newSchedule)
+      }
+      
+      shiftschedule();
+
     }catch(e){
       console.log('send to backend error QQ', e)
       setDisplayStatus('error', 'Server is not on.')

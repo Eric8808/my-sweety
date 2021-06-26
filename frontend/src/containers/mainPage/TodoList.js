@@ -91,7 +91,7 @@ function TodoList({todoList, deleteItem}) {
     setOpen(Array(todoList.length).fill(false))
     console.log("todo list changed!!!", todoList)
   }, [todoList]);
-
+  console.log(todoList)
   return (
     <Grid item style={{backgroundColor:'inherit'}}>
       <List className={classes.list} subheader={<li />}>
@@ -139,6 +139,7 @@ function TodoList({todoList, deleteItem}) {
                                 primary={
                                   <>
                                   {Object.keys(value).map((key)=>{
+                                    console.log(key,value[key])
                                     if(key==="_id"){
                                       return
                                     }
