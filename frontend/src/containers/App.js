@@ -217,7 +217,7 @@ function App(props) {
                 </Card>
               <Zoom in={zoom2}>
                 <Card className={classes.block} style={{height:'70vh', background:'transparent', boxShadow:"none",}}>
-                  <Calender scheduledList={scheduledList} schedule={schedule} day={day} setDay={setDay} setMyAnimation={setMyAnimation} setDisplayStatus={setDisplayStatus} />
+                  <Calender scheduledList={scheduledList} setScheduledList={setScheduledList} schedule={schedule} setSchedule={setSchedule} day={day} setDay={setDay} setMyAnimation={setMyAnimation} setDisplayStatus={setDisplayStatus} />
                 </Card>
               </Zoom>
               

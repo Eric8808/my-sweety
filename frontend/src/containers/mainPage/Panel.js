@@ -144,7 +144,10 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
           <AddDialog showBlock={showBlock}
                       handleBack={handleBack}
                       setShowBtn={setShowBtn}
-                      addItem={addItem}/>
+                      addItem={addItem}
+                      todoList={todoList}
+                      scheduledList={scheduledList}
+                      setDisplayStatus={setDisplayStatus}/>
       </Grid>
   )
 }

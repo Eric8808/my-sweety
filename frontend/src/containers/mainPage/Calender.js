@@ -176,13 +176,13 @@ const makeColor=()=>{
 
 
 // const MyResponsiveBar = () => (
-function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation,setDisplayStatus}) {
+function MyResponsiveBar({scheduledList, setScheduledList, schedule, setSchedule, day, setDay, setMyAnimation,setDisplayStatus}) {
     const classes = useStyles();
     const [drawerOpen, setDrawerOpen] = useState(false)
     const [drawerContent, setDrawerContent] = useState('')
     const [week, setWeek] = useState(0)
     const colorList = makeColor();
-    
+    const CompletedColor = '#f44336'
 
     // transform schedule to task for calender
     const scheduleToTask = () => {
@@ -240,6 +240,12 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation,s
           emptyColor: colorList[0],
           totalTime: value
         }
+        if (i===0) {
+          scheduledList.forEach(({name},i) => {
+            tempEvents[name] = 0;
+            tempEvents[name+'Color'] = colorList[i+1];
+          })
+        }
         let index = i
         let tempToday = new Date()
         if (week === 0) {
@@ -253,9 +259,15 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation,s
         if (index >= 0 && index < length) {
           let eventsTime = 0;
           console.log(index)
-          weekSchedule[index].events.forEach(({name}, i) => {
+          weekSchedule[index].events.forEach(({name, completed}) => {
             tempEvents[name] = todoEvents[name]
-            tempEvents[name+'Color'] = colorList[1+i]
+            if (completed) {
+              tempEvents[name + 'Color'] = CompletedColor
+            }
+            else {
+              tempEvents[name + 'Color'] = colorList[scheduledList.findIndex((value)=> (value.name === name))+1]
+            }
+            
             console.log(todoEvents[name])
             if (todoEvents[name]) {
               eventsTime += todoEvents[name]
@@ -338,8 +350,8 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation,s
               indexScale={{ type: 'band', round: true }}
               minValue={0}
               maxValue={10}
-              colors={{ scheme: 'set3' }}
-              // colors={({ id, data }) => data[`${id}Color`]}
+              // colors={{ scheme: 'set3' }}
+              colors={({ id, data }) => data[`${id}Color`]}
               defs={[
                   {
                       id: 'dots',
@@ -505,6 +517,8 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation,s
           setDrawerOpen={setDrawerOpen}
           content={drawerContent}
           setMyAnimation={setMyAnimation}
+          setSchedule={setSchedule}
+          setScheduledList={setScheduledList}
         />
         </>
     )

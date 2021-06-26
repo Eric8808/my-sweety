@@ -35,10 +35,16 @@ function CalenderDate({week, setWeek}) {
       <Grid item xs={1} style={{minWidth:60,}}/>
       {[0,1,2,3,4,5,6].map((value) => {
         const today = new Date()
+        let dateStyle = {}
+        if (week === 0) {
+          if (today.getDay() === value) {
+            dateStyle = {backgroundColor: "#ffab40", borderRadius: '5px'}
+          }
+        }
         today.setDate(today.getDate() - today.getDay() + value + week*7)
         return (
           <Grid item xs={1} key={`date${value}`}>
-            <Typography align='center' variant='h6'>
+            <Typography align='center' variant='h6' style={dateStyle}>
               {`${today.getMonth()+1}/${today.getDate()}`}
             </Typography>
           </Grid>
