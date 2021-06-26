@@ -56,8 +56,8 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
           ))
           return day
         })
-        setSchedule(newschedule)
         setScheduledList(todoList)
+        setSchedule(newschedule)
         clearTodoList()
       }else{
         setDisplayStatus('error',m.data.ans.error)
@@ -117,8 +117,8 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
           }
         }
         console.log(concatschedule)
-        setSchedule(concatschedule)
         setScheduledList(scheduledList.concat(todoList))
+        setSchedule(concatschedule)
         clearTodoList()
       }else{
         setDisplayStatus('error',m.data.ans.error)

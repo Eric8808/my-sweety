@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
 
 import Button from '@material-ui/core/Button'
+import ScheduledList from '../containers/mainPage/ScheduledList';
 
 function PaperComponent(props) {
     return (
@@ -17,7 +18,7 @@ function PaperComponent(props) {
       </Draggable>
     );
   }
-export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content, setMyAnimation}) {
+export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content, setMyAnimation, setSchedule, setScheduledList}) {
   
   
     const handleClose = () => {
@@ -25,15 +26,43 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
       setMyAnimation("sitting")
     };
 
-    const handleCompleted = () => {
-
+    const handleCompleted = (date, eventName, completed) => {
+      setScheduledList((scheduledList) => {
+        const i = scheduledList.findIndex((event)=>(event.name===eventName))
+        console.log('completed',scheduledList)
+        // 如果事件原本是completed，按下後變 uncompleted，scheduledList的completed要減1
+        if (completed) {
+          scheduledList[i].completed -= 1
+        }
+        else {
+          scheduledList[i].completed += 1
+        }
+        console.log('completed',scheduledList)
+        return [...scheduledList]
+      })
+      setSchedule((schedule)=>{
+        const i = schedule.findIndex((day)=>{
+          let temp = new Date(day.date)
+          temp.setDate(temp.getDate()-1)
+          
+          return temp.toDateString() === date.toDateString()
+        })
+        const eventIndex = schedule[i].events.findIndex((event)=>(event.name===eventName))
+        schedule[i].events[eventIndex].completed = !completed
+        return [...schedule]
+      })
+      handleClose()
     }
 
     const handleRemove = () => {
-      
+
     }
     
-    const {id: event, value: hours, indexValue: day } = content
+    const {id: event, value: hours, indexValue: day, data, completed } = content
+    // const date=''
+    // if (content.data) {
+    //   const {data:{date}} = content
+    // }
     return (
       <div>
         <Dialog
@@ -73,7 +102,8 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
             </DialogContentText>
             
           </DialogContent>
-          <DialogActions style={{
+          {(event==='empty')? (<></>) : (
+            <DialogActions style={{
                 borderRadius:"30px",
                 padding:"0px 0px 0px 0px",
                 }}>
@@ -85,8 +115,8 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
                 fontStyle:"italic",
                 margin:"0px 0px 0px 10px",
                 }}
-                onClick={handleCompleted}>
-              Completed
+                onClick={() => handleCompleted(data.date, event, completed)}>
+              {(completed)? ('Unompleted'): ('Completed')}
             </Button>
             <Button size="small" variant="contained" 
                 style={{
@@ -100,6 +130,8 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
               Remove
             </Button>
         </DialogActions>
+          )}
+          
         </Dialog>
       </div>
     );

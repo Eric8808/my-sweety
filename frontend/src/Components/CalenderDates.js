@@ -32,7 +32,7 @@ function CalenderDate({week, setWeek}) {
 
   return (
     <Grid container alignItems='center' justify='space-around'>
-      <Grid item xs={1} style={{minWidth:60,}}/>
+      <Grid item xs={1} style={{minWidth:'60px',}}/>
       {[0,1,2,3,4,5,6].map((value) => {
         const today = new Date()
         let dateStyle = {}

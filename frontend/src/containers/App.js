@@ -104,8 +104,8 @@ function App(props) {
 
         setDay.forEach((setter, i)=>{setter(day[i])})
         setTodoList(todoList)
-        setSchedule(schedule)
         setScheduledList(scheduledList)
+        setSchedule(schedule)
         setDisplayStatus('success', 'User data initialization successfully!')
         setLockOpen(true)
       } catch(e){
