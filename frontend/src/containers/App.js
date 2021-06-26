@@ -266,7 +266,10 @@ function App(props) {
         </Grid>
       </Grid>
 
-      <Snackbar open={showMsg} autoHideDuration={6000} onClose={()=>setShowMsg(false)}>
+      <Snackbar open={showMsg} autoHideDuration={3000} onClose={(e, reason)=>{
+          if(reason=="clickaway")
+          {return}
+          ;setShowMsg(false);}}>
           <Alert onClose={()=>setShowMsg(false)} severity={messageState}>
               {/* successState: error, warning, info, success */}
               {msg}
