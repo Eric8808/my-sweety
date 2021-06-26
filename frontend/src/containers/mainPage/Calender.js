@@ -253,12 +253,12 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation,s
         if (index >= 0 && index < length) {
           let eventsTime = 0;
           console.log(index)
-          weekSchedule[index].events.forEach((value, i) => {
-            tempEvents[value] = todoEvents[value]
-            tempEvents[value+'Color'] = colorList[1+i]
-            console.log(todoEvents[value])
-            if (todoEvents[value]) {
-              eventsTime += todoEvents[value]
+          weekSchedule[index].events.forEach(({name}, i) => {
+            tempEvents[name] = todoEvents[name]
+            tempEvents[name+'Color'] = colorList[1+i]
+            console.log(todoEvents[name])
+            if (todoEvents[name]) {
+              eventsTime += todoEvents[name]
             }
           })
           
@@ -447,15 +447,15 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation,s
                   inputProps={{style: { textAlign: 'center' }}} 
                   label={value}
                   value={day[i]}
-                  onChange={ (e) => {
+                  onChange={(e) => {
                       // handleChange(setDay[i], e)
                       let err = false;
                       if(parseInt(e.target.value)>10 || parseInt(e.target.value)<0){
-                        setDisplayStatus('warning','The number should between 1 and 10.')
+                        setDisplayStatus('warning','The available time should be between 0 and 10.')
                         err = true;
                       }else {
                         const gettime = (name) =>{
-                          for(let ii=0;ii<scheduledList.length;i++){
+                          for(let ii=0;ii<scheduledList.length;ii++){
                             if(name===scheduledList[ii].name) return parseInt(scheduledList[ii].needtime,10)/parseInt(scheduledList[ii].separate,10)
                           }
                         }
@@ -470,23 +470,19 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation,s
                             console.log(tempdate.getDay())
                             let totaltime = 0;
                             for(let j=0;j<schedule[ii].events.length;j++){
-                              totaltime += gettime(schedule[ii].events[j])
+                              totaltime += gettime(schedule[ii].events[j].name)
                             }
                             if(totaltime>parseInt(e.target.value)) {
-                              setDisplayStatus('warning','The number should larger than your current schedule.')
+                              setDisplayStatus('warning','The available time should be greater than your scheduled periods.')
                               err = true;
-                            }
-                            
-                          }
-                          
+                            }                            
+                          }                         
                         }
-                        
-                        
                       }
                       if(!err){
-                          setDay[i](parseInt(e.target.value))
-                          changeDay(i, e)
-                        }
+                        setDay[i](parseInt(e.target.value))
+                        changeDay(i, e)
+                      }
                     }  
                   }
                   type="number"

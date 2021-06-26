@@ -49,7 +49,14 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
       })
       // 小黑記得處理算不出來的例外
       if(!m.data.ans.error){
-        setSchedule(m.data.ans)
+        let newschedule = [...m.data.ans]
+        newschedule = newschedule.map((day)=>{
+          day.events = day.events.map((event)=>(
+            {name: event, completed: false}
+          ))
+          return day
+        })
+        setSchedule(newschedule)
         setScheduledList(todoList)
         clearTodoList()
       }else{
@@ -60,7 +67,7 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
       for(let i=0;i<schedule.length;i++){
         let totaltime = 0;
         for(let j=0;j<schedule[i].events.length;j++){
-          totaltime += gettime(schedule[i].events[j])
+          totaltime += gettime(schedule[i].events[j].name)
         }
         getedittime[new Date(schedule[i].date)] = -totaltime;
       }
@@ -74,6 +81,12 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
       if(!m.data.ans.error){
         let concatschedule=[];
         let newschedule = [...m.data.ans]
+        newschedule = newschedule.map((day)=>{
+          day.events = day.events.map((event)=>(
+            {name: event, completed: false}
+          ))
+          return day
+        })
         console.log(schedule)
         concatschedule = [...schedule]
 

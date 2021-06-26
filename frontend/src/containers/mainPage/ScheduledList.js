@@ -100,7 +100,7 @@ function ScheduledList({scheduledList, setScheduledList, setSchedule}) {
     setSchedule((schedule)=>{
       schedule = schedule.map((day)=>{
         console.log(scheduledList[i].name)
-        day.events = day.events.filter((eventName)=>eventName!==scheduledList[i].name)
+        day.events = day.events.filter((event)=>event.name!==scheduledList[i].name)
         return day
       })
 
@@ -167,7 +167,7 @@ function ScheduledList({scheduledList, setScheduledList, setSchedule}) {
                                     borderRadius: 50,
                                     pointerEvents: "none",
                                     color:"black",
-                                    backgroundColor: colorList[i+1],
+                                    backgroundColor: colorList[(i+1)%(colorList.length)],
                                     fontStyle:"italic"
                                   }}
                                 >

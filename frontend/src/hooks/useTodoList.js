@@ -9,7 +9,8 @@ const useTodoList = () => {
       priority: priority,
       separate: separate,
       needtime: needtime,
-      deadline: deadline
+      deadline: deadline,
+      completed: 0,
     }
     setTodoList([...todoList, item])
   }
