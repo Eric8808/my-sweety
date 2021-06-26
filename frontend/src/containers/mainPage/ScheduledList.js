@@ -167,7 +167,7 @@ function ScheduledList({scheduledList, setScheduledList, setSchedule}) {
                                     borderRadius: 50,
                                     pointerEvents: "none",
                                     color:"black",
-                                    backgroundColor: colorList[i+1],
+                                    backgroundColor: colorList[(i+1)%(colorList.length)],
                                     fontStyle:"italic"
                                   }}
                                 >
