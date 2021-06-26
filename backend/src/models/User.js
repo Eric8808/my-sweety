@@ -11,18 +11,23 @@ const UserSchema = new Schema({
     priority: String,
     separate: Number,
     needtime: Number,
-    deadline: String
+    deadline: String,
+    completed: Number
   }],
   scheduledList:[{
     name: String,
     priority: String,
     separate: Number,
     needtime: Number,
-    deadline: String
+    deadline: String,
+    completed: Number
   }],
   schedule:[{
     date: String,
-    events: [String]
+    events: [{
+      name: String,
+      completed: Boolean
+    }]
   }],
   day: [Number]
 },{collection:'users'})

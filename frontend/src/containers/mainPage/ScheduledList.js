@@ -193,10 +193,10 @@ function ScheduledList({scheduledList, setScheduledList, setSchedule}) {
                             <ListItemText 
                                 primary={
                                   <>
-                                  {([...Array(parseInt(value.separate))]).map((key)=>(
+                                  {([...Array(parseInt(value.completed))]).map((key)=>(
                                     <Button style={{maxWidth: '30px', maxHeight: '30px', minWidth: '25px', minHeight: '10px'}} className={classes.doneButton}></Button>
                                   ))}
-                                  {([...Array(parseInt(value.separate))]).map((key)=>(
+                                  {([...Array(parseInt(value.separate-value.completed))]).map((key)=>(
                                     <Button style={{maxWidth: '30px', maxHeight: '30px', minWidth: '25px', minHeight: '10px'}} className={classes.undoneButton}></Button>
                                   ))}
                                   <br></br>

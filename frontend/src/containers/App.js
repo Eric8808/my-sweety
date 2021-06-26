@@ -18,7 +18,7 @@ import useCalender from '../hooks/useCalender'
 import useDisplayStatus from '../hooks/useDisplayStatus'
 import ScheduledList from './mainPage/ScheduledList';
 import SignOutPanel from '../Components/SignOutPanel';
-import Evaluation from './mainPage/Evaluation';
+import Evaluation from './mainPage/EvalutationMode/Evaluation';
 import ModePanel from '../Components/ModePanel';
 
 import Button from '@material-ui/core/Button'
@@ -179,7 +179,7 @@ function App(props) {
           </Grid>
 
           {openEvaluation?
-          <Evaluation/>:
+          <Evaluation scheduledList={scheduledList}/>:
           <>
           {/* =================================middle grid container===================================== */}
           <Grid container item spacing={2} xs={6} justify='space-evenly'>
