@@ -142,6 +142,8 @@ function ScheduledList({scheduledList, setScheduledList, setSchedule}) {
     const colorList = makeColor(specifiers)
     setColorList(colorList)
   },[])
+
+  console.log("scheduledList", scheduledList)
   return (
     <Grid item style={{backgroundColor:'inherit'}}>
       <List className={classes.list} subheader={<li />}>

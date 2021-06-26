@@ -40,7 +40,7 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
       }
     }
     //fot test
-    //now_date.setDate(now_date.getDate()-5)
+    now_date.setDate(now_date.getDate()-5)
     //end test
 
     if(schedule.length===0){
@@ -75,7 +75,14 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
         getedittime[new Date(schedule[i].date)] = -totaltime;
       }
       const m = await axios.post('/api/scheduling/calculate',{
-        events : todoList.map((e)=>{return {name: e.name, needtime:parseInt(e.needtime,10), separate: parseInt(e.separate,10), deadline: new Date(e.deadline.getFullYear(),e.deadline.getMonth(),e.deadline.getDate()), priority: parseInt(e.priority,10)}}), 
+        events : todoList.map((e)=>{
+          return {
+            name: e.name, 
+            needtime:parseInt(e.needtime,10), 
+            separate: parseInt(e.separate,10), 
+            deadline: new Date(e.deadline.getFullYear(),e.deadline.getMonth(),e.deadline.getDate()), 
+            priority: parseInt(e.priority,10)
+          }}), 
         available : day, //[5,2,3,4,6,7,3],
         nowdata : now_date,
         edittime : getedittime

@@ -38,6 +38,8 @@ const toCompleteRatioData = (scheduledList)=>{
         let totalNum = 0
         let totalCompleted = 0
         scheduledList.forEach((event)=>{
+            console.log(event)
+            console.log("total", totalNum)
             totalNum += event.needtime
             totalCompleted += (event.needtime/event.separate)*event.completed
         })

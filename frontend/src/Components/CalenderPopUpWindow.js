@@ -81,7 +81,7 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
               boxShadow: 'none',
               position: 'absolute',
               left:"15vw",
-              height:"27vh",
+              height:"28vh",
               width:"20vw"
 
           }}}
@@ -116,7 +116,7 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
                 margin:"0px 0px 0px 10px",
                 }}
                 onClick={() => handleCompleted(data.date, event, completed)}>
-              {(completed)? ('Unompleted'): ('Completed')}
+              {(completed)? ('Uncompleted'): ('Completed')}
             </Button>
             <Button size="small" variant="contained" 
                 style={{

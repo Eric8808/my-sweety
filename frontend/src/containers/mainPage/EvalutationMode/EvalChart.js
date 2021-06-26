@@ -278,23 +278,25 @@ const makeData = (schedule, day) =>{
   let timeScheduled = {id:"Scheduled Time"}
   let timeComplete = {id:"Completed Time"}
   const today = new Date()
-  const tempDay = new Date()
   console.log(today)
   timeAvail["data"] = []
   timeScheduled["data"] = []
   timeComplete["data"] = []
-  const backDay = [-6, -5, -4, -3, -2, -1, 0]
-  backDay.forEach((backDay, index)=>{
-    tempDay.setDate(today.getDate() + backDay -25 )
+  const backDays = [-6, -5, -4, -3, -2, -1, 0]
+  backDays.forEach((backDay, index)=>{
+    const tempDay = new Date()
+    tempDay.setDate(today.getDate() + backDay-25)
+    console.log(tempDay)
     const dayNum = tempDay.getDay()
     // // timeAvail
     let pointA = {x: `${tempDay.getMonth()+1}/${tempDay.getDate()}`, y: day[dayNum]}
     timeAvail["data"].push(pointA)
-    console.log(timeAvail)
     // // timeScheduled
     // let pointS = {x: weekName}
     // // timeComplete
   })
+  
+  console.log(timeAvail)
 
   data.push(timeAvail)
   data.push(timeScheduled)

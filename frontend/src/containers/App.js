@@ -84,7 +84,6 @@ function App(props) {
   useEffect(async()=>{
     const openTime = 1000 //4000
     setTimeout(()=>setStart(true),0)
-    setInterval(()=>setZoom1((zoom1)=>!zoom1),openTime+4000)
     setTimeout(()=>setZoom2(true),openTime+200)
     setTimeout(()=>setZoom3(true),openTime+400)
     setTimeout(()=>setZoom4(true),openTime+200)
@@ -104,12 +103,87 @@ function App(props) {
         // transform deadline of todoList to new Date()
         todoList.map(event=>{event.deadline = new Date(event.deadline); return event})
         schedule.map(event=>{event.date = new Date(event.date); return event})
+        scheduledList.map(event=>{event.deadline = new Date(event.deadline); return event})
 
         setDay.forEach((setter, i)=>{setter(day[i])})
         setTodoList(todoList)
         setScheduledList(scheduledList)
         setSchedule(schedule)
         setDisplayStatus('success', 'User data initialization successfully!')
+
+        
+        const shiftschedule = ()=>{
+          let newTodoList = []
+          let newScheduledList = [...scheduledList] 
+          const getAttr = (name,attr)=>{
+            for(let i=0;i<scheduledList.length;i++){
+              if(scheduledList[i].name===name){
+                if(attr==="needtime") return scheduledList[i].needtime/scheduledList[i].separate;
+                else if(attr==="deadline") return scheduledList[i].deadline;
+                else if(attr==="priority") return scheduledList[i].priority;
+              }
+            }
+          }
+          const findItemInScheduledList = (name) =>{
+            for(let i=0;i<scheduledList.length;i++){
+              if(scheduledList[i].name===name){
+                return i
+              }
+            }
+          }
+          let finalindex = 0;
+          for(let i=0;i<schedule.length;i++){
+            let tempdate = new Date(schedule[i].date)
+            let nowdate = new Date();
+            if(tempdate>=nowdate) break;
+            finalindex++;
+            for(let j=0;j<schedule[i].events.length;j++){
+              if(!schedule[i].events[j].completed){
+                let newTaskName = `${schedule[i].events[j].name}-undo`
+                let isInTodoList = false;
+                for(let k=0;k<newTodoList.length;k++){
+                  if(newTodoList[k].name===newTaskName) {
+                    isInTodoList=true;
+                    newTodoList[k].needtime=(newTodoList[k].needtime/newTodoList[k].separate)*(newTodoList[k].separate+1);
+                    newTodoList[k].separate++;
+                    let tempIndex = findItemInScheduledList(schedule[i].events[j].name)
+                    newScheduledList[tempIndex].needtime -= newScheduledList[tempIndex].needtime/newScheduledList[tempIndex].separate
+                    newScheduledList[tempIndex].separate -= 1
+                    break;
+                  }
+                }
+                console.log(newTaskName)
+                if(!isInTodoList){
+                  // addItem(newTaskName,getAttr(schedule[i].events[j].name,"priority"),1,getAttr(schedule[i].events[j].name,"needtime"),getAttr(schedule[i].events[j].name,"deadline"))
+                  //task, priority,separate,needtime,deadline
+                  newTodoList.push({
+                    name:newTaskName, 
+                    needtime: getAttr(schedule[i].events[j].name,"needtime"),
+                    separate:1,deadline:getAttr(schedule[i].events[j].name,"deadline"),
+                    priority:getAttr(schedule[i].events[j].name,"priority"),
+                    completed:0
+                  })
+                  let tempIndex = findItemInScheduledList(schedule[i].events[j].name)
+                  newScheduledList[tempIndex].needtime -= newScheduledList[tempIndex].needtime/newScheduledList[tempIndex].separate
+                  newScheduledList[tempIndex].separate -= 1
+                }
+              }
+            }
+          }
+          let newSchedule=[...schedule];
+            for(let i=0;i<finalindex;i++){
+              newSchedule.shift();
+            }
+            console.log(finalindex,newSchedule)
+            if(finalindex!==0){
+              newScheduledList = newScheduledList.filter((event)=>(event.separate !== 0 && event.separate!= event.completed))
+              setScheduledList(newScheduledList)
+              setSchedule(newSchedule)
+              setTodoList(newTodoList)
+            }
+        }
+        
+        shiftschedule()
         setLockOpen(true)
 
         
@@ -142,56 +216,7 @@ function App(props) {
         })
         console.log('user data sent to backend successfully!')
       }
-      
-      const shiftschedule = ()=>{
-        let newTodoList = [...todoList]
-  
-        const getAttr = (name,attr)=>{
-          for(let i=0;i<scheduledList.length;i++){
-            if(scheduledList[i].name===name){
-              if(attr==="needtime") return scheduledList[i].needtime/scheduledList[i].separate;
-              else if(attr==="deadline") return scheduledList[i].deadline;
-              else if(attr==="priority") return scheduledList[i].priority;
-            }
-          }
-        }
-
-        let finalindex = 0;
-        for(let i=0;i<schedule.length;i++){
-          let tempdate = new Date(schedule[i].date)
-          let nowdate = new Date();
-          if(tempdate>=nowdate) break;
-          finalindex++;
-          for(let j=0;j<schedule[i].events.length;j++){
-            if(!schedule[i].events[j].completed){
-              let newTaskName = `${schedule[i].events[j].name}-undo`
-              let isInTodoList = false;
-              for(let k=0;k<newTodoList.length;k++){
-                if(newTodoList[k].name===newTaskName) {
-                  isInTodoList=true;
-                  newTodoList[k].needtime=(newTodoList[k].needtime/newTodoList[k].separate)*(newTodoList[k].separate+1);
-                  newTodoList[k].separate++;
-                  break;
-                }
-              }
-              console.log(newTaskName)
-              if(!isInTodoList){
-                addItem(newTaskName,getAttr(schedule[i].events[j].name,"priority"),1,getAttr(schedule[i].events[j].name,"needtime"),getAttr(schedule[i].events[j].name,"deadline"))
-                //task, priority,separate,needtime,deadline
-                //newTodoList.push({name:newTaskName, needtime: getAttr(schedule[i].events[j].name,"needtime"),separate:1,deadline:getAttr(schedule[i].events[j].name,"deadline"),priority:getAttr(schedule[i].events[j].name,"priority")})
-              }
-            }
-          }
-        }
-        let newSchedule=[...schedule];
-          for(let i=0;i<finalindex;i++){
-            newSchedule.shift();
-          }
-          console.log(finalindex,newSchedule)
-          if(finalindex!==0) setSchedule(newSchedule)
-      }
-      
-      shiftschedule();
+      ;
 
     }catch(e){
       console.log('send to backend error QQ', e)
@@ -210,23 +235,7 @@ function App(props) {
           {/* =================================left most grid container===================================== */}
           <Grid container item spacing={2} xs={3}justify='space-evenly'>
             {/* -------------------dialog image------------------------- */}
-            <Grid item xs={12} style={{position:'relative'}}>
-              <Zoom in={zoom1} timeout={300}>
-                <Card className={classes.block} 
-                      style={{
-                          backgroundImage: "url('dialog3.png')",
-                          backgroundColor:"transparent",
-                          backgroundRepeat:"no-repeat",
-                          backgroundSize:"24vw 33vh",
-                          boxShadow: 'none',
-                          position: 'absolute',
-                          height:"35vh",
-                          width:"25vw"
 
-                      }}>
-                </Card>
-              </Zoom>
-            </Grid>
             {/* -------------------sweety model------------------------- */}
             <Grid item xs={12} style={{position:"relative"}}>
                 <Sweety myAnimation={myAnimation}/>

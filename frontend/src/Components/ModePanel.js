@@ -1,11 +1,11 @@
 
 import Button from '@material-ui/core/Button'
 
-import { FcLineChart, FcComboChart } from "react-icons/fc";
+import { FcLineChart, FcComboChart,FcBullish,FcTodoList } from "react-icons/fc";
 const ModePanel=({openEvaluation, setOpenEvaluation})=>{
     return(
         <>
-        <FcComboChart color="white" size={70} style={{
+        <FcTodoList color="white" size={70} style={{
             cursor:"pointer",
             border: '5px solid',
             borderColor:openEvaluation? "#bdbdbd":"#1a237e",
@@ -14,7 +14,8 @@ const ModePanel=({openEvaluation, setOpenEvaluation})=>{
             position:"absolute",
             bottom:'0%', 
             left: '20%', 
-            transform: 'translate(-50%, -50%)'
+            transform: 'translate(-50%, -50%)',
+            padding:"5px"
         }}
             onClick={()=>setOpenEvaluation(false)}
         />
@@ -30,7 +31,7 @@ const ModePanel=({openEvaluation, setOpenEvaluation})=>{
             left: '20%', 
             transform: 'translate(-50%, -50%)'
         }}>Schedule Mode</Button>
-        <FcLineChart color="white" size={70} style={{
+        <FcBullish color="white" size={70} style={{
             cursor:"pointer",
             border: '5px solid',
             borderColor:openEvaluation?"#1a237e":"#bdbdbd",
@@ -39,7 +40,8 @@ const ModePanel=({openEvaluation, setOpenEvaluation})=>{
             position:"absolute",
             bottom:'0%', 
             right: '0%', 
-            transform: 'translate(-50%, -50%)'
+            transform: 'translate(-50%, -50%)',
+            padding:"5px"
         }}
             onClick={()=>setOpenEvaluation(true)}
         />

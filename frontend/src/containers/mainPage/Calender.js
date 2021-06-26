@@ -182,7 +182,7 @@ function MyResponsiveBar({scheduledList, setScheduledList, schedule, setSchedule
     const [drawerContent, setDrawerContent] = useState('')
     const [week, setWeek] = useState(0)
     const colorList = makeColor();
-    const CompletedColor = '#f44336'
+    const CompletedColor = '#43a047'
 
     // transform schedule to task for calender
     const scheduleToTask = () => {
