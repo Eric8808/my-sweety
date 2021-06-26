@@ -1,38 +1,5 @@
 import { ResponsivePie } from '@nivo/pie'
-import ScheduledList from '../ScheduledList'
 
-const data = [
-    {
-      "id": "php",
-      "label": "php",
-      "value": 77,
-      "color": "hsl(284, 70%, 50%)"
-    },
-    {
-      "id": "elixir",
-      "label": "elixir",
-      "value": 208,
-      "color": "hsl(87, 70%, 50%)"
-    },
-    {
-      "id": "css",
-      "label": "css",
-      "value": 478,
-      "color": "hsl(273, 70%, 50%)"
-    },
-    {
-      "id": "ruby",
-      "label": "ruby",
-      "value": 162,
-      "color": "hsl(1, 70%, 50%)"
-    },
-    {
-      "id": "c",
-      "label": "c",
-      "value": 73,
-      "color": "hsl(153, 70%, 50%)"
-    }
-  ]
 
 const scheduledListToData = (scheduledList) =>{
     let data = []
@@ -44,7 +11,7 @@ const scheduledListToData = (scheduledList) =>{
         data.push(item)
         return data
     }
-    scheduledList.forEach((event)=>{
+    scheduledList.forEach((event, index)=>{
         let item = {}
         item["id"] = event.name
         item["label"] = event.name
@@ -54,20 +21,62 @@ const scheduledListToData = (scheduledList) =>{
     return data
 }
 
-const MyResponsivePie = ({scheduledList}) => {
-    const data = scheduledListToData(scheduledList)
+const toCompleteRatioData = (scheduledList)=>{
+    let data = []
+    if(scheduledList.length == 0){
+        let item = {}
+        item["id"] = "No schedule."
+        item["label"] = "No schedule"
+        item["value"] = 1
+        item["color"] = "#43a047"
+        data.push(item)
+        return data
+    }
+    else{
+        let Undone = {id:"Undone", label:"Undone", color:"#f4511e"}
+        let completed = {id:"Done", label:"Done",color:"#43a047"}
+        let totalNum = 0
+        let totalCompleted = 0
+        scheduledList.forEach((event)=>{
+            totalNum += event.needtime
+            totalCompleted += (event.needtime/event.separate)*event.completed
+        })
+        Undone["value"] = totalNum-totalCompleted
+        completed["value"] = totalCompleted
+        data.push(Undone)
+        data.push(completed)
+    }
+    return data
+}
+const makeColor=()=>{
+    const specifiers = "8dd3c7ffffb3bebadafb807280b1d3fdb462b3de69fccde5d9d9d9bc80bdccebc5ffed6f"
+    var n = specifiers.length / 6 | 0, colors = new Array(n), i = 0;
+    while (i < n) colors[i] = "#" + specifiers.slice(i * 6, ++i * 6);
+    return colors;
+}
 
+const MyResponsivePie = ({scheduledList, isPersonalInfo}) => {
+    let data
+    if(isPersonalInfo){
+        data = toCompleteRatioData(scheduledList)
+    }
+    else{
+        data = scheduledListToData(scheduledList)
+    }
+    
     return(
     <ResponsivePie
         data={data}
-        margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-        innerRadius={0.5}
+        margin={isPersonalInfo?{ top: 25, right: 25, bottom: 25, left: 20 }:{ top: 40, right: 80, bottom: 40, left: 240 }}
+        innerRadius={isPersonalInfo?0.4:0.5}
         padAngle={0.7}
         cornerRadius={3}
-        colors={{ scheme: 'set3' }}
+        arcLinkLabelsDiagonalLength={isPersonalInfo?10:16}
+        arcLinkLabelsStraightLength={isPersonalInfo?10:24}
+        colors={isPersonalInfo?({ id, data }) => data["color"]:{ scheme: 'set3' }}
         activeOuterRadiusOffset={8}
         borderWidth={1}
-        borderColor={{ from: 'color', modifiers: [ [ 'darker', 0.2 ] ] }}
+        borderColor={isPersonalInfo?"none":{ from: 'color', modifiers: [ [ 'darker', 0.2 ] ] }}
         arcLinkLabelsSkipAngle={10}
         arcLinkLabelsTextColor="#333333"
         arcLinkLabelsThickness={2}
@@ -94,26 +103,18 @@ const MyResponsivePie = ({scheduledList}) => {
                 spacing: 10
             }
         ]}
-        legends={[
+        legends={isPersonalInfo?[]:[
             {
-                anchor: 'bottom',
-                direction: 'row',
+                anchor: 'left',
+                direction: 'column',
                 justify: false,
-                translateX: 0,
-                translateY: 50,
+                translateX: -220,
+                translateY: 10,
                 itemWidth: 50,
                 itemHeight: 20,
-                itemsSpacing: 0,
+                itemsSpacing: 2,
                 symbolSize: 20,
                 itemDirection: 'left-to-right',
-                effects: [
-                    {
-                        on: 'hover',
-                        style: {
-                            itemTextColor: '#000'
-                        }
-                    }
-                ]
             }
         ]}
     />
