@@ -24,6 +24,14 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
       setDrawerOpen(false)
       setMyAnimation("sitting")
     };
+
+    const handleCompleted = () => {
+
+    }
+
+    const handleRemove = () => {
+      
+    }
     
     const {id: event, value: hours, indexValue: day } = content
     return (
@@ -76,7 +84,8 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
                 background:"#4caf50",
                 fontStyle:"italic",
                 margin:"0px 0px 0px 10px",
-                }}>
+                }}
+                onClick={handleCompleted}>
               Completed
             </Button>
             <Button size="small" variant="contained" 
@@ -86,7 +95,8 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
                 background:"#f44336",
                 fontStyle:"italic",
                 margin:"0px 0px 0px 10px",
-                }}>
+                }}
+                onClick={handleRemove}>
               Remove
             </Button>
         </DialogActions>

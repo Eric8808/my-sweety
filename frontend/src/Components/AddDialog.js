@@ -26,7 +26,7 @@ const handleChange = (func) => (event) => {
   func(event.target.value);
 };
 
-function AddDialog({showBlock, handleBack, setShowBtn, addItem}) {
+function AddDialog({showBlock, handleBack, setShowBtn, addItem, todoList, scheduledList, setDisplayStatus}) {
   const classes = useStyles();
   const [task, setTask] = useState('');
   const [priority, setPriority] = useState(1)
@@ -37,6 +37,12 @@ function AddDialog({showBlock, handleBack, setShowBtn, addItem}) {
 
   const handleAddItem = () => {
     if (task && priority) {
+        const inTodoList = todoList.find((event)=>(event.name === task))
+        const inScheduledList = scheduledList.find((event)=>(event.name === task))
+        if (inTodoList || inScheduledList) {
+          setDisplayStatus('warning', 'The task you add already exists')
+          return
+        }
         let temp_deadline = new Date(deadline)
         addItem(task, priority,separate,needTime,temp_deadline)
         setTask('')
