@@ -179,7 +179,7 @@ function App(props) {
           </Grid>
 
           {openEvaluation?
-          <Evaluation scheduledList={scheduledList}/>:
+          <Evaluation scheduledList={scheduledList} schedule={schedule} day={day} username={props.username}/>:
           <>
           {/* =================================middle grid container===================================== */}
           <Grid container item spacing={2} xs={6} justify='space-evenly'>

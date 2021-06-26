@@ -271,7 +271,41 @@ const data = [
       ]
     }
   ]
-const MyResponsiveLine = () => (
+
+const makeData = (schedule, day) =>{
+  let data = []
+  let timeAvail = {id:"Available Time"}
+  let timeScheduled = {id:"Scheduled Time"}
+  let timeComplete = {id:"Completed Time"}
+  const today = new Date()
+  const tempDay = new Date()
+  console.log(today)
+  timeAvail["data"] = []
+  timeScheduled["data"] = []
+  timeComplete["data"] = []
+  const backDay = [-6, -5, -4, -3, -2, -1, 0]
+  backDay.forEach((backDay, index)=>{
+    tempDay.setDate(today.getDate() + backDay -25 )
+    const dayNum = tempDay.getDay()
+    // // timeAvail
+    let pointA = {x: `${tempDay.getMonth()+1}/${tempDay.getDate()}`, y: day[dayNum]}
+    timeAvail["data"].push(pointA)
+    console.log(timeAvail)
+    // // timeScheduled
+    // let pointS = {x: weekName}
+    // // timeComplete
+  })
+
+  data.push(timeAvail)
+  data.push(timeScheduled)
+  data.push(timeComplete)
+  return data
+}
+const MyResponsiveLine = ({schedule, day}) => {
+  console.log(schedule)
+  console.log(day)
+  makeData(schedule, day)
+  return(
     <ResponsiveLine
         data={data}
         margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
@@ -333,6 +367,7 @@ const MyResponsiveLine = () => (
             }
         ]}
     />
-)
+  )
+}
 
 export default MyResponsiveLine
