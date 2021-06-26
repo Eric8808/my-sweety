@@ -69,7 +69,7 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
         for(let j=0;j<schedule[i].events.length;j++){
           totaltime += gettime(schedule[i].events[j].name)
         }
-        getedittime[schedule[i].date] = -totaltime;
+        getedittime[new Date(schedule[i].date)] = -totaltime;
       }
       const m = await axios.post('/api/scheduling/calculate',{
         events : todoList.map((e)=>{return {name: e.name, needtime:parseInt(e.needtime,10), separate: parseInt(e.separate,10), deadline: new Date(e.deadline.getFullYear(),e.deadline.getMonth(),e.deadline.getDate()), priority: parseInt(e.priority,10)}}), 
@@ -89,7 +89,20 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
         })
         console.log(schedule)
         concatschedule = [...schedule]
+
+        let OldScheduleDate = new Date(concatschedule[concatschedule.length-1].date),NewScheduleDate = new Date(newschedule[newschedule.length-1].date);
+        if(NewScheduleDate>OldScheduleDate){
+          let addDate = new Date(OldScheduleDate);
+          while(addDate<=NewScheduleDate){
+            addDate.setDate(addDate.getDate()+1);
+            let addDate2 = new Date(addDate);
+            concatschedule.push({date:addDate2.toJSON(),events:[]})
+            console.log(addDate2.getDate());
+          }
+        }
+
         for(let i=0;i<newschedule.length;i++){
+          let isfind = false;
           for(let j=0;j<concatschedule.length;j++){
             let temp2 = new Date(newschedule[i].date)
             let dd = new Date(concatschedule[j].date)
@@ -98,6 +111,7 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
             temp2.getMonth()===dd.getMonth() &&
             temp2.getFullYear()===dd.getFullYear()){
               concatschedule[j].events=concatschedule[j].events.concat(newschedule[i].events)
+              isfind=true;
               break;
             }
           }
