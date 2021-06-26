@@ -253,12 +253,12 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation,s
         if (index >= 0 && index < length) {
           let eventsTime = 0;
           console.log(index)
-          weekSchedule[index].events.forEach((value, i) => {
-            tempEvents[value] = todoEvents[value]
-            tempEvents[value+'Color'] = colorList[1+i]
-            console.log(todoEvents[value])
-            if (todoEvents[value]) {
-              eventsTime += todoEvents[value]
+          weekSchedule[index].events.forEach(({name}, i) => {
+            tempEvents[name] = todoEvents[name]
+            tempEvents[name+'Color'] = colorList[1+i]
+            console.log(todoEvents[name])
+            if (todoEvents[name]) {
+              eventsTime += todoEvents[name]
             }
           })
           
@@ -470,7 +470,7 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation,s
                             console.log(tempdate.getDay())
                             let totaltime = 0;
                             for(let j=0;j<schedule[ii].events.length;j++){
-                              totaltime += gettime(schedule[ii].events[j])
+                              totaltime += gettime(schedule[ii].events[j].name)
                             }
                             if(totaltime>parseInt(e.target.value)) {
                               setDisplayStatus('warning','The available time should be greater than your scheduled periods.')

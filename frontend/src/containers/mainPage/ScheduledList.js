@@ -100,7 +100,7 @@ function ScheduledList({scheduledList, setScheduledList, setSchedule}) {
     setSchedule((schedule)=>{
       schedule = schedule.map((day)=>{
         console.log(scheduledList[i].name)
-        day.events = day.events.filter((eventName)=>eventName!==scheduledList[i].name)
+        day.events = day.events.filter((event)=>event.name!==scheduledList[i].name)
         return day
       })
 
