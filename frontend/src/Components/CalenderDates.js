@@ -32,7 +32,7 @@ function CalenderDate({week, setWeek}) {
 
   return (
     <Grid container alignItems='center' justify='space-around'>
-      <Grid item xs={1}/>
+      <Grid item xs={1} style={{minWidth:60,}}/>
       {[0,1,2,3,4,5,6].map((value) => {
         const today = new Date()
         today.setDate(today.getDate() - today.getDay() + value + week*7)
@@ -45,7 +45,7 @@ function CalenderDate({week, setWeek}) {
         )
       })}
       {/* <Grid item xs={1}/> */}
-      <Grid item xs={2}>
+      <Grid item xs={2}  style={{minWidth:130,}}>
         <IconButton 
           color="primary" 
           aria-label="last-week" 

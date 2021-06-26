@@ -52,7 +52,7 @@ const data = [
       "kebabColor": "hsl(5, 70%, 50%)",
       "fries": 4,
       "friesColor": "hsl(88, 70%, 50%)",
-      "donut": 88,
+      "donut": 0,
       "donutColor": "hsl(3, 70%, 50%)"
     },
     {
@@ -167,6 +167,12 @@ const handleChange = (func, event) => {
   func(event.target.value);
 };
 
+const makeColor=()=>{
+  const specifiers = "8dd3c7ffffb3bebadafb807280b1d3fdb462b3de69fccde5d9d9d9bc80bdccebc5ffed6f"
+  var n = specifiers.length / 6 | 0, colors = new Array(n), i = 0;
+  while (i < n) colors[i] = "#" + specifiers.slice(i * 6, ++i * 6);
+  return colors;
+}
 
 
 // const MyResponsiveBar = () => (
@@ -175,7 +181,7 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation})
     const [drawerOpen, setDrawerOpen] = useState(false)
     const [drawerContent, setDrawerContent] = useState('')
     const [week, setWeek] = useState(0)
-
+    const colorList = makeColor();
     
 
     // transform schedule to task for calender
@@ -190,6 +196,7 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation})
           {
             day: weekDay[i],
             empty: value,
+            emptyColor: colorList[0],
             totalTime: value,
           }
         ))
@@ -230,6 +237,7 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation})
         let tempEvents = {
           day: weekDay[i],
           empty: value,
+          emptyColor: colorList[0],
           totalTime: value
         }
         let index = i
@@ -245,8 +253,9 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation})
         if (index >= 0 && index < length) {
           let eventsTime = 0;
           console.log(index)
-          weekSchedule[index].events.forEach((value) => {
+          weekSchedule[index].events.forEach((value, i) => {
             tempEvents[value] = todoEvents[value]
+            tempEvents[value+'Color'] = colorList[1+i]
             console.log(todoEvents[value])
             if (todoEvents[value]) {
               eventsTime += todoEvents[value]
@@ -303,14 +312,23 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation})
       console.log('effect')
       setTask(scheduleToTask())
     }, [scheduledList, week])
+
+    
+    // useEffect(()=>{
+    //   const specifiers = "8dd3c7ffffb3bebadafb807280b1d3fdb462b3de69fccde5d9d9d9bc80bdccebc5ffed6f"
+    //   const colorList = makeColor(specifiers)
+    //   setColorList(colorList)
+    // },[])
+
     return (
         <>
         <CalenderDate week={week} setWeek={setWeek}/>
         <div className={classes.calender}>
           <ResponsiveBar
+              // data={data}
               data={task}
               // keys={[ 'hot dog', 'burger', 'sandwich', 'kebab', 'fries', 'donut' ]}
-              // keys={['empty']}
+              // keys={['test']}
               keys={['empty', ...scheduledList.map((value)=>(value.name))]}
               indexBy="day"
               margin={{ top: 20, right: 130, bottom: 20, left: 60 }}
@@ -421,7 +439,7 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation})
           />
         </div>
         <Grid container justify='space-around'>
-          <Grid item xs={1}/>
+          <Grid item xs={1} style={{minWidth: 60}}/>
           {weekDay.map((value, i) => (
             <Grid item xs={1} key={`day${value}`}>
               <TextField
@@ -444,8 +462,7 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation})
               />
           </Grid>
           ))}
-          <Grid item xs={1}/>
-          <Grid item xs={1}/>
+          <Grid item xs={2} style={{minWidth:130}}/>
         </Grid>
         {/* <CalenderDrawer
            open={drawerOpen}

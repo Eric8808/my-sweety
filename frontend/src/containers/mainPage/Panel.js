@@ -109,7 +109,7 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
   }
   return (
     
-      <Grid container xs={12} justify='center' alignItems='center' className={classes.grid}>
+      <Grid container item xs={12} justify='center' alignItems='center' className={classes.grid}>
         {(showBtn) ? (
           <>
             <Fab color="primary" 
