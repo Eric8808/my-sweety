@@ -85,7 +85,7 @@ function AddDialog({showBlock, handleBack, setShowBtn, addItem, todoList, schedu
                 inputProps={{style: { textAlign: 'center' }}}
                 label="Priority"
                 value={priority}
-                onChange={handleChange(setPriority)}
+                onChange={(e)=>setPriority(parseInt(e.target.value,10))}
                 type="number"
                 InputLabelProps={{
                     shrink: true,
@@ -100,7 +100,7 @@ function AddDialog({showBlock, handleBack, setShowBtn, addItem, todoList, schedu
                 inputProps={{style: { textAlign: 'center' }}} 
                 label="Total Time"
                 value={needTime}
-                onChange={handleChange(setNeedTime)}
+                onChange={(e)=>setNeedTime(parseInt(e.target.value,10))}
                 type="number"
                 InputLabelProps={{
                     shrink: true,
@@ -115,7 +115,7 @@ function AddDialog({showBlock, handleBack, setShowBtn, addItem, todoList, schedu
                 inputProps={{style: { textAlign: 'center' }}} 
                 label="Separate"
                 value={separate}
-                onChange={handleChange(setSeparate)}
+                onChange={(e)=>setSeparate(parseInt(e.target.value,10))}
                 type="number"
                 InputLabelProps={{
                     shrink: true,

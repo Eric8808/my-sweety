@@ -176,7 +176,7 @@ const makeColor=()=>{
 
 
 // const MyResponsiveBar = () => (
-function MyResponsiveBar({scheduledList, setScheduledList, schedule, setSchedule, day, setDay, setMyAnimation,setDisplayStatus}) {
+function MyResponsiveBar({scheduledList, setScheduledList, schedule, setSchedule, day, setDay, setMyAnimation,setDisplayStatus, setCompleteDate}) {
     const classes = useStyles();
     const [drawerOpen, setDrawerOpen] = useState(false)
     const [drawerContent, setDrawerContent] = useState('')
@@ -259,6 +259,9 @@ function MyResponsiveBar({scheduledList, setScheduledList, schedule, setSchedule
         if (week === 0) {
           index = i - tempToday.getDay()
         }
+        else if(week < 0){
+          index = (i < 7-length)? (-1) : (i-7+length)
+        }
         else {
           if (length !== 7) {
             index = (i < length)? i : -1
@@ -273,7 +276,7 @@ function MyResponsiveBar({scheduledList, setScheduledList, schedule, setSchedule
               tempEvents[name + 'Color'] = CompletedColor
             }
             else {
-              tempEvents[name + 'Color'] = colorList[scheduledList.findIndex((value)=> (value.name === name))+1]
+              tempEvents[name + 'Color'] = colorList[(scheduledList.findIndex((value)=> (value.name === name))+1)%colorList.length]
             }
             
             console.log(todoEvents[name])

@@ -67,6 +67,7 @@ function App(props) {
   const {todoList, addItem, deleteItem, setTodoList, clearTodoList} = useTodoList()
   const [scheduledList, setScheduledList] = useState([])
   const {day, setDay} = useCalender()
+  const [completeDate, setCompleteDate] = useState([])
   const [myAnimation, setMyAnimation] = useState('sitting')
   const {msg, showMsg, messageState, setDisplayStatus, setShowMsg} = useDisplayStatus();
   // status: success, error, info, warning
@@ -171,19 +172,20 @@ function App(props) {
             }
           }
           let newSchedule=[...schedule];
-            for(let i=0;i<finalindex;i++){
-              newSchedule.shift();
-            }
-            console.log(finalindex,newSchedule)
-            if(finalindex!==0){
-              newScheduledList = newScheduledList.filter((event)=>(event.separate !== 0 && event.separate!= event.completed))
-              setScheduledList(newScheduledList)
-              setSchedule(newSchedule)
-              setTodoList(newTodoList)
-            }
+          for(let i=0;i<finalindex;i++){
+            newSchedule.shift();
+          }
+          console.log(finalindex, newSchedule)
+          if(finalindex!==0){
+            newScheduledList = newScheduledList.filter((event)=>(event.separate !== 0 && event.separate !== event.completed))
+            setScheduledList(newScheduledList)
+            setSchedule(newSchedule)
+            setTodoList(newTodoList)
+          }
         }
         
         shiftschedule()
+
         setLockOpen(true)
 
         
@@ -216,7 +218,6 @@ function App(props) {
         })
         console.log('user data sent to backend successfully!')
       }
-      ;
 
     }catch(e){
       console.log('send to backend error QQ', e)
@@ -288,7 +289,17 @@ function App(props) {
                 </Card>
               <Zoom in={zoom2}>
                 <Card className={classes.block} style={{height:'70vh', background:'transparent', boxShadow:"none",}}>
-                  <Calender scheduledList={scheduledList} setScheduledList={setScheduledList} schedule={schedule} setSchedule={setSchedule} day={day} setDay={setDay} setMyAnimation={setMyAnimation} setDisplayStatus={setDisplayStatus} />
+                  <Calender 
+                    scheduledList={scheduledList} 
+                    setScheduledList={setScheduledList} 
+                    schedule={schedule} 
+                    setSchedule={setSchedule} 
+                    day={day}
+                    setDay={setDay} 
+                    setMyAnimation={setMyAnimation} 
+                    setDisplayStatus={setDisplayStatus} 
+                    setCompleteDate={setCompleteDate}
+                  />
                 </Card>
               </Zoom>
               

@@ -40,7 +40,7 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
       }
     }
     //fot test
-    now_date.setDate(now_date.getDate()-5)
+    // now_date.setDate(now_date.getDate()-5)
     //end test
 
     if(schedule.length===0){

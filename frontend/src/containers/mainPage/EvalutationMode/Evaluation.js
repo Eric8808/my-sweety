@@ -67,8 +67,8 @@ const Evaluation = ({scheduledList, schedule, setMyAnimation, day, username}) =>
         let totalNum = 0
         let totalCompleted = 0
         scheduledList.forEach((event)=>{
-            totalNum += event.needtime
-            totalCompleted += (event.needtime/event.separate)*event.completed
+            totalNum += parseInt(event.needtime, 10)
+            totalCompleted += (parseInt(event.needtime, 10)/parseInt(event.separate, 10))*parseInt(event.completed, 10)
         })
         return Math.round(totalCompleted/totalNum *100)
     }

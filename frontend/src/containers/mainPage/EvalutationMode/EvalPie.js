@@ -40,8 +40,8 @@ const toCompleteRatioData = (scheduledList)=>{
         scheduledList.forEach((event)=>{
             console.log(event)
             console.log("total", totalNum)
-            totalNum += event.needtime
-            totalCompleted += (event.needtime/event.separate)*event.completed
+            totalNum += parseInt(event.needtime, 10)
+            totalCompleted += (parseInt(event.needtime, 10)/parseInt(event.separate, 10))*parseInt(event.completed, 10)
         })
         Undone["value"] = totalNum-totalCompleted
         completed["value"] = totalCompleted

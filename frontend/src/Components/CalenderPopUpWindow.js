@@ -38,6 +38,7 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
           scheduledList[i].completed += 1
         }
         console.log('completed',scheduledList)
+        scheduledList = scheduledList.filter((event)=>(event.separate !== 0 && event.separate !== event.completed))
         return [...scheduledList]
       })
       setSchedule((schedule)=>{
@@ -54,8 +55,30 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
       handleClose()
     }
 
-    const handleRemove = () => {
-
+    const handleRemove = (date, eventName, completed) => {
+      setScheduledList((scheduledList)=>{
+        const i = scheduledList.findIndex((event)=>(event.name===eventName))
+        scheduledList[i].needtime -= parseInt(scheduledList[i].needtime, 10)/parseInt(scheduledList[i].separate, 10)
+        scheduledList[i].separate = parseInt(scheduledList[i].separate, 10) - 1
+        if(completed){
+          scheduledList[i].completed -= 1
+        }
+        
+        scheduledList = scheduledList.filter((event)=>(event.separate !== 0 && event.separate !== event.completed))
+        return [...scheduledList]
+      })
+      setSchedule((schedule)=>{
+        const i = schedule.findIndex((day)=>{
+          let temp = new Date(day.date)
+          temp.setDate(temp.getDate()-1)
+          
+          return temp.toDateString() === date.toDateString()
+        })
+        schedule[i].events = schedule[i].events.filter((event)=>(event.name!==eventName))
+        
+        return [...schedule]
+      })
+      handleClose()
     }
     
     const {id: event, value: hours, indexValue: day, data, completed } = content
@@ -126,7 +149,7 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
                 fontStyle:"italic",
                 margin:"0px 0px 0px 10px",
                 }}
-                onClick={handleRemove}>
+                onClick={() => handleRemove(data.date, event, completed)}>
               Remove
             </Button>
         </DialogActions>
