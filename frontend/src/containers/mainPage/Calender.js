@@ -270,6 +270,7 @@ function MyResponsiveBar({scheduledList, setScheduledList, schedule, setSchedule
         if (index >= 0 && index < length) {
           let eventsTime = 0;
           console.log(index)
+          console.log(weekSchedule)
           weekSchedule[index].events.forEach(({name, completed}) => {
             tempEvents[name] = todoEvents[name]
             if (completed) {
@@ -536,6 +537,8 @@ function MyResponsiveBar({scheduledList, setScheduledList, schedule, setSchedule
           setMyAnimation={setMyAnimation}
           setSchedule={setSchedule}
           setScheduledList={setScheduledList}
+          setCompleteDate={setCompleteDate}
+          scheduledList={scheduledList}
         />
         </>
     )

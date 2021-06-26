@@ -29,8 +29,9 @@ const UserSchema = new Schema({
       completed: Boolean
     }]
   }],
-  day: [Number]
-},{collection:'users'})
+  day: [Number],
+  completeDate:{testprop:Number}
+},{collection:'users',strict: false})
 
 // Creating a table within database with the defined schema
 const User = mongoose.model('UserSchema', UserSchema)

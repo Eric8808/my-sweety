@@ -44,12 +44,13 @@ const router = Router()
 router.get('/init', async(req, res)=>{
     const {username} = req.query
     console.log(`User ${username} comes to init data!`)
-    const {todoList, schedule, scheduledList, day} = await User.findOne({username:username});
+    const {todoList, schedule, scheduledList, day, completeDate} = await User.findOne({username:username});
     //take something from database 記得error handle
-    console.log(todoList)
-    console.log(schedule)
-    console.log(day)
-    console.log(scheduledList)
+    console.log("todoList",todoList)
+    console.log("schedule",schedule)
+    console.log("day",day)
+    console.log("scheduledList",scheduledList)
+    console.log("completeDate",completeDate)
     if(day.length === 0){
       res.json({
         todoList: todoList,
@@ -63,24 +64,27 @@ router.get('/init', async(req, res)=>{
         todoList: todoList,
         schedule: schedule,
         scheduledList: scheduledList,
-        day: day
+        day: day,
+        completeDate:completeDate
       })
     }
 })
 
 router.post('/update', async(req, res)=>{
-    const {username, todoList, schedule, scheduledList, day} = req.body
+    const {username, todoList, schedule, scheduledList, day, completeDate} = req.body
     console.log(`User ${username} comes to update data!`)
-    console.log(todoList)
-    console.log(schedule)
-    console.log(day)
-    console.log(scheduledList)
+    console.log("todoList",todoList)
+    console.log("schedule",schedule)
+    console.log("day",day)
+    console.log("scheduledList",scheduledList)
+    console.log("completeDate",completeDate)
     try{
       await User.updateOne({username: username},{
         todoList: todoList,
         schedule: schedule,
         scheduledList: scheduledList,
-        day: day
+        day: day,
+        completeDate: completeDate
       })
       res.json({message:'success'})
     } catch(e){

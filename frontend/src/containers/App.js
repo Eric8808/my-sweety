@@ -67,7 +67,7 @@ function App(props) {
   const {todoList, addItem, deleteItem, setTodoList, clearTodoList} = useTodoList()
   const [scheduledList, setScheduledList] = useState([])
   const {day, setDay} = useCalender()
-  const [completeDate, setCompleteDate] = useState([])
+  const [completeDate, setCompleteDate] = useState({})
   const [myAnimation, setMyAnimation] = useState('sitting')
   const {msg, showMsg, messageState, setDisplayStatus, setShowMsg} = useDisplayStatus();
   // status: success, error, info, warning
@@ -81,7 +81,8 @@ function App(props) {
   const [openEvaluation, setOpenEvaluation] = useState(false)
   // console.log("todolist", todoList)
   // console.log("schedule", schedule)
-  // console.log("scheduled list", scheduledList)
+  // // console.log("scheduled list", scheduledList)
+  // console.log(completeDate)
   useEffect(async()=>{
     const openTime = 1000 //4000
     setTimeout(()=>setStart(true),0)
@@ -96,7 +97,7 @@ function App(props) {
       console.log('start fetch from backend!')
       try{
         const {
-          data:{todoList, schedule, day, scheduledList}
+          data:{todoList, schedule, day, scheduledList, completeDate}
         } = await axios.get('/api/data/init',{
             params:{username: props.username}
         })
@@ -111,7 +112,7 @@ function App(props) {
         setScheduledList(scheduledList)
         setSchedule(schedule)
         setDisplayStatus('success', 'User data initialization successfully!')
-
+        setCompleteDate(completeDate)
         
         const shiftschedule = ()=>{
           let newTodoList = []
@@ -214,7 +215,8 @@ function App(props) {
           todoList: todoList,
           schedule: schedule,
           scheduledList: scheduledList,
-          day: day
+          day: day,
+          completeDate:completeDate
         })
         console.log('user data sent to backend successfully!')
       }
@@ -251,7 +253,7 @@ function App(props) {
           </Grid>
 
           {openEvaluation?
-          <Evaluation scheduledList={scheduledList} schedule={schedule} day={day} username={props.username}/>:
+          <Evaluation scheduledList={scheduledList} schedule={schedule} day={day} username={props.username}completeDate={completeDate}/>:
           <>
           {/* =================================middle grid container===================================== */}
           <Grid container item spacing={2} xs={6} justify='space-evenly'>

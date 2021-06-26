@@ -272,56 +272,63 @@ const data = [
     }
   ]
 
-const makeData = (schedule, day) =>{
+const makeData = (schedule, day, completeDate) =>{
   let data = []
-  let timeAvail = {id:"Available Time"}
-  let timeScheduled = {id:"Scheduled Time"}
-  let timeComplete = {id:"Completed Time"}
+  let timeAvail = {id:"Available Time", color:"#e57373"}
+  let timeComplete = {id:"Completed Time", color:"#3d5afe"}
   const today = new Date()
   console.log(today)
   timeAvail["data"] = []
-  timeScheduled["data"] = []
   timeComplete["data"] = []
   const backDays = [-6, -5, -4, -3, -2, -1, 0]
   backDays.forEach((backDay, index)=>{
     const tempDay = new Date()
-    tempDay.setDate(today.getDate() + backDay-25)
-    console.log(tempDay)
+    tempDay.setDate(today.getDate() + backDay)
     const dayNum = tempDay.getDay()
+    // // timeComplete
+    let pointC = {x: `${tempDay.getMonth()+1}/${tempDay.getDate()}`}
+    console.log(completeDate)
+    if(completeDate[`${tempDay.getMonth()+1}/${tempDay.getDate()}`]===undefined){
+      pointC["y"] = 0
+    }
+    else{
+      pointC["y"] = completeDate[`${tempDay.getMonth()+1}/${tempDay.getDate()}`]
+    }
+    timeComplete["data"].push(pointC)
     // // timeAvail
     let pointA = {x: `${tempDay.getMonth()+1}/${tempDay.getDate()}`, y: day[dayNum]}
+    pointA ["y"] -= pointC["y"]
     timeAvail["data"].push(pointA)
-    // // timeScheduled
-    // let pointS = {x: weekName}
-    // // timeComplete
   })
   
   console.log(timeAvail)
-
-  data.push(timeAvail)
-  data.push(timeScheduled)
+  console.log(timeComplete)
   data.push(timeComplete)
+  data.push(timeAvail)
   return data
 }
-const MyResponsiveLine = ({schedule, day}) => {
+const MyResponsiveLine = ({schedule, day, completeDate}) => {
   console.log(schedule)
   console.log(day)
-  makeData(schedule, day)
+  console.log(completeDate)
+  const data = makeData(schedule, day, completeDate)
   return(
     <ResponsiveLine
         data={data}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+        margin={{ top: 50, right: 140, bottom: 50, left: 60 }}
         xScale={{ type: 'point' }}
         yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: true, reverse: false }}
         yFormat=" >-.2f"
         axisTop={null}
         axisRight={null}
+        curve="monotoneX"
+        colors={d => d.color}
         axisBottom={{
             orient: 'bottom',
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'transportation',
+            legend: 'Date (past 7 days)',
             legendOffset: 36,
             legendPosition: 'middle'
         }}
@@ -330,7 +337,7 @@ const MyResponsiveLine = ({schedule, day}) => {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'count',
+            legend: 'time',
             legendOffset: -40,
             legendPosition: 'middle'
         }}
@@ -341,6 +348,7 @@ const MyResponsiveLine = ({schedule, day}) => {
         pointBorderColor={{ from: 'serieColor' }}
         pointLabelYOffset={-12}
         enableArea={true}
+        areaBaselineValue={0}
         useMesh={true}
         legends={[
             {

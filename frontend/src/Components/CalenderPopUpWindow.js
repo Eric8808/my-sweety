@@ -18,7 +18,7 @@ function PaperComponent(props) {
       </Draggable>
     );
   }
-export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content, setMyAnimation, setSchedule, setScheduledList}) {
+export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content, setMyAnimation, setSchedule, setScheduledList, setCompleteDate, scheduledList}) {
   
   
     const handleClose = () => {
@@ -27,6 +27,17 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
     };
 
     const handleCompleted = (date, eventName, completed) => {
+      let periodTime = 0
+      const i = scheduledList.findIndex((event)=>(event.name===eventName))
+      periodTime = parseInt(scheduledList[i].needtime,10)/parseInt(scheduledList[i].separate, 10)
+      setCompleteDate((completeDate)=>{
+        if(completeDate[`${date.getMonth()+1}/${date.getDate()}`] === undefined){
+          completeDate[`${date.getMonth()+1}/${date.getDate()}`] = 0
+        }
+        completeDate[`${date.getMonth()+1}/${date.getDate()}`] = completeDate[`${date.getMonth()+1}/${date.getDate()}`] + (completed?-1*periodTime:1*periodTime)
+        return completeDate
+      })
+
       setScheduledList((scheduledList) => {
         const i = scheduledList.findIndex((event)=>(event.name===eventName))
         console.log('completed',scheduledList)
@@ -54,7 +65,6 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
       })
       handleClose()
     }
-
     const handleRemove = (date, eventName, completed) => {
       setScheduledList((scheduledList)=>{
         const i = scheduledList.findIndex((event)=>(event.name===eventName))

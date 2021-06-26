@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Evaluation = ({scheduledList, schedule, setMyAnimation, day, username}) =>{
+const Evaluation = ({scheduledList, schedule, setMyAnimation, day, username, completeDate}) =>{
     const classes = useStyles();
 
     const getRatio = (scheduledList)=>{
@@ -193,7 +193,7 @@ const Evaluation = ({scheduledList, schedule, setMyAnimation, day, username}) =>
 
                     <Card className={classes.block} style={{height:'49vh',position:"relative"}}>
                         {titleButton("Weekly Diligence","#7986cb")}
-                        <MyResponsiveLine schedule={schedule} day={day}/>
+                        <MyResponsiveLine schedule={schedule} day={day} completeDate={completeDate}/>
                     </Card>
                     
                 </Grid>

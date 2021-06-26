@@ -25,8 +25,8 @@ const toCompleteRatioData = (scheduledList)=>{
     let data = []
     if(scheduledList.length == 0){
         let item = {}
-        item["id"] = "No schedule."
-        item["label"] = "No schedule"
+        item["id"] = "All completed."
+        item["label"] = "All completed"
         item["value"] = 1
         item["color"] = "#43a047"
         data.push(item)
