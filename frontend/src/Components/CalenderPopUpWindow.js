@@ -8,6 +8,8 @@ import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
 
+import Button from '@material-ui/core/Button'
+
 function PaperComponent(props) {
     return (
       <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
@@ -17,9 +19,6 @@ function PaperComponent(props) {
   }
 export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content, setMyAnimation}) {
   
-    const handleClickOpen = () => {
-      setDrawerOpen(true)
-    };
   
     const handleClose = () => {
       setDrawerOpen(false)
@@ -45,7 +44,7 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
               boxShadow: 'none',
               position: 'absolute',
               left:"15vw",
-              height:"26vh",
+              height:"27vh",
               width:"20vw"
 
           }}}
@@ -55,6 +54,7 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
             style={{
                 borderRadius:"30px",
                 padding:"5vh 2vw 0vh 2vw",
+                marginBottom:"1vh",
                 }}>
             <DialogContentText id="alert-dialog-description" style={{color:"black", fontSize:"large"}}>
                 {`Event: ${event}`}
@@ -69,8 +69,26 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
                 borderRadius:"30px",
                 padding:"0px 0px 0px 0px",
                 }}>
-            <button onClick={handleClose}>close</button>
-            <button onClick={handleClose}>close</button>
+            <Button size="small" variant="contained"
+                style={{
+                borderRadius: 50,
+                color:"white",
+                background:"#4caf50",
+                fontStyle:"italic",
+                margin:"0px 0px 0px 10px",
+                }}>
+              Completed
+            </Button>
+            <Button size="small" variant="contained" 
+                style={{
+                borderRadius: 50,
+                color:"white",
+                background:"#f44336",
+                fontStyle:"italic",
+                margin:"0px 0px 0px 10px",
+                }}>
+              Remove
+            </Button>
         </DialogActions>
         </Dialog>
       </div>
