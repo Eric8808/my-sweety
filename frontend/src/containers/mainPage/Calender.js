@@ -176,7 +176,7 @@ const makeColor=()=>{
 
 
 // const MyResponsiveBar = () => (
-function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation}) {
+function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation,setDisplayStatus}) {
     const classes = useStyles();
     const [drawerOpen, setDrawerOpen] = useState(false)
     const [drawerContent, setDrawerContent] = useState('')
@@ -449,8 +449,44 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation})
                   value={day[i]}
                   onChange={ (e) => {
                       // handleChange(setDay[i], e)
-                      setDay[i](parseInt(e.target.value))
-                      changeDay(i, e)
+                      let err = false;
+                      if(parseInt(e.target.value)>10 || parseInt(e.target.value)<0){
+                        setDisplayStatus('warning','The number should between 1 and 10.')
+                        err = true;
+                      }else {
+                        const gettime = (name) =>{
+                          for(let ii=0;ii<scheduledList.length;i++){
+                            if(name===scheduledList[ii].name) return parseInt(scheduledList[ii].needtime,10)/parseInt(scheduledList[ii].separate,10)
+                          }
+                        }
+                        for(let ii=0;ii<schedule.length;ii++){
+                          let tempdate = new Date(schedule[ii].date)
+                          console.log(tempdate )
+                          console.log(schedule[ii])
+                          let weekday = tempdate.getDay()
+                          console.log(weekday)
+                          if(weekday===(i+1)%7)
+                          {
+                            console.log(tempdate.getDay())
+                            let totaltime = 0;
+                            for(let j=0;j<schedule[ii].events.length;j++){
+                              totaltime += gettime(schedule[ii].events[j])
+                            }
+                            if(totaltime>parseInt(e.target.value)) {
+                              setDisplayStatus('warning','The number should larger than your current schedule.')
+                              err = true;
+                            }
+                            
+                          }
+                          
+                        }
+                        
+                        
+                      }
+                      if(!err){
+                          setDay[i](parseInt(e.target.value))
+                          changeDay(i, e)
+                        }
                     }  
                   }
                   type="number"
