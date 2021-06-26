@@ -176,13 +176,13 @@ const makeColor=()=>{
 
 
 // const MyResponsiveBar = () => (
-function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation,setDisplayStatus}) {
+function MyResponsiveBar({scheduledList, setScheduledList, schedule, setSchedule, day, setDay, setMyAnimation,setDisplayStatus}) {
     const classes = useStyles();
     const [drawerOpen, setDrawerOpen] = useState(false)
     const [drawerContent, setDrawerContent] = useState('')
     const [week, setWeek] = useState(0)
     const colorList = makeColor();
-    
+    const CompletedColor = '#f44336'
 
     // transform schedule to task for calender
     const scheduleToTask = () => {
@@ -192,14 +192,18 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation,s
         console.log(todoEvents)
       })
       if (schedule.length === 0) {
-        return day.map((value, i) => (
-          {
+        return day.map((value, i) => {
+          let temp = new Date();
+          temp.setDate(temp.getDate()-temp.getDay()+i+7*week)
+          temp = new Date(temp.getFullYear(), temp.getMonth(), temp.getDate())
+          return {
+            date: temp,
             day: weekDay[i],
             empty: value,
             emptyColor: colorList[0],
             totalTime: value,
           }
-        ))
+        })
       }
       const firstDate = new Date(schedule[0].date)
       firstDate.setDate(firstDate.getDate()-1)
@@ -234,12 +238,22 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation,s
       console.log(weekSchedule)
       // 根據 weekSchedule 將每天的事件放入
       const newTask = day.map(( value, i ) => {
+        let temp = new Date();
+        temp.setDate(temp.getDate()-temp.getDay()+i+7*week)
+        temp = new Date(temp.getFullYear(), temp.getMonth(), temp.getDate())
         let tempEvents = {
+          date: temp,
           day: weekDay[i],
           empty: value,
           emptyColor: colorList[0],
           totalTime: value
         }
+        // if (i===0) {
+        //   scheduledList.forEach(({name},i) => {
+        //     tempEvents[name] = 0;
+        //     tempEvents[name+'Color'] = colorList[i+1];
+        //   })
+        // }
         let index = i
         let tempToday = new Date()
         if (week === 0) {
@@ -253,9 +267,15 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation,s
         if (index >= 0 && index < length) {
           let eventsTime = 0;
           console.log(index)
-          weekSchedule[index].events.forEach(({name}, i) => {
+          weekSchedule[index].events.forEach(({name, completed}) => {
             tempEvents[name] = todoEvents[name]
-            tempEvents[name+'Color'] = colorList[1+i]
+            if (completed) {
+              tempEvents[name + 'Color'] = CompletedColor
+            }
+            else {
+              tempEvents[name + 'Color'] = colorList[scheduledList.findIndex((value)=> (value.name === name))+1]
+            }
+            
             console.log(todoEvents[name])
             if (todoEvents[name]) {
               eventsTime += todoEvents[name]
@@ -287,6 +307,12 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation,s
     const [task, setTask] = useState([])
 
     const handleClick = (data) => {
+        if (data.color === CompletedColor) {
+          data.completed = true
+        }
+        else {
+          data.completed = false
+        }
         setDrawerContent(data)
         setDrawerOpen(true)
         setMyAnimation("flair")
@@ -311,8 +337,8 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation,s
     useEffect(() => {
       console.log('effect')
       setTask(scheduleToTask())
-    }, [scheduledList, week])
-
+      
+    }, [schedule, week])
     
     // useEffect(()=>{
     //   const specifiers = "8dd3c7ffffb3bebadafb807280b1d3fdb462b3de69fccde5d9d9d9bc80bdccebc5ffed6f"
@@ -338,8 +364,8 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation,s
               indexScale={{ type: 'band', round: true }}
               minValue={0}
               maxValue={10}
-              colors={{ scheme: 'set3' }}
-              // colors={({ id, data }) => data[`${id}Color`]}
+              // colors={{ scheme: 'set3' }}
+              colors={({ id, data }) => data[`${id}Color`]}
               defs={[
                   {
                       id: 'dots',
@@ -398,28 +424,28 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation,s
               labelSkipHeight={12}
               labelTextColor={{ from: 'color', modifiers: [ [ 'darker', 1.6 ] ] }}
               legends={[
-                  {
-                      dataFrom: 'keys',
-                      anchor: 'bottom-right',
-                      direction: 'column',
-                      justify: false,
-                      translateX: 120,
-                      translateY: 0,
-                      itemsSpacing: 2,
-                      itemWidth: 100,
-                      itemHeight: 20,
-                      itemDirection: 'left-to-right',
-                      itemOpacity: 0.85,
-                      symbolSize: 20,
-                      effects: [
-                          {
-                              on: 'hover',
-                              style: {
-                                  itemOpacity: 1
-                              }
-                          }
-                      ]
-                  }
+                  // {
+                  //     dataFrom: 'keys',
+                  //     anchor: 'bottom-right',
+                  //     direction: 'column',
+                  //     justify: false,
+                  //     translateX: 120,
+                  //     translateY: 0,
+                  //     itemsSpacing: 2,
+                  //     itemWidth: 100,
+                  //     itemHeight: 20,
+                  //     itemDirection: 'left-to-right',
+                  //     itemOpacity: 0.85,
+                  //     symbolSize: 20,
+                  //     effects: [
+                  //         {
+                  //             on: 'hover',
+                  //             style: {
+                  //                 itemOpacity: 1
+                  //             }
+                  //         }
+                  //     ]
+                  // }
               ]}
               animate={true}
               motionStiffness={90}
@@ -494,7 +520,7 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation,s
               />
           </Grid>
           ))}
-          <Grid item xs={2} style={{minWidth:130}}/>
+          <Grid item xs={2} style={{minWidth:'130px'}}/>
         </Grid>
         {/* <CalenderDrawer
            open={drawerOpen}
@@ -505,6 +531,8 @@ function MyResponsiveBar({scheduledList, schedule, day, setDay, setMyAnimation,s
           setDrawerOpen={setDrawerOpen}
           content={drawerContent}
           setMyAnimation={setMyAnimation}
+          setSchedule={setSchedule}
+          setScheduledList={setScheduledList}
         />
         </>
     )

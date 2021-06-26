@@ -97,6 +97,7 @@ function ScheduledList({scheduledList, setScheduledList, setSchedule}) {
   const classes = useStyles();
 
   const handleDelete = (i) => {
+    setScheduledList(scheduledList.filter((_,index) => index!==i))
     setSchedule((schedule)=>{
       schedule = schedule.map((day)=>{
         console.log(scheduledList[i].name)
@@ -114,7 +115,7 @@ function ScheduledList({scheduledList, setScheduledList, setSchedule}) {
       }
       return schedule
     })
-    setScheduledList(scheduledList.filter((_,index) => index!==i))
+    
       // deleteItem(i)
     }
   const [open, setOpen] = useState(Array(scheduledList.length).fill(false));
@@ -193,10 +194,10 @@ function ScheduledList({scheduledList, setScheduledList, setSchedule}) {
                             <ListItemText 
                                 primary={
                                   <>
-                                  {([...Array(parseInt(value.separate))]).map((key)=>(
+                                  {([...Array(parseInt(value.completed))]).map((key)=>(
                                     <Button style={{maxWidth: '30px', maxHeight: '30px', minWidth: '25px', minHeight: '10px'}} className={classes.doneButton}></Button>
                                   ))}
-                                  {([...Array(parseInt(value.separate))]).map((key)=>(
+                                  {([...Array(parseInt(value.separate-value.completed))]).map((key)=>(
                                     <Button style={{maxWidth: '30px', maxHeight: '30px', minWidth: '25px', minHeight: '10px'}} className={classes.undoneButton}></Button>
                                   ))}
                                   <br></br>

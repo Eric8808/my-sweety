@@ -18,7 +18,7 @@ import useCalender from '../hooks/useCalender'
 import useDisplayStatus from '../hooks/useDisplayStatus'
 import ScheduledList from './mainPage/ScheduledList';
 import SignOutPanel from '../Components/SignOutPanel';
-import Evaluation from './mainPage/Evaluation';
+import Evaluation from './mainPage/EvalutationMode/Evaluation';
 import ModePanel from '../Components/ModePanel';
 
 import Button from '@material-ui/core/Button'
@@ -107,8 +107,8 @@ function App(props) {
 
         setDay.forEach((setter, i)=>{setter(day[i])})
         setTodoList(todoList)
-        setSchedule(schedule)
         setScheduledList(scheduledList)
+        setSchedule(schedule)
         setDisplayStatus('success', 'User data initialization successfully!')
         setLockOpen(true)
 
@@ -238,7 +238,7 @@ function App(props) {
           </Grid>
 
           {openEvaluation?
-          <Evaluation/>:
+          <Evaluation scheduledList={scheduledList} schedule={schedule} day={day} username={props.username}/>:
           <>
           {/* =================================middle grid container===================================== */}
           <Grid container item spacing={2} xs={6} justify='space-evenly'>
@@ -276,7 +276,7 @@ function App(props) {
                 </Card>
               <Zoom in={zoom2}>
                 <Card className={classes.block} style={{height:'70vh', background:'transparent', boxShadow:"none",}}>
-                  <Calender scheduledList={scheduledList} schedule={schedule} day={day} setDay={setDay} setMyAnimation={setMyAnimation} setDisplayStatus={setDisplayStatus} />
+                  <Calender scheduledList={scheduledList} setScheduledList={setScheduledList} schedule={schedule} setSchedule={setSchedule} day={day} setDay={setDay} setMyAnimation={setMyAnimation} setDisplayStatus={setDisplayStatus} />
                 </Card>
               </Zoom>
               
