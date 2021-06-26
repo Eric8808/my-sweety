@@ -39,7 +39,10 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
         if(name===scheduledList[i].name) return parseInt(scheduledList[i].needtime,10)/parseInt(scheduledList[i].separate,10)
       }
     }
-    
+    //fot test
+    //now_date.setDate(now_date.getDate()-5)
+    //end test
+
     if(schedule.length===0){
       const m = await axios.post('/api/scheduling/calculate',{
         events : todoList.map((e)=>{return {name: e.name, needtime:parseInt(e.needtime,10), separate: parseInt(e.separate,10), deadline: new Date(e.deadline.getFullYear(),e.deadline.getMonth(),e.deadline.getDate()) , priority: parseInt(e.priority,10)}}), 
