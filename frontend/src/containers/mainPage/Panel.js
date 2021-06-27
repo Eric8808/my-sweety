@@ -32,6 +32,11 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
 
   const handleSchedule = async () => {
 
+    if(todoList.length>6){
+      setDisplayStatus('warning',"Please make sure your todo items are less then 6.")
+      return
+    }
+
     let tempdate = new Date();
     let now_date = new Date(tempdate.getFullYear(),tempdate.getMonth(),tempdate.getDate());
     const gettime = (name) =>{
