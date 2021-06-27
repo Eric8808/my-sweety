@@ -38,6 +38,7 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
         return completeDate
       })
 
+      let allCompleted = false // 檢查是否要從scheduledList和schedule刪掉該事件
       setScheduledList((scheduledList) => {
         const i = scheduledList.findIndex((event)=>(event.name===eventName))
         console.log('completed',scheduledList)
@@ -47,25 +48,55 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
         }
         else {
           scheduledList[i].completed += 1
+          console.log('completed',scheduledList[i].completed)
+          if (scheduledList[i].completed === scheduledList[i].separate) {
+            allCompleted = true;
+          }
         }
         console.log('completed',scheduledList)
-        scheduledList = scheduledList.filter((event)=>(event.separate !== 0 && event.separate !== event.completed))
+        if (allCompleted) {
+          scheduledList = scheduledList.filter((event)=>(event.separate !== 0 && event.separate !== event.completed))
+        }
         return [...scheduledList]
       })
-      setSchedule((schedule)=>{
-        const i = schedule.findIndex((day)=>{
-          let temp = new Date(day.date)
-          temp.setDate(temp.getDate()-1)
-          
-          return temp.toDateString() === date.toDateString()
+
+      // 從schedule刪除事件
+      if (allCompleted) {
+        setSchedule((schedule)=> {
+          schedule = schedule.map((day)=>{
+            day.events = day.events.filter((event)=>event.name!==eventName)
+            return day
+          })
+          for(let i = schedule.length-1;i>=0;i--){
+            if(schedule[i].events.length === 0){
+              schedule.pop()
+            }
+            else{
+              break
+            }
+          }
+          return schedule
         })
-        const eventIndex = schedule[i].events.findIndex((event)=>(event.name===eventName))
-        schedule[i].events[eventIndex].completed = !completed
-        return [...schedule]
-      })
+      }
+      // schedule的該事件標示為完成
+      else {
+        setSchedule((schedule)=>{
+          const i = schedule.findIndex((day)=>{
+            let temp = new Date(day.date)
+            temp.setDate(temp.getDate()-1)
+            
+            return temp.toDateString() === date.toDateString()
+          })
+          const eventIndex = schedule[i].events.findIndex((event)=>(event.name===eventName))
+          schedule[i].events[eventIndex].completed = !completed
+          return [...schedule]
+        })
+      }
+      
       handleClose()
     }
     const handleRemove = (date, eventName, completed) => {
+      let allCompleted = false // 檢查是否要從scheduledList和schedule刪掉該事件
       setScheduledList((scheduledList)=>{
         const i = scheduledList.findIndex((event)=>(event.name===eventName))
         scheduledList[i].needtime -= parseInt(scheduledList[i].needtime, 10)/parseInt(scheduledList[i].separate, 10)
@@ -73,21 +104,48 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
         if(completed){
           scheduledList[i].completed -= 1
         }
+        if (scheduledList[i].completed === scheduledList[i].separate || scheduledList[i].separate===0) {
+          allCompleted = true;
+        }
+        if (allCompleted) {
+          scheduledList = scheduledList.filter((event)=>(event.separate !== 0 && event.separate !== event.completed))
+        }
         
-        scheduledList = scheduledList.filter((event)=>(event.separate !== 0 && event.separate !== event.completed))
         return [...scheduledList]
       })
-      setSchedule((schedule)=>{
-        const i = schedule.findIndex((day)=>{
-          let temp = new Date(day.date)
-          temp.setDate(temp.getDate()-1)
-          
-          return temp.toDateString() === date.toDateString()
+      // schedule裡全部的該事件都要刪除
+      if (allCompleted) {
+        setSchedule((schedule)=> {
+          schedule = schedule.map((day)=>{
+            day.events = day.events.filter((event)=>event.name!==eventName)
+            return day
+          })
+          for(let i = schedule.length-1;i>=0;i--){
+            if(schedule[i].events.length === 0){
+              schedule.pop()
+            }
+            else{
+              break
+            }
+          }
+          return schedule
         })
-        schedule[i].events = schedule[i].events.filter((event)=>(event.name!==eventName))
-        
-        return [...schedule]
-      })
+      }
+      // 只刪除schedule那一天的事件
+      else {
+        setSchedule((schedule)=>{
+          const i = schedule.findIndex((day)=>{
+            let temp = new Date(day.date)
+            temp.setDate(temp.getDate()-1)
+            
+            return temp.toDateString() === date.toDateString()
+          })
+          schedule[i].events = schedule[i].events.filter((event)=>(event.name!==eventName))
+          
+          return [...schedule]
+        })
+      }
+      
       handleClose()
     }
     
