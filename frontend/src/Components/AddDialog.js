@@ -36,11 +36,15 @@ function AddDialog({showBlock, handleBack, setShowBtn, addItem, todoList, schedu
   const taskRef = useRef(null)
 
   const handleAddItem = () => {
+    if (!deadline) {
+      setDisplayStatus('error', 'You need to set a deadline !')
+      return
+    }
     if (task && priority) {
         const inTodoList = todoList.find((event)=>(event.name === task))
         const inScheduledList = scheduledList.find((event)=>(event.name === task))
         if (inTodoList || inScheduledList) {
-          setDisplayStatus('warning', 'The task you add already exists')
+          setDisplayStatus('warning', 'The task you add already exists !')
           return
         }
         let temp_deadline = new Date(deadline)
@@ -82,7 +86,7 @@ function AddDialog({showBlock, handleBack, setShowBtn, addItem, todoList, schedu
           <Grid item xs={2}>
             <TextField
                 id="filled-number"
-                inputProps={{style: { textAlign: 'center' }}}
+                inputProps={{style: { textAlign: 'center' }, min: 1}}
                 label="Priority"
                 value={priority}
                 onChange={(e)=>setPriority(parseInt(e.target.value,10))}
@@ -97,7 +101,7 @@ function AddDialog({showBlock, handleBack, setShowBtn, addItem, todoList, schedu
           <Grid item xs={2}>
             <TextField
                 id="outlined-number"
-                inputProps={{style: { textAlign: 'center' }}} 
+                inputProps={{style: { textAlign: 'center' }, min: 1}} 
                 label="Total Time"
                 value={needTime}
                 onChange={(e)=>setNeedTime(parseInt(e.target.value,10))}
@@ -112,7 +116,7 @@ function AddDialog({showBlock, handleBack, setShowBtn, addItem, todoList, schedu
           <Grid item xs={2}>
             <TextField
                 id="outlined-number"
-                inputProps={{style: { textAlign: 'center' }}} 
+                inputProps={{style: { textAlign: 'center' }, min: 1}} 
                 label="Separate"
                 value={separate}
                 onChange={(e)=>setSeparate(parseInt(e.target.value,10))}
