@@ -18,12 +18,26 @@ function PaperComponent(props) {
       </Draggable>
     );
   }
-export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content, setMyAnimation, setSchedule, setScheduledList, setCompleteDate, scheduledList}) {
+export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content, setMyAnimation, setSchedule, setScheduledList, setCompleteDate, scheduledList, myAnimation}) {
   
   
-    const handleClose = () => {
+    const handleClose = ({type}) => {
       setDrawerOpen(false)
-      setMyAnimation("sitting")
+      if(type==="Completed"){  
+        setTimeout(()=>{
+          setMyAnimation("RumbaDance")
+        },1500)
+        setMyAnimation("JoyfulJump2")
+      }
+      else if(type==="Remove"){
+        setTimeout(()=>{
+          setMyAnimation("RumbaDance")
+        },5000)
+        setMyAnimation("assasination")
+      }
+      else{
+        setMyAnimation("RumbaDance")
+      }
     };
 
     const handleCompleted = (date, eventName, completed) => {
@@ -93,7 +107,7 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
         })
       }
       
-      handleClose()
+      handleClose({type:"Completed"})
     }
     const handleRemove = (date, eventName, completed) => {
       let allCompleted = false // 檢查是否要從scheduledList和schedule刪掉該事件
@@ -146,7 +160,7 @@ export default function CalendarPopUpWindow({drawerOpen, setDrawerOpen, content,
         })
       }
       
-      handleClose()
+      handleClose({type:"Remove"})
     }
     
     const {id: event, value: hours, indexValue: day, data, completed } = content

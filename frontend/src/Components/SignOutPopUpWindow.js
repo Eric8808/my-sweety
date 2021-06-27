@@ -27,7 +27,7 @@ export default function SignOutrPopUpWindow({
 }) {
     const handleClose = () => {
       setDrawerOpen(false)
-      setMyAnimation("sitting")
+      setMyAnimation("RumbaDance")
     };
     const handleConfirm=()=>{
       if(content === "sign out?"){

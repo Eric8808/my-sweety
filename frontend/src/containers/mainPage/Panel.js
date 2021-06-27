@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule, setScheduledList, clearTodoList,scheduledList}) {
+function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule, setScheduledList, clearTodoList,scheduledList,myAnimation, setMyAnimation}) {
   const classes = useStyles();
   const [showBtn, setShowBtn] = useState(true)
   const [showBlock, setShowBlock] = useState(false)
@@ -33,7 +33,7 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
   const handleSchedule = async () => {
 
     if(todoList.length>6){
-      setDisplayStatus('warning',"Please make sure your todo items are less then 6.")
+      setDisplayStatus('warning',"Please make sure your todo items are less than 6.")
       return
     }
 
@@ -57,6 +57,10 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
       })
       // 小黑記得處理算不出來的例外
       if(!m.data.ans.error){
+        setTimeout(()=>{
+          setMyAnimation(myAnimation)
+        },3000)
+        setMyAnimation("kick")
         let newschedule = [...m.data.ans]
         newschedule = newschedule.map((day)=>{
           day.events = day.events.map((event)=>(
@@ -94,6 +98,10 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
       })
       // 小黑記得處理算不出來的例外
       if(!m.data.ans.error){
+        setTimeout(()=>{
+          setMyAnimation(myAnimation)
+        },3000)
+        setMyAnimation("kick")
         let concatschedule=[];
         let newschedule = [...m.data.ans]
         newschedule = newschedule.map((day)=>{
@@ -141,6 +149,7 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
     }
     
     
+    
   }
 
   const handleAdd = () => {
@@ -176,7 +185,9 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
                       addItem={addItem}
                       todoList={todoList}
                       scheduledList={scheduledList}
-                      setDisplayStatus={setDisplayStatus}/>
+                      setDisplayStatus={setDisplayStatus}
+                      myAnimation={myAnimation}
+                      setMyAnimation={setMyAnimation}/>
       </Grid>
   )
 }

@@ -68,8 +68,8 @@ function App(props) {
   const [scheduledList, setScheduledList] = useState([])
   const {day, setDay} = useCalender()
   const [completeDate, setCompleteDate] = useState({})
-  const [myAnimation, setMyAnimation] = useState('sitting')
-  const {msg, showMsg, messageState, setDisplayStatus, setShowMsg} = useDisplayStatus();
+  const [myAnimation, setMyAnimation] = useState('RumbaDance')
+  const {msg, showMsg, messageState, setDisplayStatus, setShowMsg} = useDisplayStatus(myAnimation, setMyAnimation);
   // status: success, error, info, warning
   const [schedule,setSchedule] = useState([])
   const [lockOpen, setLockOpen] = useState(false)
@@ -242,7 +242,7 @@ function App(props) {
             {/* -------------------sweety model------------------------- */}
             <Grid item xs={12} style={{position:"relative"}}>
                 <Sweety myAnimation={myAnimation}/>
-                <ModePanel openEvaluation={openEvaluation} setOpenEvaluation={setOpenEvaluation}/>
+                <ModePanel openEvaluation={openEvaluation} setOpenEvaluation={setOpenEvaluation} setMyAnimation={setMyAnimation}/>
                 {/* assasination, break1990, breakFreeze, flair, hip-hop, sitting, situpus, zombie-down, playDrum, silly_dance */}
             </Grid>
 
@@ -268,7 +268,9 @@ function App(props) {
                   schedule={schedule}
                   clearTodoList={clearTodoList}
                   setScheduledList={setScheduledList}
-                  scheduledList={scheduledList}/>
+                  scheduledList={scheduledList}
+                  myAnimation={myAnimation}
+                  setMyAnimation={setMyAnimation}/>
             </Grid>
 
             {/* ----------------------calendar-------------------------- */}
@@ -301,6 +303,7 @@ function App(props) {
                     setMyAnimation={setMyAnimation} 
                     setDisplayStatus={setDisplayStatus} 
                     setCompleteDate={setCompleteDate}
+                    myAnimation={myAnimation}
                   />
                 </Card>
               </Zoom>

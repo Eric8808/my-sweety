@@ -6,6 +6,31 @@ import React, { useRef, useEffect } from 'react'
 import { useGLTF, useAnimations } from '@react-three/drei'
 import { AccordionActions } from '@material-ui/core'
 
+/////////////// Animation List:
+// AirSquat: 
+// AirSquat2: 
+// BigCut: 
+// Dying: 
+// HitToBody: 
+// JoyfulJump: 
+// RumbaDance: 
+// Shuffling: 
+// Sitting2: 
+// SittingClap: 
+// Standing: 
+// Thankful: 
+// Uprock: 
+// assasination: 
+// break1990: 
+// breakFreeze: 
+// flair: 
+// hip-hop: 
+// playDrum: 
+// silly_dance: 
+// sitting: 
+// situpus: 
+// zombie-down: 
+
 function usePrevious(value){
   const ref = useRef(value)
   useEffect(()=>{
@@ -15,16 +40,20 @@ function usePrevious(value){
 }
 export default function Model(props) {
   const group = useRef()
-  const { nodes, materials, animations } = useGLTF('/girlTenActions.gltf')
+  const { nodes, materials, animations } = useGLTF('/girl25Actions.gltf')
   const { actions } = useAnimations(animations, group)
   const nowAnimation = props.myAnimation
   const prevAnimation = usePrevious(nowAnimation)
   let scale = [0.028, 0.028, 0.028]
-  let position = [0,-2.3,0]
+  let position = [0,-1.9,0]
   let rotation = [Math.PI / 2, 0, -0.5]
+  console.log("Animation List:",actions)
   if(props.start){
-    scale = [0.02, 0.02, 0.02]
-    position = [-0.8, -1.5, 0]
+    scale = [0.025, 0.025, 0.025]
+    position = [-0, -3, 0]
+  }
+  if(nowAnimation === 'kick'){
+    rotation = [Math.PI / 2, 0, -0.]
   }
   useEffect(()=>{
     actions[prevAnimation].stop()
@@ -59,4 +88,4 @@ export default function Model(props) {
   )
 }
 
-useGLTF.preload('/girlTenActions.gltf')
+useGLTF.preload('/girl25Actions.gltf')

@@ -48,7 +48,7 @@ const SignOutPanel = ({username, setMyAnimation}) =>{
             onClick={()=>{
                 setDrawerContent("sign out?")
                 setDrawerOpen(true)
-                setMyAnimation("assasination")
+                setMyAnimation("BigCut")
             }} 
             style={{
             borderRadius: 50,
@@ -64,7 +64,7 @@ const SignOutPanel = ({username, setMyAnimation}) =>{
             onClick={()=>{
                 setDrawerContent("delete your account? (You have to register again.)")
                 setDrawerOpen(true)
-                setMyAnimation("zombie-down")
+                setMyAnimation("Dying")
             }}
             style={{
             borderRadius: 50,

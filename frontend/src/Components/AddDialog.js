@@ -26,7 +26,7 @@ const handleChange = (func) => (event) => {
   func(event.target.value);
 };
 
-function AddDialog({showBlock, handleBack, setShowBtn, addItem, todoList, scheduledList, setDisplayStatus}) {
+function AddDialog({showBlock, handleBack, setShowBtn, addItem, todoList, scheduledList, setDisplayStatus,myAnimation, setMyAnimation}) {
   const classes = useStyles();
   const [task, setTask] = useState('');
   const [priority, setPriority] = useState(1)
@@ -36,24 +36,32 @@ function AddDialog({showBlock, handleBack, setShowBtn, addItem, todoList, schedu
   const taskRef = useRef(null)
 
   const handleAddItem = () => {
+    // setMyAnimation("")
     if (!deadline) {
       setDisplayStatus('error', 'You need to set a deadline !')
       return
     }
-    if (task && priority) {
-        const inTodoList = todoList.find((event)=>(event.name === task))
-        const inScheduledList = scheduledList.find((event)=>(event.name === task))
-        if (inTodoList || inScheduledList) {
-          setDisplayStatus('warning', 'The task you add already exists !')
-          return
-        }
-        let temp_deadline = new Date(deadline)
-        addItem(task, priority,separate,needTime,temp_deadline)
-        setTask('')
-        setPriority(1)
-        taskRef.current.focus()
-        console.log('click')
+    var blank = task.trim()
+    if (blank === null || blank === '' || blank === undefined || !priority ||!needTime || !separate){
+      setDisplayStatus('error', 'Please confirm your event info!!')
+      return
     }
+    const inTodoList = todoList.find((event)=>(event.name === task))
+    const inScheduledList = scheduledList.find((event)=>(event.name === task))
+    if (inTodoList || inScheduledList) {
+      setDisplayStatus('warning', 'The task you add already exists !')
+      return
+    }
+    let temp_deadline = new Date(deadline)
+    addItem(task, priority,separate,needTime,temp_deadline)
+    setTask('')
+    setPriority(1)
+    taskRef.current.focus()
+    console.log('click')
+    setTimeout(()=>{
+      setMyAnimation(myAnimation)
+    },2700)
+    setMyAnimation("Uprock2")
   }
 
   return (

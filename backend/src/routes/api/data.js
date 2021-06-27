@@ -56,7 +56,8 @@ router.get('/init', async(req, res)=>{
         todoList: todoList,
         schedule: schedule,
         scheduledList: scheduledList,
-        day: [1,1,1,1,1,1,1]
+        day: [1,1,1,1,1,1,1],
+        completeDate:completeDate
       })
     }
     else{

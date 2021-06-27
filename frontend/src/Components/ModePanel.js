@@ -2,7 +2,7 @@
 import Button from '@material-ui/core/Button'
 
 import { FcLineChart, FcComboChart,FcBullish,FcTodoList } from "react-icons/fc";
-const ModePanel=({openEvaluation, setOpenEvaluation})=>{
+const ModePanel=({openEvaluation, setOpenEvaluation, setMyAnimation})=>{
     return(
         <>
         <FcTodoList color="white" size={70} style={{
@@ -17,7 +17,7 @@ const ModePanel=({openEvaluation, setOpenEvaluation})=>{
             transform: 'translate(-50%, -50%)',
             padding:"5px"
         }}
-            onClick={()=>setOpenEvaluation(false)}
+            onClick={()=>{setOpenEvaluation(false); setMyAnimation("RumbaDance")}}
         />
         <Button size="small" variant="contained" style={{
             pointerEvents:"none",
@@ -43,7 +43,7 @@ const ModePanel=({openEvaluation, setOpenEvaluation})=>{
             transform: 'translate(-50%, -50%)',
             padding:"5px"
         }}
-            onClick={()=>setOpenEvaluation(true)}
+            onClick={()=>{setOpenEvaluation(true);setMyAnimation("Shuffling")}}
         />
         <Button size="small" variant="contained" style={{
             pointerEvents:"none",

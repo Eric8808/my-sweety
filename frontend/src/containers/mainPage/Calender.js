@@ -176,7 +176,7 @@ const makeColor=()=>{
 
 
 // const MyResponsiveBar = () => (
-function MyResponsiveBar({scheduledList, setScheduledList, schedule, setSchedule, day, setDay, setMyAnimation,setDisplayStatus, setCompleteDate}) {
+function MyResponsiveBar({scheduledList, setScheduledList, schedule, setSchedule, day, setDay,myAnimation, setMyAnimation,setDisplayStatus, setCompleteDate}) {
     const classes = useStyles();
     const [drawerOpen, setDrawerOpen] = useState(false)
     const [drawerContent, setDrawerContent] = useState('')
@@ -319,7 +319,7 @@ function MyResponsiveBar({scheduledList, setScheduledList, schedule, setSchedule
         }
         setDrawerContent(data)
         setDrawerOpen(true)
-        setMyAnimation("flair")
+        setMyAnimation("SittingClap")
         console.log(data)
     }
 
@@ -539,6 +539,7 @@ function MyResponsiveBar({scheduledList, setScheduledList, schedule, setSchedule
           setScheduledList={setScheduledList}
           setCompleteDate={setCompleteDate}
           scheduledList={scheduledList}
+          myAnimation={myAnimation}
         />
         </>
     )

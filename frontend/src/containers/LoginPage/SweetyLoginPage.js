@@ -4,7 +4,7 @@ import Sweety from '../../Components/sweety'
 import Button from '@material-ui/core/Button'
 import LoginCard from './LoginCard';
 import LoginPage from './LoginPage';
-import { FcCellPhone } from "react-icons/fc";
+import { FcCellPhone, FcAlarmClock } from "react-icons/fc";
 import Fade from "@material-ui/core/Fade";
 
 const useStyles = makeStyles((theme) => ({
@@ -47,11 +47,12 @@ const SweetyLoginPage = () =>{
     const classes = useStyles();
     const [mouseOver, setMouseOver] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
+    const [animation, setAnimation] = useState("Sitting2")
     return(
         <div className={classes.root}>
             {showLogin? <LoginCard/>:
             <>
-            <Sweety myAnimation={"situpus"}/>
+            <Sweety myAnimation={animation} start={true}/>
             <FcCellPhone size={70} style={{
                 cursor:"pointer",
                 borderWidth: mouseOver?"10px":"5px",
@@ -64,8 +65,8 @@ const SweetyLoginPage = () =>{
                 left: '50%', 
                 transform: 'translate(-50%, -50%)'
             }}
-            onMouseEnter={()=>setMouseOver(true)}
-            onMouseLeave={()=>setMouseOver(false)}
+            onMouseEnter={()=>{setMouseOver(true);setAnimation("StandingGreeting");}}
+            onMouseLeave={()=>{setMouseOver(false);setAnimation("Sitting2")}}
             onClick={()=>setShowLogin(true)}
             />
             <Button size="small" variant="contained" className={classes.fakeButton}>Call My Sweety!</Button>
