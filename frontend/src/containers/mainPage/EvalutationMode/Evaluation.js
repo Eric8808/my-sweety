@@ -61,7 +61,7 @@ const Evaluation = ({scheduledList, schedule, setMyAnimation, day, username, com
     const classes = useStyles();
 
     const getRatio = (scheduledList)=>{
-        if(scheduledList.length == 0){
+        if(scheduledList.length === 0){
             return 100
         }
         let totalNum = 0

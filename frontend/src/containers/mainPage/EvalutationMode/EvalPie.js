@@ -3,7 +3,7 @@ import { ResponsivePie } from '@nivo/pie'
 
 const scheduledListToData = (scheduledList) =>{
     let data = []
-    if(scheduledList.length == 0){
+    if(scheduledList.length === 0){
         let item = {}
         item["id"] = "No schedule."
         item["label"] = "No schedule"
@@ -23,7 +23,7 @@ const scheduledListToData = (scheduledList) =>{
 
 const toCompleteRatioData = (scheduledList)=>{
     let data = []
-    if(scheduledList.length == 0){
+    if(scheduledList.length === 0){
         let item = {}
         item["id"] = "All completed."
         item["label"] = "All completed"

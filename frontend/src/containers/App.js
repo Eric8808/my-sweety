@@ -275,22 +275,6 @@ function App(props) {
 
             {/* ----------------------calendar-------------------------- */}
             <Grid item xs={12} style={{position:'relative',padding:'0px',}}>
-              <Card className={classes.block} 
-                    style={{
-                        backgroundImage: "url('thumbstack.png')",
-                        backgroundColor:"transparent",
-                        backgroundRepeat:"no-repeat",
-                        backgroundSize:"24vw 33vh",
-                        boxShadow: 'none',
-                        position: 'absolute',
-                        height:"35vh",
-                        width:"25vw",
-                        top:'50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        visibility:zoom2? 'hidden' : 'visible'
-                    }}>
-                </Card>
               <Zoom in={zoom2}>
                 <Card className={classes.block} style={{height:'70vh', background:'transparent', boxShadow:"none",}}>
                   <Calender 

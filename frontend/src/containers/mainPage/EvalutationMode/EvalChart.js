@@ -297,7 +297,7 @@ const makeData = (schedule, day, completeDate) =>{
     timeComplete["data"].push(pointC)
     // // timeAvail
     let pointA = {x: `${tempDay.getMonth()+1}/${tempDay.getDate()}`, y: day[dayNum]}
-    pointA ["y"] -= pointC["y"]
+    pointA["y"] -= pointC["y"]
     timeAvail["data"].push(pointA)
   })
   
