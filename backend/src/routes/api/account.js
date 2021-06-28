@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt'
-import User from '../../models/User';
+import User from '../../models/User.js';
 import jwt from 'jsonwebtoken'
 const JWT_SECRET = "1651w64f5wefwgrw$%^&g89wg913245%^&*("
 

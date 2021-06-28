@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import account from './account'
-import scheduling from './scheduling'
-import data from './data'
+import account from './account.js'
+import scheduling from './scheduling.js'
+import data from './data.js'
 
 const router = Router();
 

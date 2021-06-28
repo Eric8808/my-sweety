@@ -1,13 +1,14 @@
 import mongo from './mongo.js';
 import express from 'express';
-import routes from './routes';
+import routes from './routes/index.js';
 import dotenv from 'dotenv'
 import cors from 'cors'
 import http from "http";
 import path from "path";
 import { dirname } from "path";
+import { fileURLToPath } from "url";
 dotenv.config()
-// const __dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const port = process.env.PORT || 80;
 const app = express();
 app.use(cors())
