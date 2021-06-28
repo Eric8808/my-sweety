@@ -36,6 +36,10 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
       setDisplayStatus('warning',"Please make sure your todo items are less than 6.")
       return
     }
+    if(todoList.length <= 0){
+      setDisplayStatus('error',"Please add an event first.")
+      return
+    }
 
     let tempdate = new Date();
     let now_date = new Date(tempdate.getFullYear(),tempdate.getMonth(),tempdate.getDate());
@@ -58,7 +62,7 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
       // 小黑記得處理算不出來的例外
       if(!m.data.ans.error){
         setTimeout(()=>{
-          setMyAnimation(myAnimation)
+          setMyAnimation("RumbaDance")
         },3000)
         setMyAnimation("kick")
         let newschedule = [...m.data.ans]
@@ -99,7 +103,7 @@ function Panel({addItem, todoList, setSchedule, day, setDisplayStatus, schedule,
       // 小黑記得處理算不出來的例外
       if(!m.data.ans.error){
         setTimeout(()=>{
-          setMyAnimation(myAnimation)
+          setMyAnimation("RumbaDance")
         },3000)
         setMyAnimation("kick")
         let concatschedule=[];
