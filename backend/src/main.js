@@ -18,14 +18,14 @@ app.use(express.static(path.join(__dirname, "../..", "build")));
 app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "../..", "build", "index.html"));
 });
-// const httpServer = http.createServer(app);
+const httpServer = http.createServer(app);
 mongo.connect();
-// httpServer.listen(port, () => {
-//   console.log(`🚀 Server Ready at ${port}! 🚀`);
-//   console.log(__dirname)
-//   console.log(path.join(__dirname, "../..", "build"))
-//   // console.log(`Graphql Port at ${port}${server.subscriptionsPath}`);
-// });
-const server = app.listen(process.env.PORT || 4000, function () {
-  console.log('Listening on port ' + server.address().port);
+httpServer.listen(port, () => {
+  console.log(`🚀 Server Ready at ${port}! 🚀`);
+  console.log(__dirname)
+  console.log(path.join(__dirname, "../..", "build"))
+  // console.log(`Graphql Port at ${port}${server.subscriptionsPath}`);
 });
+// const server = app.listen(process.env.PORT || 4000, function () {
+//   console.log('Listening on port ' + server.address().port);
+// });
