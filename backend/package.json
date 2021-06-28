@@ -23,6 +23,6 @@
     "nodemon": "^2.0.7"
   },
   "scripts": {
-    "server": "nodemon ./src/main.js --ext js --watch src --exec babel-node"
+    "server": "node ./src/main.js --ext js --watch src --exec babel-node"
   }
 }
