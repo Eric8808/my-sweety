@@ -361,7 +361,7 @@ function MyResponsiveBar({scheduledList, setScheduledList, schedule, setSchedule
               // keys={['test']}
               keys={['empty', ...scheduledList.map((value)=>(value.name))]}
               indexBy="day"
-              margin={{ top: 20, right: 130, bottom: 20, left: 60 }}
+              margin={{ top: 25, right: 130, bottom: 20, left: 60 }}
               padding={0.3}
               // reverse={true}
               valueScale={{ type: 'linear' }}
