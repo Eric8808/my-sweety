@@ -38,7 +38,7 @@ function CalenderDate({week, setWeek}) {
         let dateStyle = {}
         if (week === 0) {
           if (today.getDay() === value) {
-            // dateStyle = {backgroundColor: "#ffab40", borderRadius: '5px'}
+            // 今天會被框起來
             dateStyle = {border: "solid 3px black", borderRadius: '5px'}
           }
         }
