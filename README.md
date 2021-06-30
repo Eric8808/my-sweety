@@ -95,7 +95,6 @@ In this app, we come up with functions and ideas by ourselves. We also develop o
     ```shell=
     git clone https://github.com/KaiwenJon/my-sweety.git
     ```
-    ##### _:bulb:<font color=#F00078>The project is located at </font><font color=#A23400>`wp1092/final/my-sweety`</font>_
 2. **Install node.js**  (If you have installed node.js, you can skip the step.) 
     * download from https://nodejs.org/en/
     * version "14.17.1" has been verified working fine.
