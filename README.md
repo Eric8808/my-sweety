@@ -95,22 +95,7 @@ In this app, we come up with functions and ideas by ourselves. We also develop o
     ```shell=
     git clone https://github.com/KaiwenJon/my-sweety.git
     ```
-2. **Install node.js**  (If you have installed node.js, you can skip the step.) 
-    * download from https://nodejs.org/en/
-    * version "14.17.1" has been verified working fine.
-
-3. **Install nvm**  (If you have installed nvm, you can skip the step.)
-    * download from https://github.com/coreybutler/nvm-windows/releases/download/1.1.7/nvm-setup.zip
-    * installation
-    ```shell=
-    nvm install 10.16.0
-    nvm use 10.16.0
-    ```
-4. **Install yarn**  (If you have installed yarn, you can skip the step.)
-    ```shell=
-    npm install --global yarn
-    ```
-5. **Install the dependencies for the project**
+2. **Install the dependencies for the project**
     > go to the project directory (/my-sweety)
     ```shell=
     cd frontend
@@ -121,7 +106,7 @@ In this app, we come up with functions and ideas by ourselves. We also develop o
     yarn install
     ```
 
-6. **Start the project**
+3. **Start the project**
     > go to the project directory (/my-sweety)
     * open one terminal
     ```shell=
