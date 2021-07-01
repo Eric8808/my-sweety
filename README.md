@@ -261,8 +261,8 @@ Each input task has the following properties: _Name, Priority, Needtime, Separat
 When the backend server gets a calculation request, it calls our scheduling algorithm. The way we take `priority` into account is that we sort the tasks by their priorities in advance, which will make the subsequent permutation always arrange the high-priority task to an earlier date. Then, we basically use brute force to permute all possible events order. For each way of permutation, distribute them into different days. So far we just get a possible schedule. However, for each possible schedule, we set some rules to determine if it's legitimate. The rules are as follows: 
 
 **Rules**
-> * not legitimate if the any event exceeds the deadline.
-> * not legitimate if the any event is repeated in one day.
+> * not legitimate if any event exceeds the deadline.
+> * not legitimate if any event is repeated in one day.
 > * not legitimate if the total working hours exceed the available time on that day.
 
 Once a possible schedule is determined as legitimate, we will push it into an array. However, as the number of events goes even higher, the algorithm could spend too much time and memory. Therefore, we set a threshold of the length of that array. Once over the threshold, we stop calculating any possible schedule.
