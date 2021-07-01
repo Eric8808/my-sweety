@@ -156,7 +156,7 @@ Press the `"Schedule"` button. And we will schedule all the tasks in the TODO li
 
 ---
 
-#### Follow the steps 1~3 above, your schedule will be filled. Next, you can adjust the schedule.
+#### Following the steps 1~3 above, your schedule will be filled. Next, you can adjust the schedule.
 ![](https://i.imgur.com/Ia2kZt6.png)
 * You can switch to another week using the arrows next to the dates.
 * If you have completed any task, you can click it in the schedule and click ``"COMPLETED"`` in the pop up dialog. This will turn the task color into green.
