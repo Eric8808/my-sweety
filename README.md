@@ -272,9 +272,9 @@ Right now we only have few information from users to do optimization. In the fut
 **the pseudo code which calculates the performance indicator**
 ```javascript=+
 let performance = 0
-for days in schedule
-    for event in days
-        performance += day.date - events.dealine
+for day in schedule
+    for event in day
+        performance += day.date - event.dealine
     end
 end
 ```
